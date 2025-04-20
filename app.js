@@ -16,11 +16,16 @@ const customerrs=require("./routes/customerrs");
 
 const app = express();
 const port = 8080;
-const dbUrl =process.env.Atlas_db;
 
+
+const dbUrl =process.env.Atlas_db;
 // Database Connection
-mongoose.connect(dbUrl)
-    .then(() => console.log("✅ Connected to MongoDB"))
+
+async function main(){
+    await mongoose.connect(dbUrl)
+}
+
+main().then(() => console.log("✅ Connected to MongoDB"))
     .catch(err => console.error("❌ DB Error:", err));
 
 // Session Configuration
@@ -80,10 +85,3 @@ app.get("/", (req, res) => {
 app.listen(port, () => {
     console.log(`🚀 Server running at http://localhost:${port}`);
 });
-
-
-
-
-    
-
-    
