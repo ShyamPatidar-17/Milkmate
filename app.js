@@ -30,7 +30,11 @@ main().then(() => console.log("✅ Connected to MongoDB"))
     .catch(err => console.error("❌ DB Error:", err));
 
 
-    store.on("Error in Mongo Session Store",err);
+    store.on("error",()+>{
+        console.log("Error in Mongo Session Store",err);
+            })
+
+
 // Session Configuration
 const sessionOptions = {
     store,
