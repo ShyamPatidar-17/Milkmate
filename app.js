@@ -3,6 +3,7 @@ const express = require("express");
 const path = require("path");
 const mongoose = require("mongoose");
 const session = require("express-session");
+const MongoStore = require('connect-mongo');
 const flash = require("connect-flash");
 const methodOverride = require("method-override");
 
@@ -28,8 +29,11 @@ async function main(){
 main().then(() => console.log("✅ Connected to MongoDB"))
     .catch(err => console.error("❌ DB Error:", err));
 
+
+    store.on("Error in Mongo Session Store",err);
 // Session Configuration
 const sessionOptions = {
+    store,
     secret:process.env.secretcode,
     resave: false,
     saveUninitialized: true,
@@ -39,6 +43,15 @@ const sessionOptions = {
         httpOnly: true,
     },
 };
+
+
+const store=MongoStore.create( {
+    mongoUrl:dbUrl,
+    crypto:{
+        secret:process.env.secretcode
+    },
+    touchAfter:24*3600
+})
 
 // App Configuration
 app.set("view engine", "ejs");
@@ -85,3 +98,4 @@ app.get("/", (req, res) => {
 app.listen(port, () => {
     console.log(`🚀 Server running at http://localhost:${port}`);
 });
+
