@@ -1,0 +1,80 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Customer Information</title>
+    <link rel="stylesheet" href="../css/dairy/index.css">
+</head>
+<body>
+        <header class="navbar">
+            <div class="logo">
+                <img src="https://static.vecteezy.com/system/resources/previews/048/342/900/non_2x/cartoon-cow-logo-png.png" alt="MilkMate Logo">
+            </div>
+            <h1 class="title">MILKMATE</h1>
+            <nav class="nav-links">
+                <a href="/customers/add" class="add-btn">+Add Customer</a>
+                <a href="/contact">Contact</a>
+                <a href="/dairy">Home</a>
+                <a href="/logout">logout</a>
+            </nav>
+        </header>
+    <!-- Table Container -->
+    <div class="table-container">
+        <table>
+            <thead>
+                <tr>
+                    <th>Code</th>
+                    <th>First Name</th>
+                    <th>Last Name</th>
+                    <th>Contact</th>
+                    <th>Address</th>
+                    <th>Action</th>
+                </tr>
+            </thead>
+            <tbody>
+                <% for(customer of allCustomer) { %>
+                    <tr>
+                        <td><%= customer.code %></td>
+                        <td><%= customer.first %></td>
+                        <td><%= customer.last %></td>
+                        <td><%= customer.contact %></td>
+                        <td><%= customer.address %></td>
+                        <td><a href="<%=customer._id%>"><button class="btn primary-btn">Show</button></a></td>
+                    </tr>
+                <% }; %>
+    
+            </tbody>
+        </table>
+    </div>
+
+    <footer class="site-footer">
+        <div class="footer-content">
+            <div class="footer-section">
+                <h3>MILKMATE</h3>
+                <p>Your smart partner in dairy management. Trusted by farms and cooperatives for reliable operations and milk traceability.</p>
+            </div>
+    
+            <div class="footer-section">
+                <h4>Quick Links</h4>
+                <ul>
+                    <li><a href="/dairy">Home</a></li>
+                    <li><a href="/about">About</a></li>
+                    <li><a href="/contact">Contact</a></li>
+                </ul>
+            </div>
+    
+            <div class="footer-section">
+                <h4>Contact Us</h4>
+                <p>Email: info@milkmate.com</p>
+                <p>Phone: +91 79739 18569</p>
+                <p>Location: Indore, Madhya Pradesh, India</p>
+            </div>
+        </div>
+    
+        <div class="footer-bottom">
+            <p>&copy; 2025 MILKMATE. All rights reserved.</p>
+        </div>
+    </footer>
+</body>
+</html>

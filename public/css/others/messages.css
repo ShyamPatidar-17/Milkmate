@@ -1,0 +1,52 @@
+/* Optional: Give the alerts a more modern, smooth feel */
+.alert {
+    box-shadow: 0 4px 12px rgba(0, 0, 0, 0.15);
+    border-radius: 0.75rem;
+    font-size: 1rem;
+    font-weight: 500;
+    opacity: 0.95;
+    transition: all 0.3s ease;
+  }
+  
+  /* Success alert color tweak */
+  .alert-success {
+    background-color: #d1e7dd;
+    color: #0f5132;
+    height: 15px;
+    border: 1px solid #badbcc;
+  }
+  
+  /* Error alert color tweak */
+  .alert-danger {
+    background-color: #f8d7da;
+    color: #842029;
+    border: 1px solid #f5c2c7;
+  }
+  
+  /* Add margin around messages for spacing */
+  .alert-dismissible {
+    margin: 10px 20px;
+  }
+  
+  /* Optional: Add hover effect */
+  .alert:hover {
+    opacity: 1;
+    transform: translateY(-2px);
+  }
+  
+  /* Optional: Animate alert appearance */
+  @keyframes slideFade {
+    0% {
+      opacity: 0;
+      transform: translateY(-10px);
+    }
+    100% {
+      opacity: 1;
+      transform: translateY(0);
+    }
+  }
+  
+  .alert {
+    animation: slideFade 0.4s ease-out;
+  }
+  

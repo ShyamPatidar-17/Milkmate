@@ -1,0 +1,95 @@
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Dairy Management</title>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.7.2/css/all.min.css">
+    <link rel="stylesheet" href="../css/customers/front.css">
+</head>
+<body>
+    <header class="navbar">
+        <div class="logo">
+            <img src="https://static.vecteezy.com/system/resources/previews/048/342/900/non_2x/cartoon-cow-logo-png.png" alt="MilkMate Logo">
+        </div>
+        <h1 class="title">MILKMATE</h1>
+        <nav class="nav-links">
+            <a href="/logout">Logout</a>
+            <a href="/about">About</a>
+            <a href="/contact">Contact</a>
+        </nav>
+    </header>
+
+    
+    <main class="container">
+        <!-- Left Section -->
+        <section class="left-section">
+           <a href="/customerrs/details">My Details </a>
+           <a href="/customerrs/product">Products</a> 
+        </section>
+
+
+        <!-- Center Section (Image) -->
+        <section class="center-section">
+            <img src="https://cdn.vectorstock.com/i/500p/53/99/cartoon-little-farmer-with-cow-and-milk-bucket-vector-51335399.jpg" alt="Milkman Illustration">
+        </section>
+
+        <!-- Right Section (Milkman Details) -->
+        <section class="right-section">
+            <h2>Customer Details</h2>
+            <table>
+                <tr>
+                    <th>User Code</th>
+                    <td><%=user.code%></td>
+                </tr>
+                <tr>
+                    <th>User Name</th>
+                    <td><%=user.name%></td>
+                </tr>
+                <tr>
+                    <th>Dairy Code</th>
+                    <td>+91 <%=user.dairyCode%> </td>
+                </tr>
+                <tr>
+                    <th>Contact</th>
+                    <td>+91 <%=user.mobile%> </td>
+                </tr>
+                <tr>
+                    <th>Address</th>
+                    <td><%=user.address%> </td>
+                </tr>
+               
+            </table>
+        </section>
+    </main>
+
+    <footer class="site-footer">
+        <div class="footer-content">
+            <div class="footer-section">
+                <h3>MILKMATE</h3>
+                <p>Your smart partner in dairy management. Trusted by farms and cooperatives for reliable operations and milk traceability.</p>
+            </div>
+    
+            <div class="footer-section">
+                <h4>Quick Links</h4>
+                <ul>
+                    <li><a href="/dairy">Home</a></li>
+                    <li><a href="/about">About</a></li>
+                    <li><a href="/contact">Contact</a></li>
+                </ul>
+            </div>
+    
+            <div class="footer-section">
+                <h4>Contact Us</h4>
+                <p>Email: info@milkmate.com</p>
+                <p>Phone: +91 79739 18569</p>
+                <p>Location: Indore, Madhya Pradesh, India</p>
+            </div>
+        </div>
+    
+        <div class="footer-bottom">
+            <p>&copy; 2025 MILKMATE. All rights reserved.</p>
+        </div>
+    </footer>
+    
+</body>
+</html>

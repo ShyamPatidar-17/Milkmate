@@ -1,0 +1,263 @@
+/* Import Google Font */
+@import url('https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;600&display=swap');
+
+/* Reset Styles */
+* {
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+    font-family: 'Poppins', sans-serif;
+}
+
+/* Body Styling */
+body {
+    background: linear-gradient(to right, #141e30, #243b55);
+    
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    min-height: 100vh;
+}
+ 
+/* NavBar */
+
+.navbar {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    background-color: #444; 
+    width: 100%;
+    padding: 0 40px;
+  }
+  
+  .logo img {
+    height: 80px;
+  }
+  
+  .title {
+    flex: 1;
+    text-align: center;
+    font-size: 48px;
+    color: #fff; 
+    margin: 0;
+  }
+  
+  .nav-links {
+    display: flex;
+    gap: 30px;
+  }
+  
+  .nav-links a {
+    text-decoration: none;
+    font-size: 20px;
+    font-weight: 700;
+    color: #fff; 
+  }
+  .nav-links a:hover{
+    color: #3dc902;
+  } 
+  
+
+/* Table Container */
+.table-container {
+    margin-top: 20px;
+    width: 90%;
+    max-width: 1100px;
+    overflow-x: auto;
+}
+
+table {
+    width: 100%;
+    border-collapse: collapse;
+    background: white;
+    box-shadow: 0px 4px 15px rgba(0, 0, 0, 0.2);
+    border-radius: 8px;
+    overflow: hidden;
+    animation: fadeIn 0.8s ease-in-out;
+}
+.btn {
+    display: inline-block;
+    margin-top: 15px;
+    padding: 12px 20px;
+    font-size: 16px;
+    font-weight: bold;
+    border-radius: 8px;
+    text-decoration: none;
+    cursor: pointer;
+    border: none;
+    transition: all 0.3s ease-in-out;
+    text-align: center;
+}
+
+/* Primary Button - Add Customer */
+.primary-btn {
+    background: linear-gradient(135deg, #28a745, #218838); /* Green gradient */
+    color: white;
+    box-shadow: 0px 5px 15px rgba(40, 167, 69, 0.4);
+    letter-spacing: 1px;
+    border: none;
+}
+
+/* Table Animations */
+@keyframes fadeIn {
+    from {
+        opacity: 0;
+        transform: translateY(-10px);
+    }
+    to {
+        opacity: 1;
+        transform: translateY(0);
+    }
+}
+
+thead {
+    background: #2E7D32;
+    color: white;
+}
+
+thead th {
+    padding: 15px;
+    text-align: left;
+    font-size: 16px;
+}
+
+tbody tr {
+    border-bottom: 1px solid #ddd;
+    transition: all 0.3s ease-in-out;
+}
+
+tbody tr:hover {
+    background: #f9f9f9;
+    transform: scale(1.02);
+    box-shadow: 0px 4px 8px rgba(0, 0, 0, 0.1);
+}
+
+tbody td {
+    padding: 15px;
+    color: #333;
+    font-size: 14px;
+}
+
+/* Action Buttons */
+.show-btn, .edit-btn {
+    text-decoration: none;
+    padding: 8px 14px;
+    font-size: 14px;
+    border-radius: 4px;
+    transition: all 0.3s;
+    display: inline-block;
+    font-weight: bold;
+}
+
+/* View Button */
+.show-btn {
+    background: #007BFF;
+    color: white;
+}
+
+.show-btn:hover {
+    background: #0056b3;
+    transform: scale(1.05);
+}
+
+/* Edit Button */
+.edit-btn {
+    background: #ff9800;
+    color: white;
+}
+
+.edit-btn:hover {
+    background: #e68900;
+    transform: scale(1.05);
+}
+
+
+.site-footer {
+    background-color: #222;
+    color: #eee;
+    width: 100%;
+    padding: 40px 20px 20px;
+    font-family: Arial, sans-serif;
+    margin-top: 320px;
+    
+}
+
+.footer-content {
+    display: flex;
+    justify-content: space-around;
+    flex-wrap: wrap;
+    gap: 30px;
+    max-width: 1100px;
+    margin: auto;
+    padding-bottom: 30px;
+    border-bottom: 1px solid #444;
+}
+
+.footer-section {
+    flex: 1;
+    min-width: 250px;
+}
+
+.footer-section h3 {
+    font-size: 28px;
+    color: #b4e114;
+    margin-bottom: 10px;
+}
+
+.footer-section h4 {
+    font-size: 20px;
+    margin-bottom: 10px;
+    color: #e61919;
+}
+
+.footer-section p,
+.footer-section ul {
+    font-size: 16px;
+    color: #ccc;
+}
+
+.footer-section ul {
+    list-style: none;
+    padding: 0;
+}
+
+.footer-section ul li {
+    margin-bottom: 8px;
+}
+
+.footer-section ul li a {
+    color: #ccc;
+    text-decoration: none;
+}
+
+.footer-section ul li a:hover {
+    color: #b4e114;
+}
+
+.footer-bottom {
+    text-align: center;
+    padding-top: 15px;
+    color: #999;
+    font-size: 14px;
+}
+
+/* Responsive Design */
+@media (max-width: 768px) {
+    header {
+        flex-direction: column;
+        text-align: center;
+        padding: 20px;
+    }
+
+    .add-btn {
+        margin-top: 10px;
+    }
+
+    table {
+        font-size: 12px;
+    }
+
+    thead th, tbody td {
+        padding: 10px;
+    }
+}

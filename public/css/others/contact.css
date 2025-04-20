@@ -1,0 +1,280 @@
+/* Reset & Base Styles */
+* {
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+  }
+  
+  body {
+    font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+    line-height: 1.6;
+    background-color: #d8d9db; /* Dark background */
+    color: #f3f4f6;
+  }
+
+
+  
+/* Navbar */
+.navbar {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  padding: 15px 40px;
+  background-color: #ffffff;
+  box-shadow: 0 2px 8px rgba(0, 0, 0, 0.1);
+  flex-wrap: wrap;
+  position: sticky;
+  top: 0;
+  z-index: 1000;
+}
+
+.logo img {
+  height: 60px;
+}
+
+.title {
+  font-size: 28px;
+  color: #2a9d8f;
+  font-weight: bold;
+  margin-left: 10px;
+  flex: 1;
+  text-align: center;
+}
+
+.nav-links {
+  display: flex;
+  gap: 20px;
+}
+
+.nav-links a {
+  text-decoration: none;
+  color: #264653;
+  font-weight: 500;
+  transition: color 0.3s ease;
+}
+
+.nav-links a:hover {
+  color: #ff0000;
+}
+  
+  a {
+    color: blue;
+    text-decoration: none;
+    font-weight: 500;
+  }
+  
+  a:hover {
+    text-decoration: underline;
+  }
+  
+  .container {
+    max-width: 1100px;
+    margin: 0 auto;
+    padding: 0 1rem;
+  }
+  
+  /* Header & Footer */
+  header, footer {
+    background-color: #111827;
+    color: white;
+    padding: 1.5rem 0;
+    text-align: center;
+  }
+  
+  header h1 {
+    font-size: 2rem;
+  }
+  
+  footer p {
+    font-size: 0.9rem;
+  }
+  
+  /* Milkman Contact Section */
+  .milkman-contact {
+    background-color: #f9fafb;
+    padding: 2rem;
+    margin-top: 2rem;
+    border-radius: 10px;
+    box-shadow: 0 2px 8px rgba(0, 0, 0, 0.1);
+  }
+  
+  .milkman-contact h2 {
+    font-size: 1.6rem;
+    margin-bottom: 1rem;
+    color: #f43f5e; /* Pink-red heading */
+  }
+  
+  .milkman-contact strong {
+    color: red;
+  }
+  
+  .milkman-contact p {
+    font-size: 1rem;
+    margin-bottom: 0.5rem;
+    color: blue;
+  }
+  
+  .milkman-note {
+    margin-top: 1rem;
+    font-style: italic;
+    color: #10b981; /* Teal green */
+    font-weight: 500;
+  }
+
+  .tex1{
+    text-align: center;
+    margin-top: 3rem;
+    color: #be4812;
+    background-color: #b4cbf9;
+  }
+
+
+  .tex{
+    text-align: center;
+    margin-top: 3rem;
+    color: #be4812;
+    background-color: #b4cbf9;
+  }
+  /* Person Card Layout */
+  .person-card {
+    display: flex;
+    background-color: white;
+    border-radius: 10px;
+    margin: 2rem 0;
+    box-shadow: 0 4px 12px rgba(0, 0, 0, 0.05);
+    overflow: hidden;
+    transition: transform 0.2s ease;
+  }
+  
+  .person-card:hover {
+    transform: translateY(-5px);
+  }
+  
+  /* Photo Styling */
+  .photo-box {
+    flex: 0 0 200px;
+    background-color: #e2e8f0;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    font-size: 0.9rem;
+    font-weight: bold;
+    color: #555;
+    padding: 1rem;
+    text-align: center;
+  }
+  
+  .photo-box img {
+    width: 100%;
+    height: auto;
+    object-fit: cover;
+  }
+  
+  /* Info Box Styling */
+  .info-box {
+    flex: 1;
+    padding: 1.5rem 2rem;
+  }
+  
+  /* Label Styling (like Name, Email) */
+  .info-box strong {
+    color: red;
+  }
+  
+  /* Data Styling (like email, bio, etc.) */
+  .info-box p {
+    color: blue;
+  }
+  
+  /* Name Styling */
+  .info-box h2 {
+    font-size: 1.5rem;
+    color: rgb(255, 0, 0);
+    text-align: center;
+  }
+  
+  /* Role Styling */
+  .info-box .role {
+    font-size: 1rem;
+    color: blue;
+    margin-bottom: 0.5rem;
+    text-align: center;
+  }
+  
+  /* Bio Styling */
+  .bio {
+    margin-top: 1rem;
+    color: blue;
+  }
+  
+
+  
+/* Footer */
+.site-footer {
+  background-color: #264653;
+  color: #ffffff;
+  margin-top: 36px;
+  padding: 40px 20px 20px 20px;
+}
+
+.footer-content {
+  display: flex;
+  flex-wrap: wrap;
+  justify-content: space-between;
+  gap: 30px;
+  max-width: 1200px;
+  margin: auto;
+}
+
+.footer-section {
+  flex: 1;
+  min-width: 250px;
+}
+
+.footer-section h3, .footer-section h4 {
+  color: #f4a261;
+  margin-bottom: 10px;
+}
+
+.footer-section ul {
+  list-style: none;
+  padding: 0;
+}
+
+.footer-section ul li a {
+  color: #ffffff;
+  text-decoration: none;
+  transition: color 0.3s ease;
+}
+
+.footer-section ul li a:hover {
+  color: #e9c46a;
+}
+
+.footer-bottom {
+  text-align: center;
+  margin-top: 30px;
+  border-top: 1px solid #ffffff33;
+  padding-top: 15px;
+  font-size: 14px;
+  color: #ccc;
+}
+
+
+  /* Responsive Layout */
+  @media (max-width: 768px) {
+    .person-card {
+      flex-direction: column;
+      text-align: center;
+    }
+  
+    .photo-box {
+      flex: none;
+      width: 100%;
+    }
+  
+    .info-box {
+      padding: 1.5rem;
+    }
+  }
+  

@@ -1,0 +1,64 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Add Milk</title>
+    <link rel="stylesheet" href="../css/milk/add.css">
+</head>
+<body>
+
+<div class="form-container"> 
+    <h1><b><i>Add Milk</i></b></h1>
+     <form action="/dairy/add" method="POST">
+        <div class="form-group">
+            <label for="code">Dairy Code:</label>
+            <input type="number" id="code" name="milk[dairyCode]" value="<%=user.dairyCode%>" required>
+        </div>
+    <div class="form-group">
+            <label for="code">Customer Code:</label>
+            <input type="number" id="code" name="milk[code]" required>
+        </div>
+        
+        <div class="form-group">
+            <label for="date">Date:</label>
+            <input type="date" id="date" name="milk[date]"  required>
+        </div>
+
+        <div class="form-group">
+            <label for="liter">Liter:</label>
+            <input type="number" step="any" id="liter" name="milk[liter]" required>
+        </div>
+
+        <div class="form-group">
+            <label for="rate">Rate:</label>
+            <input type="number" step="any" id="rate" name="milk[rate]" required>
+        </div>
+
+        <div class="form-group">
+            <label for="shift">Shift:</label>
+            <select id="shift" name="milk[shift]" required>
+                <option value="Mor">Morning</option>
+                <option value="Eve">Evening</option>
+            </select>
+        </div>
+    <button type="submit" class="btn primary-btn">Add Milk</button>
+    </form> 
+    <a href="/dairy"><button class="btn primary-btn" type="submit">Back to home page</button></a>
+ </div>
+<ul>  
+</ul>
+</body>
+</html>
+
+<script>
+    window.onload = function() {
+        var today = new Date();
+        var dd = String(today.getDate()).padStart(2, '0');
+        var mm = String(today.getMonth() + 1).padStart(2, '0');
+        var yyyy = today.getFullYear();
+
+        today = yyyy + '-' + mm + '-' + dd;
+        document.getElementById("date").value = today;
+    }
+</script>

@@ -1,0 +1,103 @@
+/* General Reset */
+* {
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+    font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+}
+
+/* Body Styling */
+body {
+    background: linear-gradient(120deg, #f0f9ff, #e0f7fa);
+    min-height: 100vh;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    padding: 20px;
+}
+/* Form Container */
+.form-container {
+    background: #ffffff;
+    padding: 30px 40px;
+    border-radius: 15px;
+    box-shadow: 0 8px 20px rgba(0, 0, 0, 0.2);
+    width: 100%;
+    max-width: 450px;
+    text-align: center;
+    transition: 0.3s ease-in-out;
+}
+
+/* Heading */
+.form-container h2 {
+    margin-bottom: 25px;
+    color: #333;
+    font-size: 28px;
+}
+
+/* Input Fields */
+.form-container input[type="text"],
+.form-container input[type="email"],
+.form-container input[type="tel"],
+.form-container input[type="password"] {
+    width: 100%;
+    padding: 12px 15px;
+    margin: 10px 0;
+    border: 1px solid #ddd;
+    border-radius: 8px;
+    font-size: 16px;
+    transition: 0.2s;
+}
+
+.form-container input:focus {
+    outline: none;
+    border-color: #0ed2f7;
+    box-shadow: 0 0 5px rgba(14, 210, 247, 0.4);
+}
+
+/* Buttons */
+.btn-1, .btn-2 {
+    width: 100%;
+    padding: 12px;
+    margin-top: 15px;
+    font-size: 16px;
+    border: none;
+    border-radius: 8px;
+    cursor: pointer;
+    transition: background 0.3s ease;
+}
+
+.btn-1 {
+    background-color: #0ed2f7;
+    color: white;
+    font-weight: bold;
+}
+
+.btn-1:hover {
+    background-color: #09b0d4;
+}
+
+.btn-2 {
+    background-color: #f0f0f0;
+    color: #333;
+    font-weight: 500;
+}
+
+.btn-2:hover {
+    background-color: #e0e0e0;
+}
+
+/* Responsive Design */
+@media (max-width: 500px) {
+    .form-container {
+        padding: 20px;
+    }
+
+    .form-container h2 {
+        font-size: 24px;
+    }
+
+    .btn-1, .btn-2 {
+        font-size: 15px;
+        padding: 10px;
+    }
+}
