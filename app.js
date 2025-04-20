@@ -35,6 +35,14 @@ main().then(() => console.log("✅ Connected to MongoDB"))
             })
 
 
+
+const store=MongoStore.create( {
+    mongoUrl:dbUrl,
+    crypto:{
+        secret:process.env.secretcode
+    },
+    touchAfter:24*3600
+})
 // Session Configuration
 const sessionOptions = {
     store,
@@ -47,16 +55,6 @@ const sessionOptions = {
         httpOnly: true,
     },
 };
-
-
-const store=MongoStore.create( {
-    mongoUrl:dbUrl,
-    crypto:{
-        secret:process.env.secretcode
-    },
-    touchAfter:24*3600
-})
-
 // App Configuration
 app.set("view engine", "ejs");
 app.set("views", path.join(__dirname, "views"));
