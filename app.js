@@ -19,7 +19,7 @@ const app = express();
 const port = 8080;
 
 
-const dbUrl =process.env.Atlas_db;
+const dbUrl ="mongodb+srv://ShyamPatidar:GOqprz7MQMondgls@milkmate.dslrcld.mongodb.net/?retryWrites=true&w=majority&appName=Milkmate";
 console.log(dbUrl);
 // Database Connection
 
