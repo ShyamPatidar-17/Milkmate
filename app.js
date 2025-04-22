@@ -20,6 +20,7 @@ const port = 8080;
 
 
 const dbUrl =process.env.Atlas_db;
+console.log(dbUrl);
 // Database Connection
 
 async function main(){
@@ -30,18 +31,19 @@ main().then(() => console.log("✅ Connected to MongoDB"))
     .catch(err => console.error("❌ DB Error:", err));
 
 
-const store = MongoStore.create({
-    mongoUrl: dbUrl,
-    crypto: {
-        secret: process.env.secretcode
-    },
-    touchAfter: 24 * 3600
-});
 
-store.on("error", (err) => {
-    console.log("Error in Mongo Session Store", err);
-});
-
+    const store = MongoStore.create({
+        mongoUrl: dbUrl,
+        crypto: {
+            secret: process.env.secretcode
+        },
+        touchAfter: 24 * 3600
+    });
+    
+    store.on("error", (err) => {
+        console.log("Error in Mongo Session Store", err);
+    });
+    
 // Session Configuration
 const sessionOptions = {
     store,
@@ -54,6 +56,7 @@ const sessionOptions = {
         httpOnly: true,
     },
 };
+
 // App Configuration
 app.set("view engine", "ejs");
 app.set("views", path.join(__dirname, "views"));
