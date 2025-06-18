@@ -1,0 +1,125 @@
+<%- include('../includes/navbar.ejs') %>
+
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>Fresh Dairy Products</title>
+  <link rel="stylesheet" href="/css/dairy/product.css">
+</head>
+<body>
+  
+  <section class="hero">
+    <div id="cart-message" style="display:none; position:fixed; top:20px; right:20px; background:#4caf50; color:white; padding:10px 20px; border-radius:5px; z-index:1000;">
+    Item added to cart!
+    </div>
+    <%if (user.type==="customer"){%>
+      <div id="go-to-cart-container">
+          <div class="cart-fixed-btn">
+            <a href="/cart">
+              <button class="go-to-cart-btn">
+                🛒 Go to Cart (<span id="cart-count"><%= cart.length %></span>items)
+              </button>
+            </a>
+          </div>
+
+      </div>      
+    <% }%>
+    
+    <div class="hero-text">
+      <h1 style="text-align: center;">Our Fresh Dairy Products</h1>
+      <b><p style="text-align: center;">Pure, Fresh & Delicious – Direct from Farms & Our Dairy to Your Home</p></b>
+    </div>
+    <img src="https://static.vecteezy.com/system/resources/previews/024/529/923/non_2x/dairy-products-on-rustic-wooden-table-illustration-ai-generative-free-photo.jpg" alt="Dairy Products Banner" class="banner">
+
+    <% if (user.type === 'dairy' || user.type === 'milkman') { %>
+      <div class="add-button-container">
+        <a href="/product/add">
+          <button class="add-btn">+ Add New Product</button>
+        </a>
+      </div>
+    <% } %>
+  </section>
+
+  <section class="products">
+    <% for(let product of products) { %>
+      <div class="product-card">
+        <img src="<%=product.image%>" alt="Product Image" class="product-img">
+        <h2><b>Name: </b><%=product.name%></h2>
+        <p class="desc"><b>Description:</b> <%=product.desc%></p>
+        <p><b>Price: ₹<%=product.price%></b></p>
+
+        <div class="button-group">
+          <% if (user.type === 'dairy'||user.type === 'milkman') { %>
+            <a href="/product/edit/<%= product._id %>"><button class="edit-btn">Edit</button></a>
+            <form action="/product/delete/<%= product._id %>?_method=DELETE" method="POST" style="display:inline;">
+              <button type="submit" class="del-btn">Delete</button>
+            </form>
+          <% } %>
+
+          <% if (user.type==='customer') { %>
+            <button class="buy-btn" data-product-id="<%= product._id%>">Add to Cart</button>     
+          <% } %>
+        </div>
+      </div>
+    <% } %>
+  </section>
+
+<%- include('../includes/footer.ejs') %>
+
+<script>
+  document.querySelectorAll('.buy-btn').forEach(button => {
+    button.addEventListener('click', async () => {
+      const productId = button.dataset.productId;
+      try {
+        const res = await fetch('/cart/add', {
+          method: 'POST',
+          headers: {
+            'Content-Type': 'application/json'
+          },
+          body: JSON.stringify({ productId })
+        });
+
+        if (res.ok) {
+          const result = await res.json();
+
+          const cartCountSpan = document.getElementById('cart-count');
+          const goToCartContainer = document.getElementById('go-to-cart-container');
+
+          if (cartCountSpan) {
+            cartCountSpan.textContent = result.cartCount;
+          } else {
+            // If no cart button exists, inject it
+            goToCartContainer.innerHTML = `
+              <div class="cart-fixed-btn">
+                <a href="/cart">
+                  <button class="go-to-cart-btn">
+                    🛒 Go to Cart (<span id="cart-count">${result.cartCount}</span> items)
+                  </button>
+                </a>
+              </div>
+            `;
+          }
+
+          // ✅ Flash message
+          const msg = document.getElementById('cart-message');
+          msg.style.display = 'block';
+          msg.textContent = '✅ Product added to cart!';
+          setTimeout(() => {
+            msg.style.display = 'none';
+          }, 2000);
+        }
+      } catch (err) {
+        console.error('Error:', err);
+      }
+    });
+  });
+</script>
+
+  
+  
+</body>
+</html>
+
+ 

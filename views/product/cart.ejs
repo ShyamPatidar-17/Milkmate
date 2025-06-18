@@ -1,0 +1,73 @@
+<%- include('../includes/navbar.ejs') %>
+
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>Your Cart</title>
+  <link rel="stylesheet" href="/css/product/cart.css">
+</head>
+<body>
+  <section class="cart-items">
+    <h1>Your Cart</h1>
+    <% if (cart.length > 0) { %><div class="cart-actions">
+        <a href="/product/all">
+            <button type="button" class="product-btn">Add More Products</button>
+          </a>
+        <form action="/cart/checkout" method="GET">
+          <button type="submit" class="checkout-btn">Proceed to Checkout</button>
+        </form>
+        
+        
+      </div>
+      
+  
+
+      <table class="cart-table">
+        <thead>
+          <tr>
+            <th>Name</th>
+            <th>Price (₹)</th>
+            <th>Quantity</th>
+            <th>Total (₹)</th>
+            <th>Actions</th>
+          </tr>
+        </thead>
+        <tbody>
+          <% cart.forEach(item => { %>
+            <tr>
+              <td><%= item.name %></td>
+              <td><%= item.price %></td>
+              <td>
+                <form action="/cart/update/<%= item.productId %>" method="POST" class="quantity-form">
+                  <button type="submit" name="action" value="decrease" class="quantity-btn">-</button>
+                  <span><%= item.quantity %></span>
+                  <button type="submit" name="action" value="increase" class="quantity-btn">+</button>
+                </form>
+              </td>
+              <td><%= item.price * item.quantity %></td>
+              <td>
+                <form action="/cart/delete/<%= item.productId %>?_method=DELETE" method="post">
+                  <button type="submit" class="delete-btn">Remove</button>
+                </form>
+              </td>
+            </tr>
+          <% }); %>
+        </tbody>
+      </table>
+
+      <div class="cart-total">
+        <p>Total: ₹<%= totalAmount %></p>
+      </div>
+
+    <% } else { %>
+      <p>Your cart is empty. <br>
+        <a href="/product/all"><button class="checkout-btn">Back to Product Page</button></a>
+      </p>
+    <% } %>
+  </section>
+
+  <%- include('../includes/footer.ejs') %>
+</body>
+</html>

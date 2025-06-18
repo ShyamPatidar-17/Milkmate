@@ -1,0 +1,90 @@
+
+
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Customer Details</title>
+    <link rel="stylesheet" href="../css/dairy/showCustomer.css">
+</head>
+<body>
+
+    
+   
+
+            <!-- <a href="/dairy"><button>Home</button></a>
+            <a href="/dairy/add"><button>Add Milk</button></a>    -->
+
+           
+       
+        <%- include('../includes/navbar.ejs') %>
+
+        <!-- Customer Info Form -->
+        <div class="header-with-button">
+            <h1>Customer Details</h1>
+            <a href="/customerrs"><button class="home-button">Go back to home</button></a>
+        </div>
+        
+            <div class="customer-details">
+                    <table class="contact-table">
+                        <thead>
+                            <tr>
+                                <th>Code</th>
+                                <th>Dairy Code</th>
+                                <th>First Name</th>
+                                <th>Last Name</th>
+                                <th>Contact</th>
+                                <th>Address</th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                            <tr>
+                                <td><%=customer.code%></td>
+                                <td><%=customer.codeD%></td>
+                                <td><%=customer.first%></td>
+                                <td><%=customer.last%></td>
+                                <td><%=customer.contact %></td>
+                                <td><%=customer.address %></td>
+                
+                            </tr>
+                        </tbody>
+                    </table>
+                    </div>
+                    
+    
+  <!-- customer Milk info -->
+ <h1>Milk Details</h1>
+
+ <div class="customer-details">
+     <table class="contact-table">
+         <thead>
+             <tr>
+                 <th>Date</th>
+                 <th>Shift</th>
+                 <th>Liter</th>
+                 <th>Rate (  &#8377 / ltr )</th>
+                 <th>Amount</th>
+                 <th>Total Amount</th>
+             </tr>
+         </thead>
+         <tbody>
+                 <% for(milk of milks) { %>  
+                 <tr>  
+                  <td>  <%=milk.date.toDateString()%></td>
+                  <td>   <%=milk.shift %></td>
+                  <td>   <%= milk.liter%></td>
+                  <td><%=milk.rate%></td>
+                  <td>    &#8377;  <%= milk.amount%></td>
+                  <td> &#8377;  <%=total+=milk.amount%></td>
+                  </tr>
+             <% }; %>
+         </tbody>
+     </table>
+     <h1>Total amount to be paid till Date = <b> &#8377 <%=total%></b></h1>
+    
+</div>
+     <!------Footer-->
+     <%- include('../includes/footer.ejs') %>  
+</body>
+</html>

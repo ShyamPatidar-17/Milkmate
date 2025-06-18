@@ -1,0 +1,86 @@
+<%- include('../includes/navbar.ejs') %>
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+  <title>Customer Information</title>
+  <link rel="stylesheet" href="../css/dairy/index.css" />
+</head>
+<body>
+
+  <!-- Search Bar -->
+  <div class="search-bar" style="text-align:center; margin: 20px;">
+    <input type="text" id="searchInput" placeholder="Search by Code or Contact" style="padding: 8px; width: 300px; font-size: 16px;">
+  </div>
+
+  <!-- Table Container -->
+  <div class="table-container">
+    <% if (!allCustomer || allCustomer.length === 0) { %>
+      <h2 style="text-align: center;">No customer available</h2>
+      <div style="text-align: center;"><a href="/customers/add">Add new Customer</a></div>
+    <% } else { %>
+      <table id="customerTable">
+        <thead>
+          <tr>
+            <th>Code</th>
+            <th>First Name</th>
+            <th>Last Name</th>
+            <th>Contact</th>
+            <th>Address</th>
+            <th>Action</th>
+          </tr>
+        </thead>
+        <tbody>
+          <% 
+            // const sortedCustomers = allCustomer.sort((a, b) =>code.localeCompare(b.code));
+            for (const customer of allCustomer) { 
+          %>
+            <tr>
+              <td data-label="Code"><%= customer.code %></td>
+              <td data-label="First Name"><%= customer.first %></td>
+              <td data-label="Last Name"><%= customer.last %></td>
+              <td data-label="Contact"><%= customer.contact %></td>
+              <td data-label="Address"><%= customer.address %></td>
+              <td data-label="Action"><a href="/customers/<%= customer._id %>"><button class="btn">Show</button></a></td>
+            </tr>
+          <% } %>
+        </tbody>
+      </table>
+
+      <div id="noResults" style="text-align:center; margin-top:20px; display:none; font-weight:bold; color:#888;">
+        No user found
+      </div>
+    <% } %>
+  </div>
+
+  <%- include('../includes/footer.ejs') %>
+
+  <script>
+    const searchInput = document.getElementById('searchInput');
+    const table = document.getElementById('customerTable');
+    const rows = table?.querySelectorAll('tbody tr') || [];
+    const noResults = document.getElementById('noResults');
+
+    searchInput.addEventListener('input', function () {
+      const filter = this.value.toLowerCase();
+      let visibleCount = 0;
+
+      rows.forEach(row => {
+        const code = row.cells[0].textContent.toLowerCase();
+        const contact = row.cells[3].textContent.toLowerCase();
+
+        if (code.includes(filter)) {
+          row.style.display = '';
+          visibleCount++;
+        } else {
+          row.style.display = 'none';
+        }
+      });
+
+      noResults.style.display = visibleCount === 0 ? 'block' : 'none';
+    });
+  </script>
+
+</body>
+</html>

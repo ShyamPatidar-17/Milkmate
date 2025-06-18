@@ -1,0 +1,59 @@
+<%- include('../includes/navbar.ejs') %>
+<head>
+  <link rel="stylesheet" href="../css/dairy/cart.css">
+</head>
+
+<body>
+  <h1 style="text-align: center;">Your Cart</h1>
+
+  <% if (cart && cart.length > 0) { 
+       let total = 0; 
+  %>
+
+  <table style="margin: 0 auto; border-collapse: collapse; width: 80%;">
+    <tr>
+      <th>Product ID</th>
+      <th>Name</th>
+      <th>Price (₹)</th>
+      <th>Quantity</th>
+      <th>Subtotal (₹)</th>
+      <th>Action</th>
+    </tr>
+
+    <% cart.forEach((item, index) => { 
+         const subtotal = item.price * item.quantity;
+         total += subtotal;
+    %>
+      <tr>
+        <td><%= item.productId %></td>
+        <td><%= item.name %></td>
+        <td><%= item.price %></td>
+        <td><%= item.quantity %></td>
+        <td><%= subtotal %></td>
+        <td>
+          <form action="/cart/remove" method="POST">
+            <input type="hidden" name="index" value="<%=index%>">
+            <button type="submit">Remove</button>
+          </form>
+        </td>
+      </tr>
+    <% }); %>
+  </table>
+
+  <h2 style="text-align: center; margin-top: 20px;">Total Price: ₹<%= total %></h2>
+
+  <div style="text-align: center; margin: 20px;">
+    <form action="/cart/checkout" method="POST">
+      <button style="padding: 10px 20px; background-color: green; color: white; border: none; border-radius: 5px;">
+        Pay Now
+      </button>
+    </form>
+  </div>
+
+  <% } else { %>
+    <p style="text-align: center;">Your cart is empty.</p>
+  <% } %>
+
+  <a href="/product" style="display: block; text-align: center; margin-top: 20px;">Continue Shopping</a>
+  <%- include('../includes/footer.ejs') %>
+</body>

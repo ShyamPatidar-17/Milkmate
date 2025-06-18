@@ -1,0 +1,78 @@
+
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+    <link rel="stylesheet" href="../css/dairy/showCustomer.css">
+</head>
+<body>
+    <div class="container">
+       <%- include('../includes/navbar.ejs') %>
+        <h1> Dairy Details</h1>
+        <div class="customer-details">
+            <table class="contact-table">
+                <thead>
+                    <tr>
+                        <th>Dairy Code</th>
+                        <th>Dairy Name</th>
+                        <th>Dairy Owner</th>
+                        <th>Dairy Contact</th>
+                        <th>Dairy Email</th>
+                        <th>Dairy Address</th>
+                    </tr>
+                </thead>
+                <tbody>
+                        <tr>
+                        <td>  <%=dairyDetails.dairyCode%></td>
+                         <td>   <%=dairyDetails.dairyName%></td>
+                         <td>   <%= dairyDetails.fullName%></td>
+                         <td><%=dairyDetails.contact%></td>
+                         <td><%=dairyDetails.email%></td>
+                         
+                         <td><%=dairyDetails.dairyAddress%></td>
+                         </tr>
+                    
+                </tbody>
+            </table>
+        
+    <h1>Milk Details</h1>
+<div class="customer-details">
+    <table class="contact-table">
+        <thead>
+            <tr>
+                <th>Date</th>
+                <th>Shift</th>
+                <th>Liter</th>
+                <th>Rate (  &#8377 / ltr )</th>
+                <th>Amount</th>
+                <th>Total Milk</th>
+                <th>Total Amount</th>
+            </tr>
+        </thead>
+        <tbody>
+                <% for(detail of details) {%>
+                <tr>
+                    <td>  <%=detail.date.toDateString()%></td>
+                 <td>   <%=detail.shift %></td>
+                 <td>   <%= detail.liter%></td>
+                 <td><%=detail.rate%></td>
+                 <td>    &#8377;  <%= detail.amount%></td>
+                 <td><%= totalmilk +=detail.liter%></td>
+                 <td> &#8377;  <%=total+=detail.amount%></td>
+                 </tr>
+            <%}%>
+        </tbody>
+    </table>
+    <h1>Total Liters of Milk collected = <%=totalmilk%> ltrs</h1>
+    <h1>Total Amount Paid  = <b> &#8377 <%=total%></b></h1>
+
+    <form action="/dairy/delete" method="post">
+        <input type="hidden" name="dairy[code]" value="<%=dairyDetails.dairyCode%>">
+        <button type="submit" class="pay-btn">Clear</button>
+    </form>
+    </div></div></div>
+    <%- include('../includes/footer.ejs') %>
+</body>
+</html>

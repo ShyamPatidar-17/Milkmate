@@ -1,0 +1,186 @@
+/* Base Reset */
+* {
+  box-sizing: border-box;
+  margin: 0;
+  padding: 0;
+  scroll-behavior: smooth;
+}
+
+body {
+  font-family: 'Segoe UI', Roboto, sans-serif;
+  background-color: #f1f3f6;
+  color: #2d2d2d;
+  line-height: 1.6;
+}
+
+/* Checkout Container */
+.checkout-container {
+  max-width: 1200px;
+  margin: 50px auto;
+  display: flex;
+  gap: 2rem;
+  padding: 20px;
+  flex-wrap: wrap;
+}
+
+/* Cards */
+.checkout-form,
+.checkout-summary {
+  background: #fff;
+  border-radius: 12px;
+  box-shadow: 0 10px 30px rgba(0, 0, 0, 0.08);
+  padding: 30px 35px;
+  flex: 1;
+  min-width: 320px;
+  transition: transform 0.3s ease;
+}
+
+.checkout-form:hover,
+.checkout-summary:hover {
+  transform: translateY(-4px);
+}
+
+/* Headings */
+h1 {
+  width: 100%;
+  font-size: 2rem;
+  font-weight: 700;
+  margin-bottom: 20px;
+  color: #1c1c1c;
+}
+
+h2 {
+  font-size: 1.4rem;
+  margin-bottom: 20px;
+  border-bottom: 2px solid #ececec;
+  padding-bottom: 10px;
+}
+
+/* Labels and Inputs */
+label {
+  font-weight: 600;
+  display: block;
+  margin-top: 20px;
+  margin-bottom: 8px;
+  color: #444;
+}
+
+input,
+textarea,
+select {
+  width: 100%;
+  padding: 12px 14px;
+  border-radius: 8px;
+  border: 1px solid #ccc;
+  background-color: #fafafa;
+  font-size: 1rem;
+  transition: border-color 0.2s ease, box-shadow 0.2s ease;
+}
+
+input:focus,
+textarea:focus,
+select:focus {
+  border-color: #0070f3;
+  outline: none;
+  box-shadow: 0 0 0 3px rgba(0, 112, 243, 0.1);
+}
+
+textarea {
+  resize: vertical;
+  min-height: 80px;
+}
+
+/* Payment Fields */
+#card-details,
+#upi-details {
+  margin-top: 20px;
+  animation: fadeIn 0.3s ease-in-out;
+}
+
+/* Order Summary */
+.checkout-summary ul {
+  list-style: none;
+  padding: 0;
+  margin: 0;
+}
+
+.checkout-summary li {
+  margin-bottom: 12px;
+  font-size: 1rem;
+  border-bottom: 1px dashed #ddd;
+  padding-bottom: 6px;
+}
+
+.checkout-summary .total {
+  font-size: 1.3rem;
+  font-weight: 700;
+  color: #000;
+  margin-top: 25px;
+}
+
+/* Pay Button */
+.pay-btn {
+  margin-top: 30px;
+  padding: 15px;
+  width: 100%;
+  background-color: #0070f3;
+  color: #fff;
+  font-size: 1.1rem;
+  font-weight: bold;
+  border: none;
+  border-radius: 8px;
+  cursor: pointer;
+  transition: background-color 0.3s ease, transform 0.1s ease;
+}
+
+.pay-btn:hover {
+  background-color: #005dc1;
+  transform: scale(1.01);
+}
+
+/* Animations */
+@keyframes fadeIn {
+  from {
+    opacity: 0;
+    transform: translateY(10px);
+  }
+  to {
+    opacity: 1;
+    transform: translateY(0);
+  }
+}
+
+.add-more-btn {
+  display: inline-block;
+  padding: 12px 20px;
+  background-color: #f0f0f0;
+  color: #0070f3;
+  font-weight: 600;
+  border-radius: 8px;
+  text-decoration: none;
+  transition: background-color 0.3s ease, color 0.3s ease;
+  border: 1px solid #0070f3;
+}
+
+.add-more-btn:hover {
+  background-color: #0070f3;
+  color: white;
+}
+
+
+/* Responsive Layout */
+@media (max-width: 768px) {
+  .checkout-container {
+    flex-direction: column;
+    padding: 10px;
+  }
+
+  h1 {
+    font-size: 1.5rem;
+  }
+
+  .checkout-form,
+  .checkout-summary {
+    padding: 20px;
+  }
+}

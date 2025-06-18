@@ -1,0 +1,30 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <title>Add Product</title>
+ <link rel="stylesheet" href="../css/dairy/addProduct.css">
+</head>
+<body>
+  <div class="container">
+    <form id="addProductForm" action="/product/add" method="POST">
+      <h1><b><i>ADD NEW PRODUCT</i></b></h1>
+      <input type="hidden" name="product[code]" value="<%=code%>">
+     Product Name:
+      <input type="text" id="name" name="product[name]" required>
+    
+      Price:
+      <input type="number" id="price" name="product[price]" step="0.01" required>
+    
+      Description:
+      <textarea id="desc" name="product[desc]" rows="4" required></textarea>
+    
+    Image:
+      <label for="imageURL">OR Image URL:</label>
+      <input type="text" id="imageURL" name="product[image]" placeholder="https://example.com/image.jpg">
+    
+      <button type="submit">Add Product</button>
+    </form>
+    
+  </div>
+</body>

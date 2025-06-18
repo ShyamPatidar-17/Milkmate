@@ -1,0 +1,124 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+  <title>Login Page</title>
+  <link rel="stylesheet" href="../css/user/login.css"/>
+</head>
+<body>
+
+  <% if (success && success.length > 0) { %>
+    <div class="alert alert-success"><%= success[0] %></div>
+  <% } else if (error && error.length > 0) { %>
+    <div class="alert alert-danger"><%= error[0] %></div>
+  <% } %>
+  
+  <div class="container">
+    <div class="left">
+      <img src="https://th.bing.com/th/id/OIP.j6M_Ze77x-9ItWX42_kgHgHaE8?pid=ImgDet&w=202&h=134&c=7&dpr=1.3" alt=""/>
+    </div>
+
+    <div class="login-container">
+      <h2>Login</h2>
+      <form id="loginForm" method="POST">
+        <label for="shift">User Type:</label>
+        <select id="shift" name="user[type]" required>
+          <option value="customer">Customer</option>
+          <option value="dairy">Dairy</option>
+          <option value="milkman">Milkman</option>
+        </select>
+
+        <label for="mobile">Mobile Number:</label>
+<input type="tel" id="mobile" name="user[mobile]" required />
+<small id="mobileError" class="error"></small>
+
+<label for="code">Code:</label>
+<input type="tel" id="code" name="user[code]" required />
+<small id="codeError" class="error"></small>
+
+<label for="password">Password:</label>
+<input type="password" id="password" name="user[password]" required />
+<small id="passwordError" class="error"></small>
+
+
+        <button type="submit">Login</button>
+        <br/>
+        <a href="/signup" class="option">New User</a>
+        <br>
+        <a href="/" class="option">Back To home</a>
+      </form>
+    </div>
+  </div>
+
+  <!-- JavaScript to set form action based on user type -->
+  <script>
+    const form = document.getElementById("loginForm");
+    const userTypeSelect = document.getElementById("shift");
+
+    form.addEventListener("submit", function (e) {
+      const selectedType = userTypeSelect.value;
+      form.action = `/login/${selectedType}`; // Dynamically set route
+    });
+
+ 
+
+  form.addEventListener("submit", function (e) {
+    // Get inputs and values
+    const userType = document.getElementById("shift").value;
+    const mobile = document.getElementById("mobile").value.trim();
+    const code = document.getElementById("code").value.trim();
+    const password = document.getElementById("password").value.trim();
+
+    // Get error message elements
+    const mobileError = document.getElementById("mobileError");
+    const codeError = document.getElementById("codeError");
+    const passwordError = document.getElementById("passwordError");
+
+    // Clear previous errors
+    mobileError.textContent = "";
+    codeError.textContent = "";
+    passwordError.textContent = "";
+
+    let hasError = false;
+
+    // Validate mobile: any 10-digit number
+    const mobileRegex = /^\d{10}$/;
+    if (!mobileRegex.test(mobile)) {
+      mobileError.textContent = "Enter a valid 10-digit mobile number.";
+      hasError = true;
+    }
+
+    // Validate code: 4 to 6 digits
+    const codeRegex = /^\d{0,10}$/;
+    if (!codeRegex.test(code)) {
+      codeError.textContent = "Code must be 0 to 6 digits.";
+      hasError = true;
+    }
+
+    // Validate password: at least 6 characters
+    if (password.length < 6) {
+      passwordError.textContent = "Password must be at least 6 characters.";
+      hasError = true;
+    }
+
+    if (hasError) {
+      e.preventDefault(); // Stop form submission
+      return;
+    }
+
+    // Set form action dynamically
+    form.action = `/login/${userType}`;
+  });
+</script>
+
+
+<script>
+  setTimeout(() => {
+    const alert = document.querySelector(".alert");
+    if (alert) alert.style.display = "none";
+  }, 4000);
+</script>
+
+</body>
+</html>

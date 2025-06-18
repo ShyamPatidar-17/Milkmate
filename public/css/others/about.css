@@ -1,0 +1,68 @@
+body {
+    margin: 0;
+    font-family: Arial, sans-serif;
+    background-color: #f5f5f5;
+}
+
+
+/* Hero Section */
+.about-content {
+    max-width: 1000px;
+    margin: 60px auto;
+    padding: 0 20px;
+}
+
+.content-block {
+    display: flex;
+    align-items: center;
+    margin-bottom: 50px;
+    gap: 30px;
+}
+
+.content-block img {
+    width: 45%;
+    border-radius: 10px;
+    box-shadow: 0 4px 10px rgba(0,0,0,0.1);
+}
+
+.content-block div {
+    flex: 1;
+}
+
+.content-block h3 {
+    font-size: 28px;
+    color: #444;
+    margin-bottom: 10px;
+}
+
+.content-block p,
+.content-block ul {
+    font-size: 18px;
+    line-height: 1.6;
+    color: #333;
+}
+
+.content-block ul {
+    list-style-type: disc;
+    padding-left: 20px;
+}
+
+.reverse {
+    flex-direction: row-reverse;
+}
+
+
+@media (max-width: 768px) {
+    .content-block {
+        flex-direction: column;
+        text-align: center;
+    }
+
+    .reverse {
+        flex-direction: column;
+    }
+
+    .content-block img {
+        width: 100%;
+    }
+}

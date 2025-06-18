@@ -1,0 +1,150 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+  <title>Sign Up - Dairy Management</title>
+  <link rel="stylesheet" href="../css/user/dairy.css"/>
+  <style>
+    .error {
+      color: red;
+      font-size: 0.9em;
+      margin-top: 2px;
+      display: block;
+    }
+  </style>
+</head>
+<body>
+
+  <% if (success && success.length > 0) { %>
+    <div class="alert alert-success"><%= success[0] %></div>
+  <% } else if (error && error.length > 0) { %>
+    <div class="alert alert-danger"><%= error[0] %></div>
+  <% } %>
+
+  <div class="form-container">
+    <h2>Sign Up as Dairy Owner</h2>
+    <form id="signupForm" action="/signup/dairy" method="POST">
+      <input type="text" name="dairy[dairyCode]" id="dairyCode" placeholder="Dairy Code" required>
+      <small id="codeError" class="error"></small>
+
+      <input type="text" name="dairy[fullName]" id="fullName" placeholder="Owner Name" required>
+      <small id="nameError" class="error"></small>
+
+      <input type="text" name="dairy[dairyName]" id="dairyName" placeholder="Dairy Name" required>
+      <small id="dairyNameError" class="error"></small>
+
+      <input type="text" name="dairy[dairyAddress]" id="dairyAddress" placeholder="Dairy Address" required>
+      <small id="addressError" class="error"></small>
+
+      <input type="email" name="dairy[email]" id="email" placeholder="Email Address" required>
+      <small id="emailError" class="error"></small>
+
+      <input type="tel" name="dairy[contact]" id="contact" placeholder="Contact Number" required>
+      <small id="contactError" class="error"></small>
+
+      <input type="password" name="dairy[password]" id="password" placeholder="Password" required>
+      <small id="passwordError" class="error"></small>
+
+      <input type="password" name="dairy[confirmPassword]" id="confirmPassword" placeholder="Confirm Password" required>
+      <small id="confirmPasswordError" class="error"></small>
+
+      <button class="btn-1" type="submit">Register</button>
+    </form>
+
+    <a href="/login"><button type="button" class="btn-2">Already Registered? Login</button></a>
+    <a href="/signup"><button type="button" class="btn-2">Back</button></a>
+  </div>
+
+  <!-- Auto-hide alert -->
+  <script>
+    setTimeout(() => {
+      const alert = document.querySelector(".alert");
+      if (alert) alert.style.display = "none";
+    }, 4000);
+  </script>
+
+  <!-- Signup form validation -->
+  <script>
+    const form = document.getElementById("signupForm");
+
+    form.addEventListener("submit", function (e) {
+      let hasError = false;
+
+      // Get values
+      const code = document.getElementById("dairyCode").value.trim();
+      const fullName = document.getElementById("fullName").value.trim();
+      const dairyName = document.getElementById("dairyName").value.trim();
+      const address = document.getElementById("dairyAddress").value.trim();
+      const email = document.getElementById("email").value.trim();
+      const contact = document.getElementById("contact").value.trim();
+      const password = document.getElementById("password").value.trim();
+      const confirmPassword = document.getElementById("confirmPassword").value.trim();
+
+      // Get error elements
+      const codeError = document.getElementById("codeError");
+      const nameError = document.getElementById("nameError");
+      const dairyNameError = document.getElementById("dairyNameError");
+      const addressError = document.getElementById("addressError");
+      const emailError = document.getElementById("emailError");
+      const contactError = document.getElementById("contactError");
+      const passwordError = document.getElementById("passwordError");
+      const confirmPasswordError = document.getElementById("confirmPasswordError");
+
+      // Clear old errors
+      codeError.textContent = "";
+      nameError.textContent = "";
+      dairyNameError.textContent = "";
+      addressError.textContent = "";
+      emailError.textContent = "";
+      contactError.textContent = "";
+      passwordError.textContent = "";
+      confirmPasswordError.textContent = "";
+
+      // Validations
+
+      if (!/^\d{0,6}$/.test(code)) {
+        codeError.textContent = "Dairy Code must be 0 to 6 digits and in Numbers only.";
+        hasError = true;
+      }
+
+      if (fullName.length < 3) {
+        nameError.textContent = "Owner name must be at least 3 characters.";
+        hasError = true;
+      }
+
+      if (dairyName.length < 3) {
+        dairyNameError.textContent = "Dairy name must be at least 3 characters.";
+        hasError = true;
+      }
+
+      if (address.length < 5) {
+        addressError.textContent = "Address must be at least 5 characters.";
+        hasError = true;
+      }
+
+      if (!/^\S+@\S+\.\S+$/.test(email)) {
+        emailError.textContent = "Enter a valid email address.";
+        hasError = true;
+      }
+
+      if (!/^\d{10}$/.test(contact)) {
+        contactError.textContent = "Contact must be a 10-digit number.";
+        hasError = true;
+      }
+
+      if (password.length < 6) {
+        passwordError.textContent = "Password must be at least 6 characters.";
+        hasError = true;
+      }
+
+      if (confirmPassword !== password) {
+        confirmPasswordError.textContent = "Passwords do not match.";
+        hasError = true;
+      }
+
+      if (hasError) e.preventDefault();
+    });
+  </script>
+</body>
+</html>

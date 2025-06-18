@@ -1,0 +1,108 @@
+/* Import Google Font */
+@import url('https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;600&display=swap');
+
+body {
+    font-family: 'Poppins', sans-serif;
+    margin: 0;
+    padding: 0;
+    background-color: #f9f9f9;
+    color: #333;
+}
+
+/* Main Container Layout */
+.container {
+    display: flex;
+    justify-content: space-between;
+    align-items: flex-start;
+    padding: 40px 60px;
+    gap: 40px;
+    flex-wrap: wrap;
+}
+
+/* Left Section - Navigation */
+.left-section {
+    flex: 1;
+    min-width: 220px;
+    background: #ffffff;
+    padding: 20px;
+    border-radius: 12px;
+    box-shadow: 0 4px 12px rgba(0, 0, 0, 0.1);
+}
+
+.left-section a {
+    display: block;
+    padding: 12px 16px;
+    margin: 8px 0;
+    text-align: center;
+    text-decoration: none;
+    font-weight: 500;
+    border-radius: 8px;
+    background: #e9ecef;
+    color: #333;
+    transition: background 0.3s ease;
+}
+
+.left-section a:hover {
+    background-color: #28a745;
+    color: #fff;
+}
+
+/* Center Section - Image */
+.center-section {
+    flex: 1;
+    text-align: center;
+    min-width: 250px;
+}
+
+.center-section img {
+    max-width: 100%;
+    height: auto;
+    border-radius: 12px;
+    box-shadow: 0 4px 12px rgba(0, 0, 0, 0.1);
+}
+
+/* Right Section - Dairy Details */
+.right-section {
+    flex: 1;
+    min-width: 260px;
+    background: #ffffff;
+    padding: 20px 24px;
+    border-radius: 12px;
+    box-shadow: 0 4px 12px rgba(0, 0, 0, 0.1);
+}
+
+.right-section h2 {
+    margin-bottom: 20px;
+    text-align: center;
+    font-size: 22px;
+    font-weight: 600;
+    color: #28a745;
+}
+
+.right-section table {
+    width: 100%;
+    border-collapse: collapse;
+}
+
+.right-section th {
+    text-align: left;
+    padding: 10px 8px;
+    font-weight: 600;
+    color: #555;
+    width: 40%;
+}
+
+.right-section td {
+    padding: 10px 8px;
+    font-weight: 400;
+    color: #333;
+}
+
+/* Responsive Design */
+@media (max-width: 900px) {
+    .container {
+        flex-direction: column;
+        padding: 20px;
+        gap: 30px;
+    }
+}

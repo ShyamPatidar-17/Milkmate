@@ -1,0 +1,82 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+  <title>MilkMate</title>
+  <link rel="stylesheet" href="/css/includes/navbar.css"/>
+</head>
+<body>
+
+<header class="navbar">
+  <div class="logo">
+    <img src="https://static.vecteezy.com/system/resources/previews/048/342/900/non_2x/cartoon-cow-logo-png.png" alt="MilkMate Logo">
+  </div>
+
+  <h1 class="title">MILKMATE</h1>
+
+  <!-- Hamburger and Close Icons -->
+  <div class="hamburger-icons">
+    <div id="hamburger" class="hamburger-icon" onclick="toggleMenu(true)">
+      &#9776; <!-- Hamburger icon -->
+    </div>
+    <div id="close" class="hamburger-icon close-icon" onclick="toggleMenu(false)">
+      &times; <!-- Close icon -->
+    </div>
+  </div>
+
+  <!-- Navigation Links -->
+ <nav class="nav-links" id="navLinks">
+  <% if (!currUser) { %>
+    <a href="/signup"><i class="about-icon">📝</i>New User</a>
+    <a href="/login"><i class="about-icon">🔐</i> Login</a>
+  <% } %>
+  <% if(currUser) { %> 
+    <a href="/logout"><i class="about-icon">🚪</i>Logout</a>
+  <% } %>
+
+  <a href="<%= currUser ? 
+    (currUser.type === 'dairy' ? '/dairy' : 
+    currUser.type === 'milkman' ? '/milkman' : 
+    currUser.type === 'customer' ? '/customerrs' : '/') 
+    : '/' %>"><i class="about-icon">🏠</i>Home</a>
+
+  <a href="/about"><i class="about-icon">📘</i>About</a>
+  <a href="/contact"><i class="about-icon">📞</i>Contact</a>
+</nav>
+
+</header>
+
+<script>
+  function toggleMenu(show) {
+    const navLinks = document.getElementById('navLinks');
+    const hamburger = document.getElementById('hamburger');
+    const close = document.getElementById('close');
+
+    if (show) {
+      navLinks.classList.add('active');
+      hamburger.style.display = 'none';
+      close.style.display = 'block';
+    } else {
+      navLinks.classList.remove('active');
+      hamburger.style.display = 'block';
+      close.style.display = 'none';
+    }
+  }
+
+  // Ensure correct icon is shown on resize
+  window.addEventListener('resize', () => {
+    const navLinks = document.getElementById('navLinks');
+    const hamburger = document.getElementById('hamburger');
+    const close = document.getElementById('close');
+
+    if (window.innerWidth > 768) {
+      navLinks.classList.remove('active');
+      hamburger.style.display = 'none';
+      close.style.display = 'none';
+    } else {
+      hamburger.style.display = 'block';
+      close.style.display = 'none';
+    }
+  });
+</script>
