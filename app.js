@@ -18,10 +18,10 @@ const app = express();
 const port = 8080;
 
 
-const dbUrl ="mongodb://127.0.0.1:27017/Milkman";
+//const dbUrl ="mongodb://127.0.0.1:27017/Milkman";
 
-// const dbUrl=process.env.db
-// console.log(dbUrl)
+const dbUrl=process.env.db
+console.log(dbUrl)
 // Database Connection
 
 async function main(){
