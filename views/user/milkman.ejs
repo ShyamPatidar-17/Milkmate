@@ -1,0 +1,46 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+  <title>Milkman Registration</title>
+  <link rel="stylesheet" href="../css/user/milkman.css" />
+</head>
+<body>
+  
+  <% if (success && success.length > 0) { %>
+    <div class="alert alert-success"><%= success[0] %></div>
+  <% } else if (error && error.length > 0) { %>
+    <div class="alert alert-danger"><%= error[0] %></div>
+  <% } %>
+
+  <div class="background-overlay">
+    <div class="form-container">
+      <h2>Milkman Registration</h2>
+      <form action="/signup/milkman" method="post">
+        <input type="number" name="milkman[milkmanCode]" placeholder="Milkman Code" required>
+        <input type="text" name="milkman[name]" placeholder="Full Name" required>
+        <input type="email" name="milkman[email]" placeholder="Email" required>
+        <input type="number" name="milkman[contact]" placeholder="Contact Number" required>
+        <input type="text" name="milkman[address]" placeholder="Address" required>
+        <input type="password" name="milkman[password]" placeholder="Password" required>
+        <input type="password" name="milkman[confirmPassword]" placeholder="Confirm Password" required>
+        <button class="btn-1" type="submit">Register</button>
+      </form>
+      <div class="form-links">
+        <a href="/login"><button class="btn-2">Already Registered? Login</button></a>
+        <a href="/signup"><button class="btn-2">Back</button></a>
+      </div>
+    </div>
+  </div>
+  <script>
+    setTimeout(() => {
+      const alert = document.querySelector(".alert");
+      if (alert) alert.style.display = "none";
+    }, 4000);
+  </script>
+</body>
+</html>
+
+
+

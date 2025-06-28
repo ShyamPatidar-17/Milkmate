@@ -1,0 +1,78 @@
+<%- include('../includes/navbar.ejs') %>
+
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Milkman</title>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.7.2/css/all.min.css">
+    <link rel="stylesheet" href="../css/milkman/front.css">
+</head>
+<body>
+    <main class="container">
+        <!-- Left Section -->
+        <section class="left-section">
+           <a href="/milkman/allcustomers">All Customers</a>
+           <a href="/milkman/add">Add New Customer</a> 
+           <a href="/milkman/sell">Sell Milk</a> 
+           <a href="/milkman/details">Milk Details</a> 
+        </section>
+
+        <!-- Center Section (Image) -->
+        <section class="center-section">
+            <img src="https://cdn.vectorstock.com/i/500p/53/99/cartoon-little-farmer-with-cow-and-milk-bucket-vector-51335399.jpg" alt="Milkman Illustration">
+        </section>
+
+        <!-- Right Section (Milkman Details) -->
+        <section class="right-section">
+            <h2>Milkman Details</h2>
+            <table>
+                <tr>
+                    <th>Code</th>
+                    <td><%=user.milkmanCode%></td>
+                </tr>
+                <tr>
+                    <th>Name</th>
+                    <td><%=user.name%></td>
+                </tr>
+                <tr>
+                    <th>Contact</th>
+                    <td>+91 <%=user.mobile%> </td>
+                </tr>
+            </table>
+        </section>
+    </main>
+
+
+    
+    <%- include('../includes/footer.ejs') %>
+
+
+    <script src="https://cdn.jsdelivr.net/npm/sweetalert2@11"></script>
+
+<% if (typeof success !== 'undefined' && success.length > 0) { %>
+    <script>
+        Swal.fire({
+            icon: 'success',
+            title: 'Success',
+            text: '<%= success[0] %>'
+        });
+    </script>
+<% } %>
+
+<% if (typeof error !== 'undefined' && error.length > 0) { %>
+    <script>
+        Swal.fire({
+            icon: 'error',
+            title: 'Error',
+            text: '<%= error[0] %>'
+        });
+    </script>
+<% } %>
+
+</body>
+</html>
+
+
+

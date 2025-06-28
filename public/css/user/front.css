@@ -1,0 +1,156 @@
+/* Reset and Base Styles */
+* {
+  margin: 0;
+  padding: 0;
+  box-sizing: border-box;
+}
+
+html, body {
+  font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+  background-color: #f4f7f9;
+  color: #333;
+  line-height: 1.6;
+}
+
+
+/* Hero Section */
+.hero {
+  background: linear-gradient(to right, #e0f7fa, #f1f8e9);
+  padding: 60px 20px;
+  text-align: center;
+}
+
+.hero-content-wrapper {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  flex-wrap: wrap;
+  max-width: 1200px;
+  margin: auto;
+}
+
+.hero-image img {
+  width: 300px;
+  max-width: 100%;
+  border-radius: 12px;
+  margin-bottom: 20px;
+}
+
+.hero-content {
+  max-width: 500px;
+  margin: 0 20px;
+}
+
+.hero-content h1 {
+  font-size: 40px;
+  color: #264653;
+  margin-bottom: 10px;
+}
+
+.hero-content p {
+  font-size: 18px;
+  margin-bottom: 25px;
+}
+
+.btn {
+  padding: 12px 24px;
+  height: 60px;
+  font-size: 16px;
+  font-weight: 600;
+  border: none;
+  border-radius: 8px;
+  cursor: pointer;
+  margin: 5px;
+}
+
+.btn-secondary {
+  background-color: #2a9d8f;
+  color: white;
+  transition: background-color 0.3s ease;
+}
+
+.btn-secondary:hover {
+  background-color: #07e807;
+}
+
+
+
+.return-btn-wrapper {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  margin-top: 20px; /* Optional: spacing */
+  text-align: center;
+}
+
+.return-btn-wrapper p {
+  font-size: 1.2rem;
+}
+
+/*btn-options*/
+.option{
+  margin: auto;
+  text-align: center;
+  margin: 15px 0;
+  font-size: 50px;
+
+}
+.btn-option{
+  align-items: center;
+}
+
+/* Illustration Section */
+.illustration {
+  padding: 40px 20px;
+  text-align: center;
+}
+
+.illustration img {
+  max-width: 200px;
+  margin-bottom: 20px;
+  border-radius: 50%;
+}
+
+.illustration p {
+  font-size: 20px;
+  color: #333;
+}
+
+
+/* Responsive Adjustments */
+@media (max-width: 768px) {
+  .navbar {
+    flex-direction: column;
+    align-items: flex-start;
+  }
+
+  .nav-links {
+    justify-content: center;
+    flex-wrap: wrap;
+    margin-top: 10px;
+  }
+
+  .title {
+    margin-top: 10px;
+    text-align: center;
+  }
+
+  .hero-content-wrapper {
+    flex-direction: column;
+    text-align: center;
+  }
+
+  .footer-content {
+    flex-direction: column;
+    text-align: center;
+  }
+
+  .hero-content h1 {
+    font-size: 32px;
+  }
+
+  .btn {
+    width: 80%;
+    max-width: 250px;
+  }
+}

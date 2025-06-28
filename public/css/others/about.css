@@ -1,0 +1,166 @@
+body {
+    margin: 0;
+    font-family: Arial, sans-serif;
+    background-color: #f5f5f5;
+}
+
+/* Navbar */
+.navbar {
+    background-color: #ffffff;
+    padding: 20px 40px;
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    box-shadow: 0 2px 10px rgba(0, 0, 0, 0.05);
+    flex-wrap: wrap;
+    position: sticky;
+    top: 0;
+    z-index: 1000;
+  }
+  
+  .logo img {
+    height: 60px;
+  }
+  
+  .title {
+    font-size: 28px;
+    font-weight: bold;
+    color: #2a9d8f;
+    margin: 0 20px;
+    flex: 1;
+    text-align: center;
+  }
+  
+  .nav-links {
+    display: flex;
+    gap: 20px;
+  }
+  
+  .nav-links a {
+    text-decoration: none;
+    color: #264653;
+    font-weight: 500;
+    transition: color 0.3s ease;
+  }
+  
+  .nav-links a:hover {
+    color: #ff0000;
+  }
+  
+
+/* Hero Section */
+
+
+.about-content {
+    max-width: 1000px;
+    margin: 60px auto;
+    padding: 0 20px;
+}
+
+.content-block {
+    display: flex;
+    align-items: center;
+    margin-bottom: 50px;
+    gap: 30px;
+}
+
+.content-block img {
+    width: 45%;
+    border-radius: 10px;
+    box-shadow: 0 4px 10px rgba(0,0,0,0.1);
+}
+
+.content-block div {
+    flex: 1;
+}
+
+.content-block h3 {
+    font-size: 28px;
+    color: #444;
+    margin-bottom: 10px;
+}
+
+.content-block p,
+.content-block ul {
+    font-size: 18px;
+    line-height: 1.6;
+    color: #333;
+}
+
+.content-block ul {
+    list-style-type: disc;
+    padding-left: 20px;
+}
+
+.reverse {
+    flex-direction: row-reverse;
+}
+
+
+
+/* Footer */
+.site-footer {
+    background-color: #264653;
+    color: #ffffff;
+    padding: 40px 20px 20px 20px;
+  }
+  
+  .footer-content {
+    display: flex;
+    flex-wrap: wrap;
+    justify-content: space-between;
+    max-width: 1200px;
+    margin: auto;
+    gap: 30px;
+  }
+  
+  .footer-section {
+    flex: 1;
+    min-width: 250px;
+  }
+  
+  .footer-section h3,
+  .footer-section h4 {
+    color: #f4a261;
+    margin-bottom: 10px;
+  }
+  
+  .footer-section ul {
+    list-style: none;
+    padding: 0;
+  }
+  
+  .footer-section ul li a {
+    color: #ffffff;
+    text-decoration: none;
+    transition: color 0.3s ease;
+  }
+  
+  .footer-section ul li a:hover {
+    color: #e9c46a;
+  }
+  
+  .footer-bottom {
+    text-align: center;
+    margin-top: 30px;
+    border-top: 1px solid #ffffff33;
+    padding-top: 15px;
+    font-size: 14px;
+    color: #ccc;
+  }
+  
+
+@media (max-width: 768px) {
+    .content-block {
+        flex-direction: column;
+        text-align: center;
+    }
+
+    .reverse {
+        flex-direction: column;
+    }
+
+    .content-block img {
+        width: 100%;
+    }
+}

@@ -1,0 +1,34 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>ADD CUSTOMER</title>
+    <link rel="stylesheet" href="../css/dairy/addcustomer.css">
+</head>
+<body>
+    
+    <div class="container">
+        <h2>Add a new Customer</h2>
+        <br>
+        <form action="/customers" method="post">
+                 <label for="dairycode" class="form-label">Dairy Code</label>
+                 <input type="number" name="customer[codeD]" value="<%=user.dairyCode%>" class="form-control" required>
+                <label for="customercode" class="form-label">Customer Code</label>
+                <input type="number" name="customer[code]" placeholder="Enter customer Code" class="form-control" required>
+               <label for="first" class="form-label">First Name</label> 
+                <input type="text" name="customer[first]" placeholder="Enter Customer First Name" class="form-control" required>
+                <label for="last" class="form-label">Last Name</label> 
+                <input type="text" name="customer[last]" placeholder="Enter Customer Last name" class="form-control" required>
+                 <label for="contact" class="form-label">Contact</label> 
+                <input type="phone" name="customer[contact]" placeholder="Enter Mobile Number" class="form-control" required>
+                 <label for="address" class="form-label">Address</label> 
+                <input type="text" name="customer[address]" placeholder="Enter Address" class="form-control" required>
+
+                <button class="btn primary-btn">Add</button>
+             
+        </form>
+        <a href="/dairy"><button class="btn primary-btn">Back To Home</button></a>
+    </div>
+</body>
+</html>

@@ -1,0 +1,44 @@
+<%- include('../includes/navbar.ejs') %>
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Customer Information</title>
+    <link rel="stylesheet" href="../css/dairy/index.css">
+</head>
+<body>
+       
+    <!-- Table Container -->
+    <div class="table-container">
+        <table>
+            <thead>
+                <tr>
+                    <th>Code</th>
+                    <th>First Name</th>
+                    <th>Last Name</th>
+                    <th>Contact</th>
+                    <th>Address</th>
+                    <th>Action</th>
+                </tr>
+            </thead>
+            <tbody>
+                <% for(customer of allCustomer) { %>
+                    <tr>
+                        <td><%= customer.code %></td>
+                        <td><%= customer.first %></td>
+                        <td><%= customer.last %></td>
+                        <td><%= customer.contact %></td>
+                        <td><%= customer.address %></td>
+                        <td><a href="<%=customer._id%>"><button class="btn primary-btn">Show</button></a></td>
+                    </tr>
+                <% }; %>
+    
+            </tbody>
+        </table>
+    </div>
+
+    <%- include('../includes/footer.ejs') %>
+    
+</body>
+</html>

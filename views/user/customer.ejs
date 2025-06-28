@@ -1,0 +1,46 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Customer Registration</title>
+    <link rel="stylesheet" href="../css/user/customer.css">
+</head>
+<body>
+    
+    <% if (success && success.length > 0) { %>
+        <div class="alert alert-success"><%= success[0] %></div>
+      <% } else if (error && error.length > 0) { %>
+        <div class="alert alert-danger"><%= error[0] %></div>
+      <% } %>
+<div class="container">
+    <div class="form-container">
+        <h2>Customer Registration</h2>
+        <form action="/signup/customer" method="post">
+          <b>Customer Code</b>
+            <input type="number" name="customerr[code]" placeholder="Customer Code" required>
+            <b>Dairy Code</b>
+            <input type="number" name="customerr[codeD]" placeholder="Dairy Code" required>
+            <b> Contact Number</b>
+            <input type="number" name="customerr[contact]" placeholder="Contact Number" required>
+            <b>Password</b>
+            <input type="password" name="customerr[password]" placeholder="Password" required>
+            <b>Confirm Password</b>
+            <input type="password" name="customerr[confirmPassword]" placeholder="Confirm Password" required>
+            <button type="submit" class="btn-1">Register</button>
+        </form>
+
+        <a href="/login"><button type="submit" class="btn-2">Already Registerd? Login</button></a>
+        <a href="/signup"><button type="submit" class="btn-2">Back</button></a>
+    </div>
+
+</div>
+
+<script>
+    setTimeout(() => {
+      const alert = document.querySelector(".alert");
+      if (alert) alert.style.display = "none";
+    }, 4000);
+  </script>
+</body>
+</html>

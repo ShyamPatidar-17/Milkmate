@@ -1,0 +1,69 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+  <title>Login Page</title>
+  <link rel="stylesheet" href="../css/user/login.css"/>
+</head>
+<body>
+
+  <% if (success && success.length > 0) { %>
+    <div class="alert alert-success"><%= success[0] %></div>
+  <% } else if (error && error.length > 0) { %>
+    <div class="alert alert-danger"><%= error[0] %></div>
+  <% } %>
+  
+  <div class="container">
+    <div class="left">
+      <img src="https://th.bing.com/th/id/OIP.j6M_Ze77x-9ItWX42_kgHgHaE8?pid=ImgDet&w=202&h=134&c=7&dpr=1.3" alt=""/>
+    </div>
+
+    <div class="login-container">
+      <h2>Login</h2>
+      <form id="loginForm" method="POST">
+        <label for="shift">User Type:</label>
+        <select id="shift" name="user[type]" required>
+          <option value="customer">Customer</option>
+          <option value="dairy">Dairy</option>
+          <option value="milkman">Milkman</option>
+        </select>
+
+        <label for="mobile">Mobile Number:</label>
+        <input type="tel" id="mobile" name="user[mobile]" required/>
+
+        <label for="code">Code:</label>
+        <input type="tel" id="code" name="user[code]" required/>
+
+        <label for="password">Password:</label>
+        <input type="password" id="password" name="user[password]" required/>
+
+        <button type="submit">Login</button>
+        <br/>
+        <a href="/signup" class="option">New User</a>
+        <br>
+        <a href="/" class="option">Back To home</a>
+      </form>
+    </div>
+  </div>
+
+  <!-- JavaScript to set form action based on user type -->
+  <script>
+    const form = document.getElementById("loginForm");
+    const userTypeSelect = document.getElementById("shift");
+
+    form.addEventListener("submit", function (e) {
+      const selectedType = userTypeSelect.value;
+      form.action = `/login/${selectedType}`; // Dynamically set route
+    });
+  </script>
+
+<script>
+  setTimeout(() => {
+    const alert = document.querySelector(".alert");
+    if (alert) alert.style.display = "none";
+  }, 4000);
+</script>
+
+</body>
+</html>

@@ -1,0 +1,55 @@
+<%- include('../includes/navbar.ejs') %>
+<link rel="stylesheet" href="../css/user/front.css">
+  <!-- Hero Section -->
+  <section class="hero">
+    <div class="container hero-content-wrapper">
+      <div class="hero-image">
+        <img src="https://th.bing.com/th/id/OIP.j8AHGOtscDn3VzhTLVdJmAHaE8?pid=ImgDet&w=202&h=134&c=7&dpr=1.3" alt="Milk being poured"/>
+      </div>
+      <div class="hero-content">
+        <div>
+        <h1>Get Started Now</h1>
+        <p>Effortless Milk Management with MilkMate</p> 
+      </div></div>
+  </section>
+  <p class="option"><b></b></p>
+  <div class="btn-option">
+    <% if(currUser && currUser.type=="dairy") {%>
+      <div class="return-btn-wrapper">
+        <p><b>Return to:</b> 
+          <a href="/dairy">
+            <button class="btn btn-secondary">Dairy Page</button>
+          </a>
+        </p>
+      </div>   
+<%}%>
+
+    <% if(currUser && currUser.type=="milkman") {%>
+      <div class="return-btn-wrapper">
+        <p><b>Return to:</b> 
+          <a href="/milkman">
+            <button class="btn btn-secondary">Milkman Page</button>
+          </a>
+        </p>
+      </div>  <%}%>
+
+    <% if(currUser && currUser.type=="customer") {%>
+      <div class="return-btn-wrapper">
+        <p><b>Return to:</b> 
+          <a href="/customerrs"><button class="btn btn-secondary">Customer Page</button></a>
+        </p>
+      </div>  
+    <%}%>
+
+  </div>
+
+  <!-- Illustration Section -->
+  <section class="illustration container">
+    <img src="https://th.bing.com/th/id/OIP.RIUOMY7h4cYAiin0sc2iSgHaHa?pid=ImgDet&w=202&h=202&c=7&dpr=1.3" alt="Milkify app and farmer illustration"/>
+    <p><strong>Milk Management, Simplified by MilkMate.</strong></p>
+  </section>
+
+  <%- include('../includes/footer.ejs') %>
+
+</body>
+</html>
