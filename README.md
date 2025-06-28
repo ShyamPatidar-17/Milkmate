@@ -30,3 +30,19 @@ Live Site: https://milkmate.onrender.com
 
 ---
 
+## 🧠 Learning Goals
+
+Backend routing and MVC pattern
+Role-based access control
+CRUD operations in MongoDB
+Middleware and session management
+Responsive EJS templating
+
+---
+
+## 🙋‍♂️ Author
+Shyam Patidar
+B.Tech Final Year
+Shri Vaishnav Vidyapeeth Vishwavidyalaya
+Email: shyampatidar.dev@gmail.com
+
