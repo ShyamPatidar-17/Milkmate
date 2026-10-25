@@ -10,6 +10,8 @@
   "author": "",
   "license": "ISC",
   "dependencies": {
+    "@protobufjs/fetch": "^1.1.1",
+    "@protobufjs/fs": "^1.0.1",
     "axios": "^1.8.4",
     "bcrypt": "^5.1.1",
     "connect-flash": "^0.1.1",
