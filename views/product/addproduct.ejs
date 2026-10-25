@@ -1,30 +1,53 @@
-<!DOCTYPE html>
-<html lang="en">
-<head>
-  <meta charset="UTF-8">
-  <title>Add Product</title>
- <link rel="stylesheet" href="../css/dairy/addProduct.css">
-</head>
-<body>
-  <div class="container">
-    <form id="addProductForm" action="/product/add" method="POST">
-      <h1><b><i>ADD NEW PRODUCT</i></b></h1>
-      <input type="hidden" name="product[code]" value="<%=code%>">
-     Product Name:
-      <input type="text" id="name" name="product[name]" required>
-    
-      Price:
-      <input type="number" id="price" name="product[price]" step="0.01" required>
-    
-      Description:
-      <textarea id="desc" name="product[desc]" rows="4" required></textarea>
-    
-    Image:
-      <label for="imageURL">OR Image URL:</label>
-      <input type="text" id="imageURL" name="product[image]" placeholder="https://example.com/image.jpg">
-    
-      <button type="submit">Add Product</button>
+<%- include('../includes/navbar.ejs') %>
+<link rel="stylesheet" href="/css/dairy/addProduct.css">
+
+<div class="prod-form-wrapper">
+  <div class="prod-form-card">
+    <div class="prod-form-head">
+      <span class="prod-form-badge"><i class="fa-solid fa-box-open"></i> Store Catalog</span>
+      <h2>Add New Dairy Product</h2>
+      <p>List fresh farm items for sale under Code #<%= code %></p>
+    </div>
+
+    <form action="/product/add" method="POST" id="addProductForm">
+      <!-- Hidden vendor/dairy code -->
+      <input type="hidden" name="product[code]" value="<%= code %>">
+
+      <!-- Product Name -->
+      <div class="mm-form-group">
+        <label class="mm-label" for="name">Product Name *</label>
+        <input type="text" id="name" name="product[name]" class="mm-input" placeholder="e.g. Pure Desi Cow Ghee (500g)" required>
+      </div>
+
+      <!-- Price -->
+      <div class="mm-form-group">
+        <label class="mm-label" for="price">Price (₹) *</label>
+        <input type="number" id="price" name="product[price]" step="0.01" class="mm-input" placeholder="e.g. 450.00" required min="1">
+      </div>
+
+      <!-- Description -->
+      <div class="mm-form-group">
+        <label class="mm-label" for="desc">Product Description *</label>
+        <textarea id="desc" name="product[desc]" rows="3" class="mm-textarea" placeholder="Describe the quality, freshness, quantity, and packaging..." required></textarea>
+      </div>
+
+      <!-- Image URL -->
+      <div class="mm-form-group">
+        <label class="mm-label" for="imageURL">Product Image URL (Optional)</label>
+        <input type="url" id="imageURL" name="product[image]" class="mm-input" placeholder="https://images.unsplash.com/photo-...">
+        <small style="color:#64748b; font-size:0.8rem; margin-top:4px; display:block;">Leave empty to use high-quality farm dairy default photo.</small>
+      </div>
+
+      <div class="prod-form-footer">
+        <button type="submit" class="mm-btn mm-btn-primary mm-btn-lg" style="width:100%;">
+          <i class="fa-solid fa-plus"></i> Publish Product to Marketplace
+        </button>
+        <a href="/product" class="mm-btn mm-btn-secondary" style="width:100%; text-align:center;">
+          <i class="fa-solid fa-arrow-left"></i> Cancel & Return to Products
+        </a>
+      </div>
     </form>
-    
   </div>
-</body>
+</div>
+
+<%- include('../includes/footer.ejs') %>

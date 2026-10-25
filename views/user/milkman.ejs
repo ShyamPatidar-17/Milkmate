@@ -1,97 +1,95 @@
-<!DOCTYPE html>
-<html lang="en">
-<head>
-  <meta charset="UTF-8" />
-  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
-  <title>Milkman Registration</title>
-  <link rel="stylesheet" href="../css/user/milkman.css" />
-  <style>
-    .input-error {
-      color: red;
-      font-size: 0.9em;
-      margin-bottom: 8px;
-      display: none;
-    }
-    input.invalid {
-      border: 2px solid red;
-    }
-  </style>
-</head>
-<body>
-  <div class="background-overlay">
-    <div class="form-container">
+<%- include('../includes/navbar.ejs') %>
+<link rel="stylesheet" href="/css/user/milkman.css">
+
+<div class="auth-form-wrapper">
+  <div class="auth-form-card">
+    <div class="auth-form-head">
+      <span class="auth-form-badge"><i class="fa-solid fa-truck-fast"></i> Milk Vendor Portal</span>
       <h2>Milkman Registration</h2>
-      <form id="milkmanForm" action="/signup/milkman" method="post" novalidate>
-        
-        <input type="number" name="milkman[milkmanCode]" placeholder="Milkman Code" required>
-        <div class="input-error" id="codeError">Please enter a valid code.</div>
+      <p>Register as a milk distributor to manage household delivery customers and daily sales records.</p>
+    </div>
 
-        <input type="text" name="milkman[name]" placeholder="Full Name" required>
-        <div class="input-error" id="nameError">Please enter your full name.</div>
+    <form id="milkmanSignupForm" action="/signup/milkman" method="POST" novalidate>
+      <div class="form-grid-2">
+        <!-- Milkman Code -->
+        <div class="mm-form-group">
+          <label class="mm-label" for="milkmanCode">Unique Milkman Code *</label>
+          <input type="number" name="milkman[milkmanCode]" id="milkmanCode" class="mm-input" placeholder="e.g. 201" required>
+          <small id="codeError" class="field-error"></small>
+        </div>
 
-        <input type="email" name="milkman[email]" placeholder="Email" required>
-        <div class="input-error" id="emailError">Enter a valid email address.</div>
+        <!-- Full Name -->
+        <div class="mm-form-group">
+          <label class="mm-label" for="name">Full Name *</label>
+          <input type="text" name="milkman[name]" id="name" class="mm-input" placeholder="e.g. Suresh Kumar" required>
+          <small id="nameError" class="field-error"></small>
+        </div>
 
-        <input type="number" name="milkman[contact]" placeholder="Contact Number" required>
-        <div class="input-error" id="contactError">Enter a 10-digit contact number.</div>
+        <!-- Contact Phone -->
+        <div class="mm-form-group">
+          <label class="mm-label" for="contact">10-Digit Mobile Number *</label>
+          <input type="tel" name="milkman[contact]" id="contact" class="mm-input" placeholder="e.g. 9826012345" required maxlength="10">
+          <small id="contactError" class="field-error"></small>
+        </div>
 
-        <input type="text" name="milkman[address]" placeholder="Address" required>
-        <div class="input-error" id="addressError">Enter your address.</div>
-
-        <input type="password" name="milkman[password]" placeholder="Password" required>
-        <div class="input-error" id="passwordError">Password must be at least 6 characters.</div>
-
-        <input type="password" name="milkman[confirmPassword]" placeholder="Confirm Password" required>
-        <div class="input-error" id="confirmError">Passwords do not match.</div>
-
-        <button class="btn-1" type="submit">Register</button>
-      </form>
-
-      <div class="form-links">
-        <a href="/login"><button class="btn-2">Already Registered? Login</button></a>
-        <a href="/signup"><button class="btn-2">Back</button></a>
+        <!-- Email Address -->
+        <div class="mm-form-group">
+          <label class="mm-label" for="email">Email Address *</label>
+          <input type="email" name="milkman[email]" id="email" class="mm-input" placeholder="e.g. suresh@milkmate.com" required>
+          <small id="emailError" class="field-error"></small>
+        </div>
       </div>
+
+      <!-- Service Address / Route Area -->
+      <div class="mm-form-group">
+        <label class="mm-label" for="address">Delivery Route Area / Address *</label>
+        <input type="text" name="milkman[address]" id="address" class="mm-input" placeholder="e.g. Vijay Nagar Sector A-C, Indore" required>
+        <small id="addressError" class="field-error"></small>
+      </div>
+
+      <div class="form-grid-2">
+        <!-- Password -->
+        <div class="mm-form-group">
+          <label class="mm-label" for="password">Create Password *</label>
+          <input type="password" name="milkman[password]" id="password" class="mm-input" placeholder="Minimum 5 characters" required minlength="5">
+          <small id="passwordError" class="field-error"></small>
+        </div>
+
+        <!-- Confirm Password -->
+        <div class="mm-form-group">
+          <label class="mm-label" for="confirmPassword">Confirm Password *</label>
+          <input type="password" name="milkman[confirmPassword]" id="confirmPassword" class="mm-input" placeholder="Re-enter password" required minlength="5">
+          <small id="confirmPasswordError" class="field-error"></small>
+        </div>
+      </div>
+
+      <button type="submit" class="mm-btn mm-btn-accent mm-btn-lg auth-submit-btn">
+        <i class="fa-solid fa-check"></i> Register as Milk Delivery Vendor
+      </button>
+    </form>
+
+    <div class="auth-footer-links">
+      <span>Already registered? <a href="/login">Sign In Here</a></span>
+      <a href="/signup"><i class="fa-solid fa-arrow-left"></i> Change Role</a>
     </div>
   </div>
+</div>
 
-  <script>
-    const form = document.getElementById('milkmanForm');
+<%- include('../includes/footer.ejs') %>
 
-    form.addEventListener('submit', function (e) {
-      let valid = true;
+<script>
+  document.getElementById("milkmanSignupForm").addEventListener("submit", function(e) {
+    let isValid = true;
+    const pwd = document.getElementById("password").value;
+    const confirmPwd = document.getElementById("confirmPassword").value;
+    const confirmError = document.getElementById("confirmPasswordError");
 
-      const fields = {
-        milkmanCode: form.querySelector('input[name="milkman[milkmanCode]"]'),
-        name: form.querySelector('input[name="milkman[name]"]'),
-        email: form.querySelector('input[name="milkman[email]"]'),
-        contact: form.querySelector('input[name="milkman[contact]"]'),
-        address: form.querySelector('input[name="milkman[address]"]'),
-        password: form.querySelector('input[name="milkman[password]"]'),
-        confirmPassword: form.querySelector('input[name="milkman[confirmPassword]"]')
-      };
+    confirmError.textContent = "";
+    if (pwd !== confirmPwd) {
+      confirmError.textContent = "Passwords do not match.";
+      isValid = false;
+    }
 
-      const showError = (field, errorId, condition) => {
-        const error = document.getElementById(errorId);
-        if (condition) {
-          error.style.display = 'block';
-          field.classList.add('invalid');
-          valid = false;
-        } else {
-          error.style.display = 'none';
-          field.classList.remove('invalid');
-        }
-      };
-
-      showError(fields.milkmanCode, 'codeError', !fields.milkmanCode.value.trim());
-      showError(fields.name, 'nameError', !fields.name.value.trim());
-      showError(fields.email, 'emailError', !/^\S+@\S+\.\S+$/.test(fields.email.value));
-      showError(fields.contact, 'contactError', !/^\d{10}$/.test(fields.contact.value));
-      showError(fields.address, 'addressError', !fields.address.value.trim());
-      showError(fields.password, 'passwordError', fields.password.value.length < 6);
-      showError(fields.confirmPassword, 'confirmError', fields.confirmPassword.value !== fields.password.value);
-
-      if (!valid) e.preventDefault();
-    });
-  </script>
-</body>
-</html>
+    if (!isValid) e.preventDefault();
+  });
+</script>

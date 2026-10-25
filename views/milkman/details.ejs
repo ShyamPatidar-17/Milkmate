@@ -1,75 +1,192 @@
 <%- include('../includes/navbar.ejs') %>
+<link rel="stylesheet" href="/css/dairy/index.css">
+<link rel="stylesheet" href="/css/dairy/showCustomer.css">
 
-<!DOCTYPE html>
-<html lang="en">
-<head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Document</title>
-    <link rel="stylesheet" href="../css/dairy/showCustomer.css">
-</head>
-<body>
-    <div class="container">
-        <h1> Dairy Details</h1>
-        <div class="customer-details">
-            <table class="contact-table">
-                <thead>
-                    <tr>
-                        <th>Milkman Code</th>
-                        <th>Milkman Name</th>
-                        <th>Milkman Contact</th>
-                        <th>Milkman Email</th>
-                        <th>Milkman Address</th>
-                    </tr>
-                </thead>
-                <tbody>
-                        <tr>
-                        <td>  <%=dairyDetails.milkmanCode%></td>
-                         <td>   <%= dairyDetails.name%></td>
-                         <td><%=dairyDetails.contact%></td>
-                         <td><%=dairyDetails.email%></td>
-                         <td><%=dairyDetails.address%></td>
-                         </tr>
-                    
-                </tbody>
-            </table>
-        
-    <h1>Milk Details</h1>
-<div class="customer-details">
-    <table class="contact-table">
-        <thead>
+<div class="passbook-container">
+  <!-- Navigation Toolbar -->
+  <div class="passbook-nav-bar">
+    <div class="passbook-title-group">
+      <h2><i class="fa-solid fa-chart-line" style="color:#0284c7;"></i> Milkman Sales & Delivery Ledger</h2>
+      <p>All-customer delivery history and sales earnings for Milkman #<%= dairyDetails.milkmanCode %></p>
+    </div>
+
+    <div style="display:flex; gap:10px; flex-wrap:wrap;">
+      <button onclick="window.print()" class="mm-btn mm-btn-secondary mm-btn-sm">
+        <i class="fa-solid fa-print"></i> Print Statement
+      </button>
+      <a href="/milkman/sell" class="mm-btn mm-btn-accent mm-btn-sm">
+        <i class="fa-solid fa-plus"></i> Record Delivery (Sell Milk)
+      </a>
+      <a href="/milkman" class="mm-btn mm-btn-secondary mm-btn-sm">
+        <i class="fa-solid fa-arrow-left"></i> Milkman Dashboard
+      </a>
+    </div>
+  </div>
+
+  <!-- Milkman Overview Card -->
+  <div class="profile-overview-card">
+    <div class="profile-main-meta">
+      <div class="profile-avatar-large" style="background: linear-gradient(135deg, #0284c7 0%, #059669 100%);">
+        <i class="fa-solid fa-truck-fast"></i>
+      </div>
+      <div>
+        <h3 style="font-size:1.3rem; font-weight:800; color:#0f172a;"><%= dairyDetails.name %></h3>
+        <span class="code-badge">Milkman #<%= dairyDetails.milkmanCode %></span>
+      </div>
+    </div>
+
+    <div class="profile-details-list">
+      <div class="meta-field">
+        <span class="meta-field-label">Mobile Contact</span>
+        <span class="meta-field-value">
+          <a href="tel:<%= dairyDetails.contact %>" class="phone-link">+91 <%= dairyDetails.contact %></a>
+        </span>
+      </div>
+      <div class="meta-field">
+        <span class="meta-field-label">Delivery Route</span>
+        <span class="meta-field-value"><%= dairyDetails.address %></span>
+      </div>
+      <div class="meta-field">
+        <span class="meta-field-label">Email</span>
+        <span class="meta-field-value"><%= dairyDetails.email %></span>
+      </div>
+      <div class="meta-field">
+        <span class="meta-field-label">Total Delivery Logs</span>
+        <span class="meta-field-value"><%= details ? details.length : 0 %> logs</span>
+      </div>
+    </div>
+  </div>
+
+  <!-- KPI Summary Cards -->
+  <% 
+    let calcTotalLiters = 0;
+    let calcTotalAmount = 0;
+    if (details && details.length > 0) {
+      for (const entry of details) {
+        calcTotalLiters += (Number(entry.liter) || 0);
+        calcTotalAmount += (Number(entry.amount) || 0);
+      }
+    }
+  %>
+
+  <div class="kpi-metrics-row">
+    <div class="kpi-card">
+      <div class="kpi-icon" style="background:#f0f9ff; color:#0284c7;">
+        <i class="fa-solid fa-bottle-droplet"></i>
+      </div>
+      <div class="kpi-text">
+        <h3><%= calcTotalLiters.toFixed(1) %> L</h3>
+        <p>Total Milk Distributed</p>
+      </div>
+    </div>
+
+    <div class="kpi-card">
+      <div class="kpi-icon" style="background:#ecfdf5; color:#059669;">
+        <i class="fa-solid fa-money-bill-wave"></i>
+      </div>
+      <div class="kpi-text">
+        <h3>₹<%= calcTotalAmount.toFixed(2) %></h3>
+        <p>Total Revenue Accrued</p>
+      </div>
+    </div>
+
+    <div class="kpi-card">
+      <div class="kpi-icon" style="background:#fef3c7; color:#d97706;">
+        <i class="fa-solid fa-calculator"></i>
+      </div>
+      <div class="kpi-text">
+        <h3>₹<%= calcTotalLiters > 0 ? (calcTotalAmount / calcTotalLiters).toFixed(2) : '0.00' %>/L</h3>
+        <p>Average Sale Price</p>
+      </div>
+    </div>
+  </div>
+
+  <!-- All Sales Table -->
+  <div class="passbook-table-card">
+    <div class="table-header-stripe">
+      <h3><i class="fa-solid fa-list-check" style="color:#0284c7; margin-right:8px;"></i> Milk Delivery Logs</h3>
+      <span style="font-size:0.85rem; font-weight:600; color:#64748b;"><%= details ? details.length : 0 %> Entries</span>
+    </div>
+
+    <div class="table-responsive">
+      <% if (!details || details.length === 0) { %>
+        <div class="empty-table-state">
+          <div class="empty-icon"><i class="fa-solid fa-clipboard-question"></i></div>
+          <h3>No Delivery Records Found</h3>
+          <p>No milk sales records have been logged under Milkman #<%= dairyDetails.milkmanCode %>.</p>
+          <a href="/milkman/sell" class="mm-btn mm-btn-accent">
+            <i class="fa-solid fa-plus"></i> Record First Milk Delivery
+          </a>
+        </div>
+      <% } else { %>
+        <table class="modern-table">
+          <thead>
             <tr>
-                <th>Date</th>
-                <th>Shift</th>
-                <th>Liter</th>
-                <th>Rate (  &#8377 / ltr )</th>
-                <th>Amount</th>
-                <th>Total Milk</th>
-                <th>Total Amount</th>
+              <th>Date</th>
+              <th>Customer Code</th>
+              <th>Shift</th>
+              <th>Fat (%)</th>
+              <th>SNF (%)</th>
+              <th>Liters</th>
+              <th>Rate (₹ / Liter)</th>
+              <th>Subtotal</th>
+              <th style="text-align: right;">Payment Status</th>
             </tr>
-        </thead>
-        <tbody>
-                <% for(detail of details) {%>
-                <tr>
-                    <td>  <%=detail.date.toDateString()%></td>
-                 <td>   <%=detail.shift %></td>
-                 <td>   <%= detail.liter%></td>
-                 <td><%=detail.rate%></td>
-                 <td>    &#8377;  <%= detail.amount%></td>
-                 <td><%= totalmilk +=detail.liter%></td>
-                 <td> &#8377;  <%=total+=detail.amount%></td>
-                 </tr>
-            <%}%>
-        </tbody>
-    </table>
-    <h1>Total Liters of Milk collected = <%=totalmilk%> ltrs</h1>
-    <h1>Total Amount Paid  = <b> &#8377 <%=total%></b></h1>
+          </thead>
+          <tbody>
+            <% 
+              for (const entry of details) { 
+                const entryDate = entry.date ? new Date(entry.date).toLocaleDateString('en-IN', {day:'2-digit', month:'short', year:'numeric'}) : '—';
+                const fatVal = entry.fat !== undefined ? entry.fat + '%' : '—';
+                const snfVal = entry.snf !== undefined ? entry.snf + '%' : '—';
+                const isPaid = entry.isPaymentCompleted;
+            %>
+              <tr class="<%= isPaid ? 'record-paid' : 'record-unpaid' %>" style="<%= isPaid ? 'background-color: #ecfdf5 !important;' : '' %>">
+                <td><strong><%= entryDate %></strong></td>
+                <td><span class="code-badge">#<%= entry.code %></span></td>
+                <td>
+                  <% if (entry.shift === 'Mor' || entry.shift === 'Morning') { %>
+                    <span class="shift-badge shift-mor"><i class="fa-solid fa-sun"></i> Morning</span>
+                  <% } else { %>
+                    <span class="shift-badge shift-eve"><i class="fa-solid fa-moon"></i> Evening</span>
+                  <% } %>
+                </td>
+                <td><strong style="color:#f59e0b;"><%= fatVal %></strong></td>
+                <td><strong style="color:#0284c7;"><%= snfVal %></strong></td>
+                <td><strong><%= entry.liter %> L</strong></td>
+                <td>₹<%= entry.rate %></td>
+                <td><strong>₹<%= (entry.amount || (entry.liter * entry.rate)).toFixed(2) %></strong></td>
+                <td style="text-align: right;">
+                  <% if (isPaid) { %>
+                    <span class="payment-badge payment-paid"><i class="fa-solid fa-circle-check"></i> Paid</span>
+                  <% } else { %>
+                    <span class="payment-badge payment-pending"><i class="fa-solid fa-clock"></i> Pending</span>
+                  <% } %>
+                </td>
+              </tr>
+            <% } %>
+          </tbody>
+        </table>
+      <% } %>
+    </div>
+  </div>
 
-    <form action="/milkman/delete" method="post">
-        <input type="hidden" name="dairy[code]" value="<%=dairyDetails.milkmanCode%>">
-        <button type="submit" class="pay-btn">Clear</button>
-    </form>
+  <!-- Clear All Records Action -->
+  <% if (details && details.length > 0) { %>
+    <div class="settlement-card" style="border-color:#fca5a5;">
+      <div class="settlement-summary">
+        <h4 style="color:#991b1b;"><i class="fa-solid fa-triangle-exclamation"></i> Settle All Route Accounts</h4>
+        <p>Total current balance across all route customers: <strong style="color:#b91c1c;">₹<%= calcTotalAmount.toFixed(2) %></strong></p>
+      </div>
 
-    <%- include('../includes/footer.ejs') %>
-</body>
-</html>
+      <form action="/milkman/delete" method="POST" onsubmit="return confirm('WARNING: Are you sure you want to clear all sales records for this milkman? This resets the active delivery ledger.');">
+        <input type="hidden" name="dairy[code]" value="<%= dairyDetails.milkmanCode %>">
+        <button type="submit" class="mm-btn mm-btn-danger mm-btn-lg">
+          <i class="fa-solid fa-trash-can"></i> Clear Ledger Records
+        </button>
+      </form>
+    </div>
+  <% } %>
+</div>
+
+<%- include('../includes/footer.ejs') %>

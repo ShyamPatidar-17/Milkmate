@@ -1,43 +1,119 @@
 <%- include('../includes/navbar.ejs') %>
+<link rel="stylesheet" href="/css/dairy/index.css" />
 
-<!DOCTYPE html>
-<html lang="en">
-<head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Customer Information</title>
-    <link rel="stylesheet" href="../css/dairy/index.css">
-</head>
-<body>
-        
-    <!-- Table Container -->
-    <div class="table-container">
-        <table>
-            <thead>
-                <tr>
-                    <th>Code</th>
-                    <th>First Name</th>
-                    <th>Last Name</th>
-                    <th>Contact</th>
-                    <th>Address</th>
-                    <th>Action</th>
-                </tr>
-            </thead>
-            <tbody>
-                <% for(customer of allCustomer) { %>
-                    <tr>
-                        <td><%= customer.code %></td>
-                        <td><%= customer.first %></td>
-                        <td><%= customer.last %></td>
-                        <td><%= customer.contact %></td>
-                        <td><%= customer.address %></td>
-                        <td><a href="<%=customer._id%>"><button class="btn primary-btn">Show</button></a></td>
-                    </tr>
-                <% }; %>
-    
-            </tbody>
-        </table>
+<div class="table-page-container">
+  <!-- Table Header Bar -->
+  <div class="table-header-bar">
+    <div class="table-header-title">
+      <h2><i class="fa-solid fa-truck-fast" style="color:#0284c7;"></i> Milkman Route Customers</h2>
+      <p>Households and delivery stops assigned to Milkman #<%= currUser ? currUser.milkmanCode : '' %></p>
     </div>
-    <%- include('../includes/footer.ejs') %>
-</body>
-</html>
+
+    <div class="table-controls">
+      <div class="search-input-wrapper">
+        <i class="fa-solid fa-magnifying-glass"></i>
+        <input type="text" id="searchInput" placeholder="Search customer, code, or phone...">
+      </div>
+
+      <a href="/milkman/add" class="mm-btn mm-btn-accent">
+        <i class="fa-solid fa-user-plus"></i> Add New Customer
+      </a>
+      <a href="/milkman" class="mm-btn mm-btn-secondary">
+        <i class="fa-solid fa-arrow-left"></i> Dashboard
+      </a>
+    </div>
+  </div>
+
+  <!-- Data Card -->
+  <div class="data-card">
+    <% if (!allCustomer || allCustomer.length === 0) { %>
+      <div class="empty-table-state">
+        <div class="empty-icon"><i class="fa-solid fa-users-slash"></i></div>
+        <h3>No Route Customers Found</h3>
+        <p>You haven't added any delivery households to your route yet.</p>
+        <a href="/milkman/add" class="mm-btn mm-btn-accent">
+          <i class="fa-solid fa-user-plus"></i> Add Your First Customer
+        </a>
+      </div>
+    <% } else { %>
+      <div class="table-responsive">
+        <table class="modern-table" id="customerTable">
+          <thead>
+            <tr>
+              <th>Customer Code</th>
+              <th>Customer Name</th>
+              <th>Contact</th>
+              <th>Delivery Address</th>
+              <th style="text-align: right;">Action</th>
+            </tr>
+          </thead>
+          <tbody>
+            <% for (const customer of allCustomer) { %>
+              <tr>
+                <td>
+                  <span class="code-badge">#<%= customer.code %></span>
+                </td>
+                <td>
+                  <div class="customer-name-cell">
+                    <div class="avatar-circle" style="background:#e0f2fe; color:#0369a1; border-color:#7dd3fc;">
+                      <%= (customer.first ? customer.first.charAt(0) : 'C').toUpperCase() %>
+                    </div>
+                    <div>
+                      <strong><%= customer.first %> <%= customer.last %></strong>
+                    </div>
+                  </div>
+                </td>
+                <td>
+                  <a href="tel:<%= customer.contact %>" class="phone-link">
+                    <i class="fa-solid fa-phone" style="font-size:0.8rem;"></i> <%= customer.contact %>
+                  </a>
+                </td>
+                <td><%= customer.address || '—' %></td>
+                <td style="text-align: right;">
+                  <a href="/milkman/<%= customer._id %>" class="mm-btn mm-btn-accent mm-btn-sm">
+                    <i class="fa-solid fa-file-lines"></i> View Passbook
+                  </a>
+                </td>
+              </tr>
+            <% } %>
+          </tbody>
+        </table>
+      </div>
+
+      <div id="noResults" style="text-align:center; padding: 40px; display:none; color:#64748b;">
+        <i class="fa-solid fa-search" style="font-size:2rem; margin-bottom:8px; display:block; color:#cbd5e1;"></i>
+        <strong>No matching customers found.</strong> Try adjusting your search query.
+      </div>
+    <% } %>
+  </div>
+</div>
+
+<%- include('../includes/footer.ejs') %>
+
+<script>
+  const searchInput = document.getElementById('searchInput');
+  const table = document.getElementById('customerTable');
+  const rows = table ? table.querySelectorAll('tbody tr') : [];
+  const noResults = document.getElementById('noResults');
+
+  if (searchInput && table) {
+    searchInput.addEventListener('input', function () {
+      const filter = this.value.toLowerCase().trim();
+      let visibleCount = 0;
+
+      rows.forEach(row => {
+        const text = row.textContent.toLowerCase();
+        if (text.includes(filter)) {
+          row.style.display = '';
+          visibleCount++;
+        } else {
+          row.style.display = 'none';
+        }
+      });
+
+      if (noResults) {
+        noResults.style.display = visibleCount === 0 ? 'block' : 'none';
+      }
+    });
+  }
+</script>

@@ -1,124 +1,199 @@
-<!DOCTYPE html>
-<html lang="en">
-<head>
-  <meta charset="UTF-8" />
-  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
-  <title>Login Page</title>
-  <link rel="stylesheet" href="../css/user/login.css"/>
-</head>
-<body>
+<%- include('../includes/navbar.ejs') %>
+<link rel="stylesheet" href="/css/user/login.css">
 
-  <% if (success && success.length > 0) { %>
-    <div class="alert alert-success"><%= success[0] %></div>
-  <% } else if (error && error.length > 0) { %>
-    <div class="alert alert-danger"><%= error[0] %></div>
-  <% } %>
-  
-  <div class="container">
-    <div class="left">
-      <img src="https://th.bing.com/th/id/OIP.j6M_Ze77x-9ItWX42_kgHgHaE8?pid=ImgDet&w=202&h=134&c=7&dpr=1.3" alt=""/>
+<div class="login-page-wrapper">
+  <div class="login-card-container">
+    <!-- Left Brand Panel -->
+    <div class="login-brand-panel">
+      <div class="login-brand-top">
+        <div class="login-brand-logo">
+          <img src="https://static.vecteezy.com/system/resources/previews/048/342/900/non_2x/cartoon-cow-logo-png.png" alt="MilkMate Logo">
+        </div>
+        <span class="login-brand-title">MILKMATE</span>
+      </div>
+
+      <div class="login-brand-mid">
+        <h2>Transparent & Smart Dairy Operations</h2>
+        <p>Log in to access your customized dairy registers, sales passbook, or household dairy products order tracking.</p>
+      </div>
+
+      <div class="login-demo-pill">
+        <h5><i class="fa-solid fa-circle-info"></i> Instant Demo Credentials</h5>
+        <p>
+          <strong>Code:</strong> 101 &nbsp;|&nbsp;
+          <strong>Mobile:</strong> 9879638521<br>
+          <strong>Password:</strong> password123
+        </p>
+      </div>
     </div>
 
-    <div class="login-container">
-      <h2>Login</h2>
-      <form id="loginForm" method="POST">
-        <label for="shift">User Type:</label>
-        <select id="shift" name="user[type]" required>
-          <option value="customer">Customer</option>
-          <option value="dairy">Dairy</option>
-          <option value="milkman">Milkman</option>
-        </select>
+    <!-- Right Form Panel -->
+    <div class="login-form-panel">
+      <div class="login-header">
+        <h2>Sign In</h2>
+        <p>Select your user category and enter your credentials.</p>
+      </div>
 
-        <label for="mobile">Mobile Number:</label>
-<input type="tel" id="mobile" name="user[mobile]" required />
-<small id="mobileError" class="error"></small>
+      <!-- Role Selector Tabs -->
+      <div class="role-tabs">
+        <button type="button" class="role-tab-btn active" data-type="customer" onclick="selectRole('customer')">
+          <i class="fa-solid fa-user"></i> Customer
+        </button>
+        <button type="button" class="role-tab-btn" data-type="dairy" onclick="selectRole('dairy')">
+          <i class="fa-solid fa-building-wheat"></i> Dairy
+        </button>
+        <button type="button" class="role-tab-btn" data-type="milkman" onclick="selectRole('milkman')">
+          <i class="fa-solid fa-truck-fast"></i> Milkman
+        </button>
+      </div>
 
-<label for="code">Code:</label>
-<input type="tel" id="code" name="user[code]" required />
-<small id="codeError" class="error"></small>
+      <!-- Quick 1-Click Auto Fill Demo Button -->
+      <button type="button" class="quick-autofill-btn" onclick="fillDemoCredentials()">
+        <i class="fa-solid fa-bolt"></i> Click to Auto-Fill Demo Credentials
+      </button>
 
-<label for="password">Password:</label>
-<input type="password" id="password" name="user[password]" required />
-<small id="passwordError" class="error"></small>
+      <!-- Form (Dynamically posted to /login/:type) -->
+      <form id="loginForm" method="POST" action="/login/customer" novalidate>
+        <!-- Hidden user type field -->
+        <input type="hidden" id="shift" name="user[type]" value="customer">
 
+        <!-- Mobile Number -->
+        <div class="mm-form-group">
+          <label class="mm-label" for="mobile">Mobile Number</label>
+          <div class="input-with-icon">
+            <i class="fa-solid fa-phone input-icon-left"></i>
+            <input type="tel" id="mobile" name="user[mobile]" class="mm-input" placeholder="Enter 10-digit mobile number" required maxlength="10">
+          </div>
+          <small id="mobileError" class="field-error"></small>
+        </div>
 
-        <button type="submit">Login</button>
-        <br/>
-        <a href="/signup" class="option">New User</a>
-        <br>
-        <a href="/" class="option">Back To home</a>
+        <!-- User / Dairy / Milkman Code -->
+        <div class="mm-form-group">
+          <label class="mm-label" for="code" id="codeLabel">Customer Code</label>
+          <div class="input-with-icon">
+            <i class="fa-solid fa-id-badge input-icon-left"></i>
+            <input type="tel" id="code" name="user[code]" class="mm-input" placeholder="e.g. 101" required>
+          </div>
+          <small id="codeError" class="field-error"></small>
+        </div>
+
+        <!-- Password -->
+        <div class="mm-form-group">
+          <label class="mm-label" for="password">Password</label>
+          <div class="input-with-icon">
+            <i class="fa-solid fa-lock input-icon-left"></i>
+            <input type="password" id="password" name="user[password]" class="mm-input" placeholder="Enter your password" required>
+            <button type="button" class="password-toggle-btn" onclick="togglePasswordVisibility()" aria-label="Toggle password view">
+              <i class="fa-solid fa-eye" id="passwordEyeIcon"></i>
+            </button>
+          </div>
+          <small id="passwordError" class="field-error"></small>
+        </div>
+
+        <!-- Submit Button -->
+        <button type="submit" class="mm-btn mm-btn-primary" style="width:100%; margin-top:10px;">
+          <i class="fa-solid fa-arrow-right-to-bracket"></i> Login to Account
+        </button>
       </form>
+
+      <!-- Footer Navigation Links -->
+      <div class="login-footer-links">
+        <span>New to MilkMate? <a href="/signup">Register Here</a></span>
+        <a href="/"><i class="fa-solid fa-arrow-left"></i> Back to Home</a>
+      </div>
     </div>
   </div>
+</div>
 
-  <!-- JavaScript to set form action based on user type -->
-  <script>
-    const form = document.getElementById("loginForm");
-    const userTypeSelect = document.getElementById("shift");
+<%- include('../includes/footer.ejs') %>
 
-    form.addEventListener("submit", function (e) {
-      const selectedType = userTypeSelect.value;
-      form.action = `/login/${selectedType}`; // Dynamically set route
+<script>
+  function selectRole(role) {
+    // Update active tab styling
+    document.querySelectorAll('.role-tab-btn').forEach(btn => {
+      btn.classList.toggle('active', btn.dataset.type === role);
     });
 
- 
+    // Update hidden input and form action
+    const shiftInput = document.getElementById('shift');
+    const form = document.getElementById('loginForm');
+    const codeLabel = document.getElementById('codeLabel');
 
+    shiftInput.value = role;
+    form.action = `/login/${role}`;
+
+    if (role === 'dairy') {
+      codeLabel.textContent = 'Dairy Code';
+    } else if (role === 'milkman') {
+      codeLabel.textContent = 'Milkman Code';
+    } else {
+      codeLabel.textContent = 'Customer Code';
+    }
+  }
+
+  function fillDemoCredentials() {
+    document.getElementById('mobile').value = '9879638521';
+    document.getElementById('code').value = '101';
+    document.getElementById('password').value = 'password123';
+    
+    // Clear any previous errors
+    document.getElementById('mobileError').textContent = '';
+    document.getElementById('codeError').textContent = '';
+    document.getElementById('passwordError').textContent = '';
+  }
+
+  function togglePasswordVisibility() {
+    const passwordInput = document.getElementById('password');
+    const eyeIcon = document.getElementById('passwordEyeIcon');
+    if (passwordInput.type === 'password') {
+      passwordInput.type = 'text';
+      eyeIcon.classList.remove('fa-eye');
+      eyeIcon.classList.add('fa-eye-slash');
+    } else {
+      passwordInput.type = 'password';
+      eyeIcon.classList.remove('fa-eye-slash');
+      eyeIcon.classList.add('fa-eye');
+    }
+  }
+
+  // Client-side validation on submit
+  const form = document.getElementById("loginForm");
   form.addEventListener("submit", function (e) {
-    // Get inputs and values
-    const userType = document.getElementById("shift").value;
+    const selectedType = document.getElementById("shift").value;
+    form.action = `/login/${selectedType}`;
+
     const mobile = document.getElementById("mobile").value.trim();
     const code = document.getElementById("code").value.trim();
     const password = document.getElementById("password").value.trim();
 
-    // Get error message elements
     const mobileError = document.getElementById("mobileError");
     const codeError = document.getElementById("codeError");
     const passwordError = document.getElementById("passwordError");
 
-    // Clear previous errors
     mobileError.textContent = "";
     codeError.textContent = "";
     passwordError.textContent = "";
 
     let hasError = false;
 
-    // Validate mobile: any 10-digit number
     const mobileRegex = /^\d{10}$/;
     if (!mobileRegex.test(mobile)) {
-      mobileError.textContent = "Enter a valid 10-digit mobile number.";
+      mobileError.textContent = "Please enter a valid 10-digit mobile number.";
       hasError = true;
     }
 
-    // Validate code: 4 to 6 digits
-    const codeRegex = /^\d{0,10}$/;
-    if (!codeRegex.test(code)) {
-      codeError.textContent = "Code must be 0 to 6 digits.";
+    if (!code) {
+      codeError.textContent = "Code cannot be empty.";
       hasError = true;
     }
 
-    // Validate password: at least 6 characters
-    if (password.length < 6) {
-      passwordError.textContent = "Password must be at least 6 characters.";
+    if (password.length < 5) {
+      passwordError.textContent = "Password must be at least 5 characters.";
       hasError = true;
     }
 
     if (hasError) {
-      e.preventDefault(); // Stop form submission
-      return;
+      e.preventDefault();
     }
-
-    // Set form action dynamically
-    form.action = `/login/${userType}`;
   });
 </script>
-
-
-<script>
-  setTimeout(() => {
-    const alert = document.querySelector(".alert");
-    if (alert) alert.style.display = "none";
-  }, 4000);
-</script>
-
-</body>
-</html>

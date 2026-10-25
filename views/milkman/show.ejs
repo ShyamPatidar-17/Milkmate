@@ -1,89 +1,198 @@
-<!DOCTYPE html>
-<html lang="en">
-<head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Customer Details</title>
-    <link rel="stylesheet" href="../css/dairy/showCustomer.css">
-</head>
-<body>
+<%- include('../includes/navbar.ejs') %>
+<link rel="stylesheet" href="/css/dairy/index.css">
+<link rel="stylesheet" href="/css/dairy/showCustomer.css">
 
-    
-    <div class="container">
-
-            <!-- <a href="/dairy"><button>Home</button></a>
-            <a href="/dairy/add"><button>Add Milk</button></a>    -->
-
-
-        <h1>Customer Details</h1>
-        <!-- Customer Info Form -->
-            <div class="customer-details">
-                    <table class="contact-table">
-                        <thead>
-                            <tr>
-                                <th>Code</th>
-                                <th>Milkman Code</th>
-                                <th>First Name</th>
-                                <th>Last Name</th>
-                                <th>Contact</th>
-                                <th>Address</th>
-                                <th>Edit</th>
-                                <th>Delete</th>
-                                
-                            </tr>
-                        </thead>
-                        <tbody>
-                            <tr>
-                                <td><%=customer.code%></td>
-                                <td><%=customer.milkmanCode%></td>
-                                <td><%=customer.first%></td>
-                                <td><%=customer.last%></td>
-                                <td><%=customer.contact %></td>
-                                <td><%=customer.address %></td>
-                                <td><a href="/milkman/<%=customer._id%>/edit"><button class="edit-btn">Edit</button></a></td>
-                                <td><form method="POST" action="/milkman/<%=customer._id%>?_method=delete">
-                                <button class="del-btn">Delete</button>
-                                </form></td>
-                            </tr>
-                        </tbody>
-                    </table>
-<!-- customer Milk info -->
- <h1>Milk Details</h1>
-
-<div class="customer-details">
-    <table class="contact-table">
-        <thead>
-            <tr>
-                <th>Date</th>
-                <th>Shift</th>
-                <th>Liter</th>
-                <th>Rate (  &#8377 / ltr )</th>
-                <th>Amount</th>
-                <th>Total Amount</th>
-            </tr>
-        </thead>
-        <tbody>
-                <% for(milk of milk) { %>  
-                <tr>  
-                 <td>  <%=milk.date.toDateString()%></td>
-                 <td>   <%=milk.shift %></td>
-                 <td>   <%= milk.liter%></td>
-                 <td><%=milk.rate%></td>
-                 <td>    &#8377;  <%= milk.amount%></td>
-                 <td> &#8377;  <%=total+=milk.amount%></td>
-                 </tr>
-            <% }; %>
-        </tbody>
-    </table>
-    <h1>Total amount to be pay by Customer till Date = <b> &#8377 <%=total%></b></h1>
-    <form action="/milkman/pay" method="post"> 
-        <input type="hidden" name="pay[code]" id="code" value="<%=customer.code%>">
-    <button type="submit" class="pay-btn">Paid</button>  
-</form>
-</div>
+<div class="passbook-container">
+  <!-- Navigation Toolbar -->
+  <div class="passbook-nav-bar">
+    <div class="passbook-title-group">
+      <h2><i class="fa-solid fa-receipt" style="color:#0284c7;"></i> Customer Delivery Ledger</h2>
+      <p>Customer Code #<%= customer.code %> &bull; Assigned to Milkman #<%= customer.milkmanCode %></p>
     </div>
 
-    
-    <%- include('../includes/footer.ejs') %>
-</body>
-</html>
+    <div style="display:flex; gap:10px; flex-wrap:wrap;">
+      <button onclick="window.print()" class="mm-btn mm-btn-secondary mm-btn-sm">
+        <i class="fa-solid fa-print"></i> Print Statement
+      </button>
+      <a href="/milkman/<%= customer._id %>/edit" class="mm-btn mm-btn-secondary mm-btn-sm">
+        <i class="fa-solid fa-pen-to-square"></i> Edit Profile
+      </a>
+      <a href="/milkman/allcustomers" class="mm-btn mm-btn-secondary mm-btn-sm">
+        <i class="fa-solid fa-arrow-left"></i> Customer List
+      </a>
+    </div>
+  </div>
+
+  <!-- Profile Overview Card -->
+  <div class="profile-overview-card">
+    <div class="profile-main-meta">
+      <div class="profile-avatar-large" style="background: linear-gradient(135deg, #0284c7 0%, #059669 100%);">
+        <%= (customer.first ? customer.first.charAt(0) : 'C').toUpperCase() %>
+      </div>
+      <div>
+        <h3 style="font-size:1.3rem; font-weight:800; color:#0f172a;"><%= customer.first %> <%= customer.last %></h3>
+        <span class="code-badge">Route Code #<%= customer.code %></span>
+      </div>
+    </div>
+
+    <div class="profile-details-list">
+      <div class="meta-field">
+        <span class="meta-field-label">Milkman Code</span>
+        <span class="meta-field-value">#<%= customer.milkmanCode %></span>
+      </div>
+      <div class="meta-field">
+        <span class="meta-field-label">Mobile Contact</span>
+        <span class="meta-field-value">
+          <a href="tel:<%= customer.contact %>" class="phone-link">+91 <%= customer.contact %></a>
+        </span>
+      </div>
+      <div class="meta-field">
+        <span class="meta-field-label">Delivery Address</span>
+        <span class="meta-field-value"><%= customer.address || '—' %></span>
+      </div>
+      <div class="meta-field">
+        <span class="meta-field-label">Delivery Entries</span>
+        <span class="meta-field-value"><%= milk ? milk.length : 0 %> logs</span>
+      </div>
+    </div>
+
+    <div class="profile-actions-group">
+      <form method="POST" action="/milkman/<%= customer._id %>?_method=delete" onsubmit="return confirm('Are you sure you want to delete this customer?');">
+        <button type="submit" class="mm-btn mm-btn-danger mm-btn-sm">
+          <i class="fa-solid fa-trash"></i> Delete
+        </button>
+      </form>
+    </div>
+  </div>
+
+  <!-- KPI Summary Cards -->
+  <% 
+    let calcTotalLiters = 0;
+    let calcTotalAmount = 0;
+    if (milk && milk.length > 0) {
+      for (const entry of milk) {
+        calcTotalLiters += (Number(entry.liter) || 0);
+        calcTotalAmount += (Number(entry.amount) || 0);
+      }
+    }
+  %>
+
+  <div class="kpi-metrics-row">
+    <div class="kpi-card">
+      <div class="kpi-icon" style="background:#f0f9ff; color:#0284c7;">
+        <i class="fa-solid fa-bottle-droplet"></i>
+      </div>
+      <div class="kpi-text">
+        <h3><%= calcTotalLiters.toFixed(1) %> L</h3>
+        <p>Total Milk Delivered</p>
+      </div>
+    </div>
+
+    <div class="kpi-card">
+      <div class="kpi-icon" style="background:#ecfdf5; color:#059669;">
+        <i class="fa-solid fa-indian-rupee-sign"></i>
+      </div>
+      <div class="kpi-text">
+        <h3>₹<%= calcTotalAmount.toFixed(2) %></h3>
+        <p>Total Receivable from Customer</p>
+      </div>
+    </div>
+
+    <div class="kpi-card">
+      <div class="kpi-icon" style="background:#fef3c7; color:#d97706;">
+        <i class="fa-solid fa-calculator"></i>
+      </div>
+      <div class="kpi-text">
+        <h3>₹<%= calcTotalLiters > 0 ? (calcTotalAmount / calcTotalLiters).toFixed(2) : '0.00' %>/L</h3>
+        <p>Average Rate per Liter</p>
+      </div>
+    </div>
+  </div>
+
+  <!-- Delivery Logs Table -->
+  <div class="passbook-table-card">
+    <div class="table-header-stripe">
+      <h3><i class="fa-solid fa-list-check" style="color:#0284c7; margin-right:8px;"></i> Delivery History (Fat & SNF Verified)</h3>
+      <span style="font-size:0.85rem; font-weight:600; color:#64748b;"><%= milk ? milk.length : 0 %> Records</span>
+    </div>
+
+    <div class="table-responsive">
+      <% if (!milk || milk.length === 0) { %>
+        <div class="empty-table-state">
+          <div class="empty-icon"><i class="fa-solid fa-clipboard-question"></i></div>
+          <h3>No Delivery Entries Logged Yet</h3>
+          <p>No morning or evening milk drops have been recorded for Customer #<%= customer.code %>.</p>
+          <a href="/milkman/sell" class="mm-btn mm-btn-accent">
+            <i class="fa-solid fa-plus"></i> Record First Milk Delivery
+          </a>
+        </div>
+      <% } else { %>
+        <table class="modern-table">
+          <thead>
+            <tr>
+              <th>Date</th>
+              <th>Shift</th>
+              <th>Fat (%)</th>
+              <th>SNF (%)</th>
+              <th>Quantity (L)</th>
+              <th>Calculated Rate</th>
+              <th>Subtotal</th>
+              <th style="text-align: right;">Payment Status</th>
+            </tr>
+          </thead>
+          <tbody>
+            <% 
+              for (const entry of milk) { 
+                const entryDate = entry.date ? new Date(entry.date).toLocaleDateString('en-IN', {day:'2-digit', month:'short', year:'numeric'}) : '—';
+                const fatVal = entry.fat !== undefined ? entry.fat + '%' : '—';
+                const snfVal = entry.snf !== undefined ? entry.snf + '%' : '—';
+                const isPaid = entry.isPaymentCompleted;
+            %>
+              <tr class="<%= isPaid ? 'record-paid' : 'record-unpaid' %>" style="<%= isPaid ? 'background-color: #ecfdf5 !important;' : '' %>">
+                <td><strong><%= entryDate %></strong></td>
+                <td>
+                  <% if (entry.shift === 'Mor' || entry.shift === 'Morning') { %>
+                    <span class="shift-badge shift-mor"><i class="fa-solid fa-sun"></i> Morning</span>
+                  <% } else { %>
+                    <span class="shift-badge shift-eve"><i class="fa-solid fa-moon"></i> Evening</span>
+                  <% } %>
+                </td>
+                <td><strong style="color:#f59e0b;"><%= fatVal %></strong></td>
+                <td><strong style="color:#0284c7;"><%= snfVal %></strong></td>
+                <td><strong><%= entry.liter %> L</strong></td>
+                <td>₹<%= entry.rate %></td>
+                <td><strong>₹<%= (entry.amount || (entry.liter * entry.rate)).toFixed(2) %></strong></td>
+                <td style="text-align: right;">
+                  <% if (isPaid) { %>
+                    <span class="payment-badge payment-paid"><i class="fa-solid fa-circle-check"></i> Paid</span>
+                  <% } else { %>
+                    <span class="payment-badge payment-pending"><i class="fa-solid fa-clock"></i> Pending</span>
+                  <% } %>
+                </td>
+              </tr>
+            <% } %>
+          </tbody>
+        </table>
+      <% } %>
+    </div>
+  </div>
+
+  <!-- Settle Dues Card -->
+  <% if (milk && milk.length > 0) { %>
+    <div class="settlement-card" style="border-color:#bae6fd;">
+      <div class="settlement-summary">
+        <h4 style="color:#0369a1;">Settle Payment for Customer #<%= customer.code %></h4>
+        <p>Total amount due from <%= customer.first %> <%= customer.last %>: <strong style="color:#0284c7;">₹<%= calcTotalAmount.toFixed(2) %></strong></p>
+      </div>
+
+      <form action="/milkman/pay" method="POST" onsubmit="return confirm('Confirm receipt of payment? This will clear all pending delivery records for this customer.');">
+        <input type="hidden" name="pay[code]" value="<%= customer.code %>">
+        <button type="submit" class="mm-btn mm-btn-accent mm-btn-lg">
+          <i class="fa-solid fa-circle-check"></i> Mark as Paid & Clear Dues
+        </button>
+      </form>
+    </div>
+  <% } %>
+</div>
+
+<%- include('../includes/footer.ejs') %>

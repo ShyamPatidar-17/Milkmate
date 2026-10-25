@@ -1,52 +1,7 @@
-const mongoose = require('mongoose');
-const Schema = mongoose.Schema;
+// Models/milkman.js
+// Firebase Firestore Model for Milk Delivery Vendors (Milkmen)
+import { createModel } from "../config/firebaseModel.js";
 
-const milkmanSchema= new Schema({
-    name:{
-        type:String,
-        required: true,
-    },
-    milkmanCode:{
-      type:Number,
-      required:true,
-      unique:true,
-    },
-    contact:{
-        type:Number,
-        required:true,
-        unique:true,
-    },
-    email:{
-      type:String,
-      unique:true,
-    },
-    address:{
-        type:String,
-        required:true,
-        maxlength: 200
-    },
-    password:{
-        type:String,
-        minlength: 5,
-        maxlength: 20
-    },
-    confirmPassword:{
-        type:String,
-        minlength:5,
-        maxlength:20
-    }
-})
+const Milkman = createModel("milkmen");
 
-milkmanSchema.pre('save', function(next) {
-  if (this.password !== this.confirmPassword) {
-    next(new Error('Passwords do not match'));
-  } else {
-    next();
-  }
-});
-
-
-// Create and export the DairyOwner model
-const Milkman = mongoose.model('Milkman', milkmanSchema);
-
-module.exports = Milkman;
+export default Milkman;

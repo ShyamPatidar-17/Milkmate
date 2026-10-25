@@ -1,16 +1,7 @@
-const mongoose = require("mongoose");
+// Models/milkmancustomer.js
+// Firebase Firestore Model for Milkman Route Customers
+import { createModel } from "../config/firebaseModel.js";
 
-const milkmancustomerSchema = new mongoose.Schema({
-  first: { type: String, required: true },
-  last: { type: String, required: true },
-  contact: { type: Number, required: true },
-  address: { type: String, required: true },
-  code: { type: Number, required: true },  // removed `unique: true`
-  milkmanCode: { type: Number, required: true },
-});
+const MilkmanCustomer = createModel("milkmancustomers");
 
-milkmancustomerSchema.index({ code: 1, milkmanCode: 1 }, { unique: true });
-
-const MilkmanCustomer = mongoose.model("MilkmanCustomer", milkmancustomerSchema);
-
-module.exports = MilkmanCustomer;
+export default MilkmanCustomer;

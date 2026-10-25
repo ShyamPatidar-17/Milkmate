@@ -1,19 +1,38 @@
-<!DOCTYPE html>
-<html lang="en">
-<head>
-  <meta charset="UTF-8" />
-  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
-  <title>Payment Successful</title>
-  <link rel="stylesheet" href="/css/product/pay.css" />
-</head>
-<body>
-  <div class="success-container">
-    <div class="checkmark-circle">
-      <div class="checkmark">&#10003;</div>
+<%- include('../includes/navbar.ejs') %>
+<link rel="stylesheet" href="/css/product/pay.css">
+
+<div class="success-page-wrapper">
+  <div class="success-card">
+    <div class="success-circle-icon">
+      <i class="fa-solid fa-check"></i>
     </div>
+
+    <span class="mm-badge mm-badge-primary" style="margin-bottom:12px;">Order Confirmed</span>
     <h1>Payment Successful!</h1>
-    <p>Thank you for your purchase. Your order has been placed successfully.</p>
-    <a href="/customerrs"><button class="home-btn">Back to Home</button></a>
+    <p>
+      Thank you for ordering with MilkMate. Your fresh farm dairy products are being packed and will be delivered during the upcoming morning/evening shift.
+    </p>
+
+    <div style="background:#f8fafc; border:1px solid #e2e8f0; border-radius:14px; padding:16px; margin-bottom:28px; text-align:left;">
+      <div style="display:flex; justify-content:space-between; margin-bottom:8px; font-size:0.88rem;">
+        <span style="color:#64748b;">Estimated Delivery:</span>
+        <strong style="color:#0f172a;">Next Scheduled Shift</strong>
+      </div>
+      <div style="display:flex; justify-content:space-between; font-size:0.88rem;">
+        <span style="color:#64748b;">Payment Status:</span>
+        <strong style="color:#059669;">Verified / Confirmed</strong>
+      </div>
+    </div>
+
+    <div style="display:flex; flex-direction:column; gap:12px;">
+      <a href="/customerrs" class="mm-btn mm-btn-primary mm-btn-lg">
+        <i class="fa-solid fa-house"></i> Return to Customer Dashboard
+      </a>
+      <a href="/product/all" class="mm-btn mm-btn-secondary">
+        <i class="fa-solid fa-store"></i> Continue Shopping
+      </a>
+    </div>
   </div>
-</body>
-</html>
+</div>
+
+<%- include('../includes/footer.ejs') %>

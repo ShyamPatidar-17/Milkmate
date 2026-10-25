@@ -37,7 +37,7 @@ const sampleCustomer= [
     },
   ];
 
-//  module.exports={data1:sampleCustomer};
+//  export default {data1:sampleCustomer};
 
   const dairyUser=[
     {
@@ -69,7 +69,7 @@ const sampleCustomer= [
     },
   ]
 
-  // module.exports={data2:dairyUser};
+  // export default {data2:dairyUser};
   
   const milkmanData = [
     {
@@ -99,7 +99,7 @@ const sampleCustomer= [
     }
 ];
 
-// module.exports={data3:milkmanData};
+// export default {data3:milkmanData};
 
 const customerrData = [
   {
@@ -129,7 +129,7 @@ const customerrData = [
 ];
 
 
-// module.exports={data4:customerrData};
+// export default {data4:customerrData};
 
 
 //Addmilk data
@@ -186,4 +186,4 @@ const milkData = [
   }
 ];
 
-module.exports={data5:milkData};
+export default {data5:milkData};

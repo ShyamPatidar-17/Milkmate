@@ -1,60 +1,206 @@
 <%- include('../includes/navbar.ejs') %>
-<link rel="stylesheet" href="../css/user/front.css">
-  <!-- Hero Section -->
-  <section class="hero">
-   <div class="marquee-wrapper">
-  <div class="marquee-text">
-    Note: If you are a demo user Use Code:101, Number: 9879638521, Password: 123456 to login as any type
-  </div>
-</div>
-<br><br>
-    <div class="container hero-content-wrapper">
-      <div class="hero-image">
-        <img src="https://th.bing.com/th/id/OIP.j8AHGOtscDn3VzhTLVdJmAHaE8?pid=ImgDet&w=202&h=134&c=7&dpr=1.3" alt="Milk being poured"/>
+<link rel="stylesheet" href="/css/user/front.css">
+
+<!-- Hero Section -->
+<section class="hero-section">
+  <div class="hero-container">
+    <div class="hero-text-col">
+      <!-- Announcement Pill -->
+      <div class="hero-pill">
+        <i class="fa-solid fa-cow"></i>
+        <span>Smart Dairy & Milk Delivery Platform</span>
       </div>
-      <div class="hero-content">
-        <div>
-        <h1>Get Started Now</h1>
-        <p>Effortless Milk Management with MilkMate</p> 
-      </div></div>
-  </section>
-  <p class="option"><b></b></p>
-  <div class="btn-option">
-    <% if(currUser && currUser.type=="dairy") {%>
-      <div class="return-btn-wrapper">
-        <p><b>Return to:</b> 
-          <a href="/dairy">
-            <button class="btn btn-secondary">Dairy Page</button>
-          </a>
-        </p>
-      </div>   
-<%}%>
-    <% if(currUser && currUser.type=="milkman") {%>
-      <div class="return-btn-wrapper">
-        <p><b>Return to:</b> 
-          <a href="/milkman">
-            <button class="btn btn-secondary">Milkman Page</button>
-          </a>
-        </p>
-      </div>  <%}%>
 
-    <% if(currUser && currUser.type=="customer") {%>
-      <div class="return-btn-wrapper">
-        <p><b>Return to:</b> 
-          <a href="/customerrs"><button class="btn btn-secondary">Customer Page</button></a>
-        </p>
-      </div>  
-    <%}%>
+      <h1 class="hero-title">
+        Digitize Your Milk Network with <span class="hero-highlight">MilkMate</span>
+      </h1>
 
+      <p class="hero-subtitle">
+        The complete all-in-one ecosystem connecting Dairy Centers, Milkmen, and Households. Track daily milk intake, calculate fat-based pricing, eliminate paper registers, and order fresh farm products.
+      </p>
+
+      <!-- Return button if user is logged in -->
+      <% if (currUser) { %>
+        <div class="user-return-box">
+          <div>
+            <h3>Welcome Back, <%= currUser.name || currUser.dname || 'User' %>!</h3>
+            <p>You are signed in as <strong><%= currUser.type.toUpperCase() %></strong> (Code: <%= currUser.code || currUser.dairyCode || currUser.milkmanCode %>)</p>
+          </div>
+          <a href="<%= currUser.type === 'dairy' ? '/dairy' : 
+                       currUser.type === 'milkman' ? '/milkman' : '/customerrs' %>" 
+             class="mm-btn mm-btn-secondary">
+            <i class="fa-solid fa-gauge-high"></i> Open Dashboard
+          </a>
+        </div>
+      <% } else { %>
+        <!-- CTAs for Visitors -->
+        <div class="hero-cta-group">
+          <a href="/login" class="mm-btn mm-btn-primary mm-btn-lg">
+            <i class="fa-solid fa-right-to-bracket"></i> Login to Portal
+          </a>
+          <a href="/signup" class="mm-btn mm-btn-secondary mm-btn-lg">
+            <i class="fa-solid fa-user-plus"></i> Register Free
+          </a>
+          <a href="/product/all" class="mm-btn mm-btn-accent mm-btn-lg">
+            <i class="fa-solid fa-store"></i> Fresh Store
+          </a>
+        </div>
+
+        <!-- Demo Credentials Callout -->
+        <div class="demo-banner">
+          <div class="demo-banner-content">
+            <div class="demo-banner-icon">
+              <i class="fa-solid fa-key"></i>
+            </div>
+            <div class="demo-banner-text">
+              <h4>Quick Demo Access</h4>
+              <p>
+                Code: <span class="demo-badge-code">101</span> &nbsp;|&nbsp;
+                Mobile: <span class="demo-badge-code">9879638521</span> &nbsp;|&nbsp;
+                Pass: <span class="demo-badge-code">password123</span>
+              </p>
+            </div>
+          </div>
+          <a href="/login" class="mm-btn mm-btn-primary mm-btn-sm">
+            Auto-Login Demo <i class="fa-solid fa-arrow-right"></i>
+          </a>
+        </div>
+      <% } %>
+    </div>
+
+    <!-- Hero Card Illustration -->
+    <div class="hero-visual">
+      <div class="hero-card-main">
+        <div class="hero-card-img-wrap">
+          <img src="/images/hero.png" alt="Fresh Dairy Farm" class="hero-card-img">
+        </div>
+        <div class="hero-card-body">
+          <div style="display:flex; justify-content:space-between; align-items:center; margin-bottom:8px;">
+            <span class="mm-badge mm-badge-primary"><i class="fa-solid fa-shield-halved"></i> 100% Transparent</span>
+            <span style="font-size:0.85rem; color:#64748b; font-weight:600;"><i class="fa-solid fa-circle-check" style="color:#10b981;"></i> Live Records</span>
+          </div>
+          <h3 style="font-size:1.2rem; font-weight:700; color:#0f172a;">Smart Dairy Operations</h3>
+          <p style="font-size:0.88rem; color:#64748b; margin-top:4px;">
+            Eliminating billing discrepancies between producers and buyers with automated fat/rate calculations.
+          </p>
+          <div class="hero-stat-row">
+            <div class="hero-stat-item">
+              <h5>0%</h5>
+              <span>Errors</span>
+            </div>
+            <div class="hero-stat-item">
+              <h5>Morning/Eve</h5>
+              <span>Two Shifts</span>
+            </div>
+            <div class="hero-stat-item">
+              <h5>Instant</h5>
+              <span>Settlement</span>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- 3 Roles Section -->
+<section class="roles-section">
+  <div class="section-head">
+    <span class="section-tag">Designed for Every Stakeholder</span>
+    <h2 class="section-title">One Platform, Three Tailored Portals</h2>
+    <p class="section-desc">MilkMate unifies dairy cooperatives, doorstep milkmen, and household customers with dedicated tools tailored to their daily operations.</p>
   </div>
 
-  <!-- Illustration Section -->
-  <section class="illustration container">
-    <img src="https://th.bing.com/th/id/OIP.RIUOMY7h4cYAiin0sc2iSgHaHa?pid=ImgDet&w=202&h=202&c=7&dpr=1.3" alt="Milkify app and farmer illustration"/>
-    <p><strong>Milk Management, Simplified by MilkMate.</strong></p>
-  </section>
+  <div class="roles-grid">
+    <!-- Role 1: Dairy Center -->
+    <div class="role-card">
+      <div class="role-icon-box role-icon-dairy">
+        <i class="fa-solid fa-building-wheat"></i>
+      </div>
+      <h3>Dairy Owners</h3>
+      <p>Streamline large-scale milk intake from local farmers and cooperatives with automatic pricing calculations.</p>
+      <ul class="role-features-list">
+        <li><i class="fa-solid fa-check"></i> Register and manage farmer profiles</li>
+        <li><i class="fa-solid fa-check"></i> Record Morning & Evening shifts</li>
+        <li><i class="fa-solid fa-check"></i> Auto-calculate Liters &times; Rate totals</li>
+        <li><i class="fa-solid fa-check"></i> 1-Click balance settlement & payouts</li>
+      </ul>
+      <a href="/login" class="mm-btn mm-btn-primary">
+        Dairy Portal <i class="fa-solid fa-arrow-right"></i>
+      </a>
+    </div>
 
-  <%- include('../includes/footer.ejs') %>
+    <!-- Role 2: Milkman -->
+    <div class="role-card">
+      <div class="role-icon-box role-icon-milkman">
+        <i class="fa-solid fa-truck-fast"></i>
+      </div>
+      <h3>Milk Delivery Vendors</h3>
+      <p>Empower local milkmen to manage household delivery routes, track distribution logs, and receive punctual payments.</p>
+      <ul class="role-features-list">
+        <li><i class="fa-solid fa-check"></i> Manage daily customer accounts</li>
+        <li><i class="fa-solid fa-check"></i> Quick logging of delivered milk</li>
+        <li><i class="fa-solid fa-check"></i> Real-time customer billing status</li>
+        <li><i class="fa-solid fa-check"></i> List extra dairy items for sale</li>
+      </ul>
+      <a href="/login" class="mm-btn mm-btn-accent">
+        Milkman Portal <i class="fa-solid fa-arrow-right"></i>
+      </a>
+    </div>
 
-</body>
-</html>
+    <!-- Role 3: Customer -->
+    <div class="role-card">
+      <div class="role-icon-box role-icon-customer">
+        <i class="fa-solid fa-users"></i>
+      </div>
+      <h3>Customers & Households</h3>
+      <p>Full transparency into daily milk delivered, accumulated bills, payment status, and order fresh artisan dairy goods.</p>
+      <ul class="role-features-list">
+        <li><i class="fa-solid fa-check"></i> View daily digital milk passbook</li>
+        <li><i class="fa-solid fa-check"></i> Check exact rates and liters logged</li>
+        <li><i class="fa-solid fa-check"></i> Order Ghee, Paneer, Butter online</li>
+        <li><i class="fa-solid fa-check"></i> Multiple payment options (COD, UPI, Card)</li>
+      </ul>
+      <a href="/login" class="mm-btn mm-btn-secondary">
+        Customer Passbook <i class="fa-solid fa-arrow-right"></i>
+      </a>
+    </div>
+  </div>
+</section>
+
+<!-- Workflow Section -->
+<section class="workflow-section">
+  <div class="section-head">
+    <span class="section-tag">Smooth & Simple</span>
+    <h2 class="section-title">How MilkMate Works</h2>
+    <p class="section-desc">Experience frictionless dairy tracking from morning milking to doorstep delivery.</p>
+  </div>
+
+  <div class="workflow-grid">
+    <div class="workflow-card">
+      <div class="step-num">01</div>
+      <h4>Register Account</h4>
+      <p>Sign up as a Dairy Owner, Milkman, or Customer with your assigned code and mobile verification.</p>
+    </div>
+
+    <div class="workflow-card">
+      <div class="step-num">02</div>
+      <h4>Log Daily Milk</h4>
+      <p>Log morning or evening shift liters and rate per liter with immediate validation.</p>
+    </div>
+
+    <div class="workflow-card">
+      <div class="step-num">03</div>
+      <h4>Automated Ledger</h4>
+      <p>Both party's ledgers synchronize in real-time, displaying total liters and pending balances.</p>
+    </div>
+
+    <div class="workflow-card">
+      <div class="step-num">04</div>
+      <h4>Settle & Purchase</h4>
+      <p>Clear dues with single-click settlements and purchase fresh farm dairy goods in the integrated store.</p>
+    </div>
+  </div>
+</section>
+
+<%- include('../includes/footer.ejs') %>

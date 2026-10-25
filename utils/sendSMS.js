@@ -1,4 +1,4 @@
-const axios = require("axios");
+import axios from "axios";
 
 const sendSMS = async (to, message) => {
   try {
@@ -21,4 +21,5 @@ const sendSMS = async (to, message) => {
   }
 };
 
-module.exports = sendSMS;
+export default sendSMS;
+export { sendSMS };

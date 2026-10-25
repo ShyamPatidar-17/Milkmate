@@ -1,76 +1,73 @@
-body {
-    font-family: Arial, sans-serif;
-    background: #f0f0f5;
-    margin: 0;
-    padding: 0;
+/* ==========================================================================
+   MilkMate - Add & Edit Product Styling
+   ========================================================================== */
+
+.prod-form-wrapper {
+  min-height: calc(100vh - 160px);
+  padding: 50px 20px;
+  background: radial-gradient(circle at 10% 20%, rgba(209, 250, 229, 0.45) 0%, rgba(240, 249, 255, 0.4) 50%, #f8fafc 90%);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  animation: mmFadeIn 0.35s ease-out both;
+}
+
+.prod-form-card {
+  width: 640px;
+  max-width: 100%;
+  background: #ffffff;
+  border-radius: 24px;
+  border: 1px solid #e2e8f0;
+  box-shadow: 0 20px 40px -15px rgba(15, 23, 42, 0.1);
+  padding: 40px;
+  animation: mmSlideUp 0.45s cubic-bezier(0.16, 1, 0.3, 1) both;
+}
+
+.prod-form-head {
+  text-align: center;
+  margin-bottom: 28px;
+}
+
+.prod-form-badge {
+  display: inline-flex;
+  align-items: center;
+  gap: 6px;
+  background: #ecfdf5;
+  color: #059669;
+  border: 1px solid #a7f3d0;
+  padding: 5px 14px;
+  border-radius: 9999px;
+  font-size: 0.8rem;
+  font-weight: 700;
+  text-transform: uppercase;
+  margin-bottom: 12px;
+}
+
+.prod-form-head h2 {
+  font-size: clamp(1.6rem, 3.5vw, 2rem);
+  font-weight: 800;
+  color: #0f172a;
+  margin-bottom: 6px;
+  letter-spacing: -0.5px;
+}
+
+.prod-form-head p {
+  color: #64748b;
+  font-size: 0.95rem;
+}
+
+.prod-form-footer {
+  display: flex;
+  flex-direction: column;
+  gap: 12px;
+  margin-top: 26px;
+}
+
+@media (max-width: 600px) {
+  .prod-form-wrapper {
+    padding: 30px 16px;
   }
-  
-  .container {
-    max-width: 500px;
-    margin: 60px auto;
-    padding: 30px;
-    background: white;
-    border-radius: 8px;
-    box-shadow: 0 4px 10px rgba(0,0,0,0.1);
+  .prod-form-card {
+    padding: 28px 20px;
   }
-  
-  h1 {
-    text-align: center;
-    color: #333;
-    margin-bottom: 30px;
-  }
-  
-  form {
-    display: flex;
-    flex-direction: column;
-  }
-  
-  label {
-    margin-top: 15px;
-    font-weight: bold;
-  }
-  
-  input[type="text"],
-  input[type="number"],
-  input[type="file"],
-  textarea {
-    padding: 10px;
-    margin-top: 5px;
-    border: 1px solid #ccc;
-    border-radius: 4px;
-  }
-  
-  textarea {
-    resize: vertical;
-  }
-  
-  button {
-    margin-top: 25px;
-    padding: 12px;
-    background-color: #28a745;
-    color: white;
-    border: none;
-    font-size: 16px;
-    border-radius: 5px;
-    cursor: pointer;
-  }
-  
-  button:hover {
-    background-color: #218838;
-  }
-  
-  .back-button {
-    display: inline-block;
-    text-align: center;
-    margin-top: 15px;
-    padding: 10px;
-    background-color: #6c757d;
-    color: white;
-    text-decoration: none;
-    border-radius: 5px;
-  }
-  
-  .back-button:hover {
-    background-color: #5a6268;
-  }
-  
+}

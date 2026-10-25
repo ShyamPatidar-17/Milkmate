@@ -1,101 +1,385 @@
-@import url('https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;600&display=swap');
+/* ==========================================================================
+   MilkMate - Milk Entry & Transaction Form Styling
+   ========================================================================== */
 
-body {
-    font-family: 'Poppins', sans-serif;
-    background-color: #f4f6f8;
-    margin: 0;
-    padding: 0;
-    display: flex;
-    justify-content: center;
-    align-items: center;
-    height: 100vh;
+.milk-entry-wrapper {
+  min-height: calc(100vh - 160px);
+  padding: 40px 20px;
+  background: radial-gradient(circle at 10% 20%, rgba(209, 250, 229, 0.45) 0%, rgba(240, 249, 255, 0.4) 50%, #f8fafc 90%);
+  display: flex;
+  align-items: center;
+  justify-content: center;
 }
 
-/* Form container */
-.form-container {
-    background-color: #ffffff;
-    padding: 40px;
-    border-radius: 12px;
-    box-shadow: 0 8px 24px rgba(0, 0, 0, 0.1);
-    width: 100%;
-    max-width: 500px;
-    box-sizing: border-box;
-    text-align: center;
+.milk-entry-layout-grid {
+  display: grid;
+  grid-template-columns: 1.15fr 0.85fr;
+  gap: 28px;
+  max-width: 1120px;
+  width: 100%;
+  align-items: start;
 }
 
-/* Heading */
-h1 {
-    color: #28a745;
-    margin-bottom: 20px;
-    font-weight: 600;
+.milk-entry-card {
+  width: 100%;
+  background: #ffffff;
+  border-radius: 24px;
+  border: 1px solid #e2e8f0;
+  box-shadow: 0 20px 40px -15px rgba(15, 23, 42, 0.08);
+  padding: 34px;
 }
 
-/* Form layout */
-form {
-    display: flex;
-    flex-direction: column;
-    gap: 16px;
+/* Farmer Details Side View Card */
+.farmer-side-card {
+  background: #ffffff;
+  border-radius: 24px;
+  border: 1.5px solid #e2e8f0;
+  box-shadow: 0 20px 40px -15px rgba(15, 23, 42, 0.08);
+  padding: 32px 28px;
+  position: sticky;
+  top: 90px;
+  transition: all 0.3s ease;
 }
 
-.form-group {
-    display: flex;
-    flex-direction: column;
-    text-align: left;
+.farmer-side-head {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  margin-bottom: 20px;
+  padding-bottom: 14px;
+  border-bottom: 1px solid #f1f5f9;
 }
 
-/* Label */
-.form-group label {
-    margin-bottom: 6px;
-    font-weight: 500;
-    color: #333;
+.farmer-side-head h3 {
+  font-size: 1.15rem;
+  font-weight: 800;
+  color: #0f172a;
+  display: flex;
+  align-items: center;
+  gap: 8px;
 }
 
-/* Inputs & select */
-input, select {
-    padding: 10px;
-    font-size: 15px;
-    border: 1px solid #ccc;
-    border-radius: 6px;
-    background-color: #fdfdfd;
-    transition: border 0.3s;
+.farmer-side-status {
+  font-size: 0.75rem;
+  font-weight: 700;
+  text-transform: uppercase;
+  padding: 4px 10px;
+  border-radius: 9999px;
+  letter-spacing: 0.5px;
 }
 
-input:focus, select:focus {
-    outline: none;
-    border-color: #28a745;
-    background-color: #fff;
+.status-waiting {
+  background: #f1f5f9;
+  color: #64748b;
+  border: 1px solid #cbd5e1;
 }
 
-/* Button styles */
-.btn {
-    margin-top: 12px;
-    padding: 12px;
-    border: none;
-    border-radius: 8px;
-    font-size: 16px;
-    font-weight: 600;
-    cursor: pointer;
-    transition: background-color 0.3s, transform 0.2s;
-    width: 100%;
+.status-verified {
+  background: #ecfdf5;
+  color: #059669;
+  border: 1px solid #a7f3d0;
 }
 
-.primary-btn {
-    background-color: #28a745;
-    color: white;
+.status-notfound {
+  background: #fef2f2;
+  color: #ef4444;
+  border: 1px solid #fecaca;
 }
 
-.primary-btn:hover {
-    background-color: #218838;
-    transform: scale(1.03);
+/* Empty State in Side View */
+.side-view-empty {
+  text-align: center;
+  padding: 40px 15px;
 }
 
-.primary-btn:active {
-    transform: scale(0.97);
+.side-view-empty-icon {
+  width: 72px;
+  height: 72px;
+  border-radius: 20px;
+  background: #f0fdf4;
+  color: #059669;
+  font-size: 2rem;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  margin: 0 auto 18px auto;
+  box-shadow: 0 4px 12px rgba(5, 150, 105, 0.15);
 }
 
-/* Responsive design */
-@media (max-width: 500px) {
-    .form-container {
-        padding: 25px;
-    }
+.side-view-empty h4 {
+  font-size: 1.15rem;
+  font-weight: 700;
+  color: #0f172a;
+  margin-bottom: 8px;
+}
+
+.side-view-empty p {
+  font-size: 0.88rem;
+  color: #64748b;
+  line-height: 1.6;
+}
+
+/* Loading State */
+.side-view-loading {
+  text-align: center;
+  padding: 50px 20px;
+  color: #059669;
+}
+
+.side-view-loading i {
+  font-size: 2.2rem;
+  margin-bottom: 14px;
+}
+
+.side-view-loading p {
+  font-size: 0.92rem;
+  font-weight: 600;
+  color: #475569;
+}
+
+/* Active Profile Details State */
+.farmer-profile-main {
+  display: flex;
+  align-items: center;
+  gap: 16px;
+  margin-bottom: 22px;
+}
+
+.farmer-avatar {
+  width: 60px;
+  height: 60px;
+  border-radius: 18px;
+  background: linear-gradient(135deg, #059669 0%, #047857 100%);
+  color: #ffffff;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-size: 1.6rem;
+  font-weight: 800;
+  box-shadow: 0 8px 18px rgba(5, 150, 105, 0.25);
+  flex-shrink: 0;
+}
+
+.farmer-name-block h4 {
+  font-size: 1.25rem;
+  font-weight: 800;
+  color: #0f172a;
+  margin-bottom: 4px;
+}
+
+.farmer-meta-list {
+  background: #f8fafc;
+  border: 1px solid #e2e8f0;
+  border-radius: 16px;
+  padding: 16px;
+  display: flex;
+  flex-direction: column;
+  gap: 12px;
+  margin-bottom: 20px;
+}
+
+.farmer-meta-row {
+  display: flex;
+  align-items: flex-start;
+  gap: 10px;
+  font-size: 0.88rem;
+}
+
+.farmer-meta-row i {
+  color: #059669;
+  font-size: 0.95rem;
+  margin-top: 3px;
+  width: 18px;
+}
+
+.farmer-meta-row strong {
+  color: #0f172a;
+}
+
+.farmer-meta-row span {
+  color: #475569;
+}
+
+/* Side KPI Cards */
+.farmer-kpi-grid {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 12px;
+  margin-bottom: 20px;
+}
+
+.side-kpi-card {
+  background: #ffffff;
+  border: 1.5px solid #e2e8f0;
+  border-radius: 14px;
+  padding: 14px 16px;
+  box-shadow: 0 2px 6px rgba(0,0,0,0.03);
+}
+
+.side-kpi-card span {
+  font-size: 0.75rem;
+  font-weight: 700;
+  color: #64748b;
+  text-transform: uppercase;
+  letter-spacing: 0.5px;
+  display: block;
+  margin-bottom: 4px;
+}
+
+.side-kpi-card h4 {
+  font-size: 1.2rem;
+  font-weight: 800;
+  color: #059669;
+  margin: 0;
+}
+
+/* Last Intake Snapshot */
+.side-last-entry-box {
+  background: #f0fdf4;
+  border: 1.5px solid #bbf7d0;
+  border-radius: 14px;
+  padding: 14px 16px;
+  margin-bottom: 20px;
+  font-size: 0.85rem;
+}
+
+.side-last-entry-box h5 {
+  font-size: 0.8rem;
+  font-weight: 800;
+  color: #065f46;
+  text-transform: uppercase;
+  margin-bottom: 4px;
+}
+
+.side-last-entry-box p {
+  color: #1e293b;
+  margin: 0;
+  font-weight: 600;
+}
+
+/* Responsive */
+@media (max-width: 900px) {
+  .milk-entry-layout-grid {
+    grid-template-columns: 1fr;
+  }
+
+  .farmer-side-card {
+    position: static;
+  }
+}
+
+.milk-entry-head {
+  text-align: center;
+  margin-bottom: 28px;
+}
+
+.milk-entry-badge {
+  display: inline-flex;
+  align-items: center;
+  gap: 6px;
+  background: #ecfdf5;
+  color: #059669;
+  border: 1px solid #a7f3d0;
+  padding: 4px 12px;
+  border-radius: 9999px;
+  font-size: 0.8rem;
+  font-weight: 700;
+  text-transform: uppercase;
+  margin-bottom: 12px;
+}
+
+.milk-entry-head h2 {
+  font-size: 1.85rem;
+  font-weight: 800;
+  color: #0f172a;
+  margin-bottom: 6px;
+}
+
+.milk-entry-head p {
+  color: #64748b;
+  font-size: 0.92rem;
+}
+
+.calc-preview-box {
+  background: #f8fafc;
+  border: 1.5px dashed #cbd5e1;
+  border-radius: 14px;
+  padding: 16px 20px;
+  margin: 20px 0;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+}
+
+.calc-preview-label {
+  font-size: 0.85rem;
+  font-weight: 600;
+  color: #475569;
+}
+
+.calc-preview-value {
+  font-size: 1.35rem;
+  font-weight: 800;
+  color: #059669;
+}
+
+.milk-form-footer-actions {
+  display: flex;
+  flex-direction: column;
+  gap: 12px;
+  margin-top: 24px;
+}
+
+
+/* ==========================================================================
+   Animations & Responsive Breakpoints for Milk Entry & Side Card
+   ========================================================================== */
+
+.farmer-side-card {
+  animation: mmSlideUp 0.4s ease forwards;
+}
+
+#farmerVerifiedBox {
+  animation: mmFadeIn 0.3s ease forwards;
+}
+
+#shiftDisplayBox {
+  transition: all 0.3s ease;
+}
+
+.calc-preview-box {
+  transition: all 0.3s ease;
+}
+
+.calc-preview-box:hover {
+  background: #f0fdf4;
+  border-color: #a7f3d0;
+  transform: translateY(-2px);
+}
+
+@media (max-width: 900px) {
+  .milk-entry-layout-grid {
+    grid-template-columns: 1fr;
+    gap: 24px;
+  }
+  
+  .farmer-side-card {
+    position: static;
+    order: 2;
+  }
+  
+  .milk-entry-card {
+    order: 1;
+  }
+}
+
+@media (max-width: 600px) {
+  .form-grid-2 {
+    grid-template-columns: 1fr !important;
+  }
+  
+  .milk-entry-card,
+  .farmer-side-card {
+    padding: 24px 18px !important;
+  }
 }

@@ -1,9 +1,7 @@
-const express = require('express');
+import express from "express";
 const router = express.Router();
-const mongoose = require('mongoose');
-const Product = require('../Models/product');
-const Order = require("../Models/order");
-const methodOverride=require("method-override")
+import Product from "../Models/product.js";
+import Order from "../Models/order.js";
 
 router.get('/', async (req, res) => {
   const user = req.session.user;
@@ -151,4 +149,4 @@ router.post("/pay", async (req, res) => {
 });
 
 
-module.exports=router
+export default router;

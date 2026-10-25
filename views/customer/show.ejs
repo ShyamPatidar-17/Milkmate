@@ -1,89 +1,266 @@
+<%- include('../includes/navbar.ejs') %>
+<link rel="stylesheet" href="/css/dairy/index.css">
+<link rel="stylesheet" href="/css/dairy/showCustomer.css">
 
+<div class="passbook-container">
+  <!-- Top Navigation & Action Bar -->
+  <div class="passbook-nav-bar">
+    <div class="passbook-title-group">
+      <h2><i class="fa-solid fa-receipt" style="color:#059669;"></i> Digital Milk Passbook & Statements</h2>
+      <p>Real-time delivery verification and payment settlement ledger for Customer #<%= customer.code %></p>
+    </div>
 
-<!DOCTYPE html>
-<html lang="en">
-<head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Customer Details</title>
-    <link rel="stylesheet" href="../css/dairy/showCustomer.css">
-</head>
-<body>
+    <div style="display:flex; gap:10px; flex-wrap:wrap;">
+      <button onclick="window.print()" class="mm-btn mm-btn-secondary mm-btn-sm">
+        <i class="fa-solid fa-print"></i> Print Statement
+      </button>
+      <a href="/customerrs" class="mm-btn mm-btn-secondary mm-btn-sm">
+        <i class="fa-solid fa-arrow-left"></i> My Portal
+      </a>
+      <a href="/product/all" class="mm-btn mm-btn-accent mm-btn-sm">
+        <i class="fa-solid fa-store"></i> Fresh Store
+      </a>
+    </div>
+  </div>
 
-    
-   
-
-            <!-- <a href="/dairy"><button>Home</button></a>
-            <a href="/dairy/add"><button>Add Milk</button></a>    -->
-
-       
-        <%- include('../includes/navbar.ejs') %>
-
-        <!-- Customer Info Form -->
-        <div class="header-with-button">
-            <h1>Customer Details</h1>
-            
+  <!-- Customer Overview Card -->
+  <% if (customer) { %>
+    <div class="profile-overview-card">
+      <div class="profile-main-meta">
+        <div class="profile-avatar-large">
+          <%= (customer.first ? customer.first.charAt(0) : 'U').toUpperCase() %>
         </div>
-        
-            <div class="customer-details">
-                    <table class="contact-table">
-                        <thead>
-                            <tr>
-                                <th>Code</th>
-                                <th>Dairy Code</th>
-                                <th>First Name</th>
-                                <th>Last Name</th>
-                                <th>Contact</th>
-                                <th>Address</th>
-                            </tr>
-                        </thead>
-                        <tbody>
-                            <tr>
-                                <td><%=customer.code%></td>
-                                <td><%=customer.codeD%></td>
-                                <td><%=customer.first%></td>
-                                <td><%=customer.last%></td>
-                                <td><%=customer.contact %></td>
-                                <td><%=customer.address %></td>
-                
-                            </tr>
-                        </tbody>
-                    </table>
-                    </div>
-                    
-    
-  <!-- customer Milk info -->
- <h1>Milk Details</h1>
+        <div>
+          <div style="display:flex; align-items:center; gap:10px; flex-wrap:wrap; margin-bottom:4px;">
+            <h3 style="font-size:1.35rem; font-weight:800; color:#0f172a; margin:0;"><%= customer.first %> <%= customer.last %></h3>
+            <span class="code-badge">Customer #<%= customer.code %></span>
+          </div>
+          <% if (netPending === 0 && totalGross > 0) { %>
+            <span style="display:inline-flex; align-items:center; gap:6px; background:#ecfdf5; color:#059669; border:1px solid #a7f3d0; padding:4px 12px; border-radius:9999px; font-size:0.82rem; font-weight:800;">
+              <i class="fa-solid fa-circle-check"></i> Account Cleared (Zero Dues)
+            </span>
+          <% } else if (totalSettled > 0 && netPending > 0) { %>
+            <span style="display:inline-flex; align-items:center; gap:6px; background:#fffbeb; color:#d97706; border:1px solid #fde68a; padding:4px 12px; border-radius:9999px; font-size:0.82rem; font-weight:800;">
+              <i class="fa-solid fa-clock-rotate-left"></i> Partially Settled &bull; ₹<%= netPending.toFixed(2) %> Pending
+            </span>
+          <% } else if (netPending > 0) { %>
+            <span style="display:inline-flex; align-items:center; gap:6px; background:#fef2f2; color:#ef4444; border:1px solid #fca5a5; padding:4px 12px; border-radius:9999px; font-size:0.82rem; font-weight:800;">
+              <i class="fa-solid fa-hourglass-half"></i> Payment Pending &bull; ₹<%= netPending.toFixed(2) %> Due
+            </span>
+          <% } else { %>
+            <span style="display:inline-flex; align-items:center; gap:6px; background:#f1f5f9; color:#64748b; border:1px solid #cbd5e1; padding:4px 12px; border-radius:9999px; font-size:0.82rem; font-weight:700;">
+              <i class="fa-solid fa-minus"></i> No Recorded Dues
+            </span>
+          <% } %>
+        </div>
+      </div>
 
- <div class="customer-details">
-     <table class="contact-table">
-         <thead>
-             <tr>
-                 <th>Date</th>
-                 <th>Shift</th>
-                 <th>Liter</th>
-                 <th>Rate (  &#8377 / ltr )</th>
-                 <th>Amount</th>
-                 <th>Total Amount</th>
-             </tr>
-         </thead>
-         <tbody>
-                 <% for(milk of milks) { %>  
-                 <tr>  
-                  <td>  <%=milk.date.toDateString()%></td>
-                  <td>   <%=milk.shift %></td>
-                  <td>   <%= milk.liter%></td>
-                  <td><%=milk.rate%></td>
-                  <td>    &#8377;  <%= milk.amount%></td>
-                  <td> &#8377;  <%=total+=milk.amount%></td>
-                  </tr>
-             <% }; %>
-         </tbody>
-     </table>
-     <h1>Total amount to be paid till Date = <b> &#8377 <%=total%></b></h1>
-    
+      <div class="profile-details-list">
+        <div class="meta-field">
+          <span class="meta-field-label">Dairy Affiliation</span>
+          <span class="meta-field-value">Dairy #<%= customer.codeD || customer.dairyCode %></span>
+        </div>
+        <div class="meta-field">
+          <span class="meta-field-label">Mobile Contact</span>
+          <span class="meta-field-value">
+            <a href="tel:<%= customer.contact %>" class="phone-link">+91 <%= customer.contact %></a>
+          </span>
+        </div>
+        <div class="meta-field">
+          <span class="meta-field-label">Home Address</span>
+          <span class="meta-field-value"><%= customer.address || 'Registered Address' %></span>
+        </div>
+        <div class="meta-field">
+          <span class="meta-field-label">Logged Entries</span>
+          <span class="meta-field-value"><%= milks ? milks.length : 0 %> logs</span>
+        </div>
+      </div>
+    </div>
+  <% } %>
+
+  <!-- KPI Summary Cards -->
+  <% 
+    let calcTotalLiters = 0;
+    if (milks && milks.length > 0) {
+      for (const entry of milks) {
+        calcTotalLiters += (Number(entry.liter) || 0);
+      }
+    }
+  %>
+
+  <div class="kpi-metrics-row" style="grid-template-columns: repeat(4, 1fr);">
+    <div class="kpi-card">
+      <div class="kpi-icon" style="background:#ecfdf5; color:#059669;">
+        <i class="fa-solid fa-bottle-droplet"></i>
+      </div>
+      <div class="kpi-text">
+        <h3><%= calcTotalLiters.toFixed(1) %> L</h3>
+        <p>Total Milk Delivered</p>
+      </div>
+    </div>
+
+    <div class="kpi-card">
+      <div class="kpi-icon" style="background:#f0f9ff; color:#0284c7;">
+        <i class="fa-solid fa-calculator"></i>
+      </div>
+      <div class="kpi-text">
+        <h3>₹<%= totalGross.toFixed(2) %></h3>
+        <p>Total Milk Accrued</p>
+      </div>
+    </div>
+
+    <div class="kpi-card">
+      <div class="kpi-icon" style="background:#f5f3ff; color:#7c3aed;">
+        <i class="fa-solid fa-hand-holding-dollar"></i>
+      </div>
+      <div class="kpi-text">
+        <h3>₹<%= totalSettled.toFixed(2) %></h3>
+        <p>Total Amount Received</p>
+      </div>
+    </div>
+
+    <div class="kpi-card" style="<%= netPending > 0 ? 'border:1.5px solid #fca5a5;' : 'border:1.5px solid #86efac;' %>">
+      <div class="kpi-icon" style="<%= netPending > 0 ? 'background:#fef2f2; color:#dc2626;' : 'background:#ecfdf5; color:#059669;' %>">
+        <i class="fa-solid <%= netPending > 0 ? 'fa-hourglass-half' : 'fa-circle-check' %>"></i>
+      </div>
+      <div class="kpi-text">
+        <h3 style="<%= netPending > 0 ? 'color:#dc2626;' : 'color:#059669;' %>">
+          ₹<%= netPending.toFixed(2) %>
+        </h3>
+        <p><%= netPending > 0 ? 'Pending Payout Due' : 'Account 100% Cleared' %></p>
+      </div>
+    </div>
+  </div>
+
+  <!-- Milk Records Table -->
+  <div class="passbook-table-card">
+    <div class="table-header-stripe">
+      <h3><i class="fa-solid fa-list-check" style="color:#059669; margin-right:8px;"></i> Milk Delivery History (Fat & SNF Verified)</h3>
+      <span style="font-size:0.85rem; font-weight:600; color:#64748b;"><%= milks ? milks.length : 0 %> Records</span>
+    </div>
+
+    <div class="table-responsive">
+      <% if (!milks || milks.length === 0) { %>
+        <div class="empty-table-state">
+          <div class="empty-icon"><i class="fa-solid fa-clipboard-question"></i></div>
+          <h3>No Records Found</h3>
+          <p>Your dairy center hasn't entered any morning or evening milk records for your code yet.</p>
+        </div>
+      <% } else { %>
+        <table class="modern-table">
+          <thead>
+            <tr>
+              <th>Date</th>
+              <th>Shift</th>
+              <th>Fat (%)</th>
+              <th>SNF (%)</th>
+              <th>Quantity (L)</th>
+              <th>Calculated Rate</th>
+              <th>Subtotal</th>
+              <th style="text-align: right;">Payment Status</th>
+            </tr>
+          </thead>
+          <tbody>
+            <% 
+              for (const entry of milks) { 
+                const entryDate = entry.date ? new Date(entry.date).toLocaleDateString('en-IN', {day:'2-digit', month:'short', year:'numeric'}) : '—';
+                const fatVal = entry.fat !== undefined ? entry.fat + '%' : '—';
+                const snfVal = entry.snf !== undefined ? entry.snf + '%' : '—';
+                const isPaid = entry.isPaymentCompleted;
+            %>
+              <tr class="<%= isPaid ? 'record-paid' : 'record-unpaid' %>" style="<%= isPaid ? 'background-color: #ecfdf5 !important;' : '' %>">
+                <td><strong><%= entryDate %></strong></td>
+                <td>
+                  <% if (entry.shift === 'Mor' || entry.shift === 'Morning') { %>
+                    <span class="shift-badge shift-mor"><i class="fa-solid fa-sun"></i> Morning</span>
+                  <% } else { %>
+                    <span class="shift-badge shift-eve"><i class="fa-solid fa-moon"></i> Evening</span>
+                  <% } %>
+                </td>
+                <td><strong style="color:#f59e0b;"><%= fatVal %></strong></td>
+                <td><strong style="color:#0284c7;"><%= snfVal %></strong></td>
+                <td><strong><%= entry.liter %> L</strong></td>
+                <td>₹<%= entry.rate %></td>
+                <td><strong>₹<%= (entry.amount || (entry.liter * entry.rate)).toFixed(2) %></strong></td>
+                <td style="text-align: right;">
+                  <% if (isPaid) { %>
+                    <span class="payment-badge payment-paid"><i class="fa-solid fa-circle-check"></i> Paid</span>
+                  <% } else { %>
+                    <span class="payment-badge payment-pending"><i class="fa-solid fa-clock"></i> Pending</span>
+                  <% } %>
+                </td>
+              </tr>
+            <% } %>
+          </tbody>
+        </table>
+      <% } %>
+    </div>
+  </div>
+
+  <!-- Settlement Payment History -->
+  <div class="settlement-history-card">
+    <div class="table-header-stripe">
+      <h3>
+        <i class="fa-solid fa-clock-rotate-left" style="color:#7c3aed; margin-right:8px;"></i>
+        Payment Payout & Clearance Receipts
+      </h3>
+      <span style="font-size:0.85rem; font-weight:600; color:#64748b;"><%= settlements ? settlements.length : 0 %> Settlements</span>
+    </div>
+
+    <div class="table-responsive">
+      <% if (!settlements || settlements.length === 0) { %>
+        <div class="empty-table-state" style="padding:40px 20px;">
+          <div class="empty-icon" style="color:#94a3b8;"><i class="fa-solid fa-receipt"></i></div>
+          <h4 style="font-size:1.1rem; color:#0f172a; margin-bottom:4px;">No Payouts Received Yet</h4>
+          <p style="color:#64748b; font-size:0.88rem;">Your dairy center has not recorded any payments yet. All statement balance is active.</p>
+        </div>
+      <% } else { %>
+        <table class="modern-table">
+          <thead>
+            <tr>
+              <th>Date & Time</th>
+              <th>Settlement Type</th>
+              <th>Amount Received</th>
+              <th>Remaining Dues</th>
+              <th>Payment Mode</th>
+              <th>Payment Notes</th>
+              <th style="text-align: right;">Paid By</th>
+            </tr>
+          </thead>
+          <tbody>
+            <% for (const s of settlements) { 
+                const sDate = s.date ? new Date(s.date).toLocaleString('en-IN', {
+                  day: '2-digit', month: 'short', year: 'numeric', hour: '2-digit', minute: '2-digit'
+                }) : '—';
+                const isFull = s.type === 'Full' || (s.remainingBalance === 0);
+            %>
+              <tr>
+                <td><strong><%= sDate %></strong></td>
+                <td>
+                  <% if (isFull) { %>
+                    <span class="badge-full-settle"><i class="fa-solid fa-circle-check"></i> Complete Clearance</span>
+                  <% } else { %>
+                    <span class="badge-partial-settle"><i class="fa-solid fa-clock-rotate-left"></i> Partial Payment</span>
+                  <% } %>
+                </td>
+                <td><strong style="color:#059669; font-size:1.05rem;">₹<%= (Number(s.settledAmount) || 0).toFixed(2) %></strong></td>
+                <td>
+                  <% if (Number(s.remainingBalance) === 0) { %>
+                    <span style="color:#059669; font-weight:700;">₹0.00 (Cleared)</span>
+                  <% } else { %>
+                    <span style="color:#d97706; font-weight:700;">₹<%= (Number(s.remainingBalance) || 0).toFixed(2) %></span>
+                  <% } %>
+                </td>
+                <td><strong><%= s.paymentMode || 'Cash' %></strong></td>
+                <td style="color:#475569;"><%= s.notes || '—' %></td>
+                <td style="text-align: right; color:#64748b; font-weight:600;"><%= s.settledBy || 'Dairy Center' %></td>
+              </tr>
+            <% } %>
+          </tbody>
+        </table>
+      <% } %>
+    </div>
+  </div>
 </div>
-     <!------Footer-->
-     <%- include('../includes/footer.ejs') %>  
-</body>
-</html>
+
+<%- include('../includes/footer.ejs') %>

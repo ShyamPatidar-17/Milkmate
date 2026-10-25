@@ -1,82 +1,88 @@
-<!DOCTYPE html>
-<html lang="en">
-<head>
-  <meta charset="UTF-8" />
-  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
-  <title>Customer Registration</title>
-  <link rel="stylesheet" href="../css/user/customer.css"/>
-</head>
-<body>
+<%- include('../includes/navbar.ejs') %>
+<link rel="stylesheet" href="/css/user/customer.css">
 
-  <% if (success && success.length > 0) { %>
-    <div class="alert alert-success"><%= success[0] %></div>
-  <% } else if (error && error.length > 0) { %>
-    <div class="alert alert-danger"><%= error[0] %></div>
-  <% } %>
+<div class="auth-form-wrapper">
+  <div class="auth-form-card">
+    <div class="auth-form-head">
+      <span class="auth-form-badge"><i class="fa-solid fa-user-check"></i> Customer Passbook Portal</span>
+      <h2>Customer Portal Activation</h2>
+      <p>Activate your digital passbook account to view daily milk entries and pending bills.</p>
+    </div>
 
-  <div class="container">
-    <div class="form-container">
-      <h2>Customer Registration</h2>
-      <form action="/signup/customer" method="POST" id="customerForm">
+    <div class="auth-info-banner">
+      <i class="fa-solid fa-circle-info"></i>
+      <div>
+        <strong>Prerequisite Note:</strong> Please ensure your Dairy Center has registered your customer profile with your Customer Code and Dairy Code before activating.
+      </div>
+    </div>
 
-        <b>Customer Code</b>
-        <input type="number" name="customerr[code]" placeholder="Customer Code" required>
-        <div class="input-alert" id="code-alert"></div>
+    <form id="customerSignupForm" action="/signup/customer" method="POST" novalidate>
+      <div class="form-grid-2">
+        <!-- Customer Code -->
+        <div class="mm-form-group">
+          <label class="mm-label" for="code">Your Customer Code *</label>
+          <input type="number" name="customerr[code]" id="code" class="mm-input" placeholder="e.g. 101" required>
+          <small id="codeError" class="field-error"></small>
+        </div>
 
-        <b>Dairy Code</b>
-        <input type="number" name="customerr[codeD]" placeholder="Dairy Code" required>
-        <div class="input-alert" id="codeD-alert"></div>
+        <!-- Associated Dairy Code -->
+        <div class="mm-form-group">
+          <label class="mm-label" for="codeD">Dairy Center Code *</label>
+          <input type="number" name="customerr[codeD]" id="codeD" class="mm-input" placeholder="e.g. 101" required>
+          <small id="codeDError" class="field-error"></small>
+        </div>
+      </div>
 
-        <b>Contact Number</b>
-        <input type="tel" name="customerr[contact]" placeholder="Contact Number" required pattern="[0-9]{10}">
-        <div class="input-alert" id="contact-alert"></div>
+      <!-- Mobile Number -->
+      <div class="mm-form-group">
+        <label class="mm-label" for="contact">10-Digit Registered Mobile Number *</label>
+        <input type="tel" name="customerr[contact]" id="contact" class="mm-input" placeholder="e.g. 9879638521" required pattern="[0-9]{10}" maxlength="10">
+        <small id="contactError" class="field-error"></small>
+      </div>
 
-        <b>Password</b>
-        <input type="password" name="customerr[password]" placeholder="Password" required>
-        <div class="input-alert" id="password-alert"></div>
+      <div class="form-grid-2">
+        <!-- Password -->
+        <div class="mm-form-group">
+          <label class="mm-label" for="password">Create Password *</label>
+          <input type="password" name="customerr[password]" id="password" class="mm-input" placeholder="Minimum 5 characters" required minlength="5">
+          <small id="passwordError" class="field-error"></small>
+        </div>
 
-        <b>Confirm Password</b>
-        <input type="password" name="customerr[confirmPassword]" placeholder="Confirm Password" required>
-        <div class="input-alert" id="confirmPassword-alert"></div>
+        <!-- Confirm Password -->
+        <div class="mm-form-group">
+          <label class="mm-label" for="confirmPassword">Confirm Password *</label>
+          <input type="password" name="customerr[confirmPassword]" id="confirmPassword" class="mm-input" placeholder="Re-enter password" required minlength="5">
+          <small id="confirmPasswordError" class="field-error"></small>
+        </div>
+      </div>
 
-        <button type="submit" class="btn-1">Register</button>
-      </form>
+      <button type="submit" class="mm-btn mm-btn-primary mm-btn-lg auth-submit-btn">
+        <i class="fa-solid fa-check"></i> Activate Customer Account
+      </button>
+    </form>
 
-      <a href="/login"><button type="button" class="btn-2">Already Registered? Login</button></a>
-      <a href="/signup"><button type="button" class="btn-2">Back</button></a>
+    <div class="auth-footer-links">
+      <span>Already activated? <a href="/login">Sign In Here</a></span>
+      <a href="/signup"><i class="fa-solid fa-arrow-left"></i> Change Role</a>
     </div>
   </div>
+</div>
 
-  <script>
-    // Hide alert after 4 seconds
-    setTimeout(() => {
-      const alert = document.querySelector(".alert");
-      if (alert) alert.style.display = "none";
-    }, 4000);
-  </script>
+<%- include('../includes/footer.ejs') %>
 
-  <style>
-    .input-alert {
-      color: red;
-      font-size: 0.85em;
-      margin-top: -10px;
-      margin-bottom: 10px;
-    }
-    .alert {
-      text-align: center;
-      padding: 10px;
-      margin: 15px;
-      border-radius: 4px;
-    }
-    .alert-success {
-      background-color: #d4edda;
-      color: #155724;
-    }
-    .alert-danger {
-      background-color: #f8d7da;
-      color: #721c24;
-    }
-  </style>
+<script>
+  document.getElementById("customerSignupForm").addEventListener("submit", function(e) {
+    let isValid = true;
+    const pwd = document.getElementById("password").value;
+    const confirmPwd = document.getElementById("confirmPassword").value;
+    const confirmError = document.getElementById("confirmPasswordError");
 
-</body>
-</html>
+    confirmError.textContent = "";
+    if (pwd !== confirmPwd) {
+      confirmError.textContent = "Passwords do not match.";
+      isValid = false;
+    }
+
+    if (!isValid) e.preventDefault();
+  });
+</script>

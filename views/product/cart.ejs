@@ -1,73 +1,100 @@
 <%- include('../includes/navbar.ejs') %>
+<link rel="stylesheet" href="/css/product/cart.css">
 
-<!DOCTYPE html>
-<html lang="en">
-<head>
-  <meta charset="UTF-8">
-  <meta name="viewport" content="width=device-width, initial-scale=1">
-  <title>Your Cart</title>
-  <link rel="stylesheet" href="/css/product/cart.css">
-</head>
-<body>
-  <section class="cart-items">
-    <h1>Your Cart</h1>
-    <% if (cart.length > 0) { %><div class="cart-actions">
-        <a href="/product/all">
-            <button type="button" class="product-btn">Add More Products</button>
-          </a>
-        <form action="/cart/checkout" method="GET">
-          <button type="submit" class="checkout-btn">Proceed to Checkout</button>
-        </form>
-        
-        
-      </div>
-      
-  
+<div class="cart-page-wrapper">
+  <div class="cart-header">
+    <h1><i class="fa-solid fa-cart-shopping" style="color:#059669;"></i> Your Shopping Bag</h1>
+    <a href="/product/all" class="mm-btn mm-btn-secondary">
+      <i class="fa-solid fa-arrow-left"></i> Continue Shopping
+    </a>
+  </div>
 
-      <table class="cart-table">
-        <thead>
-          <tr>
-            <th>Name</th>
-            <th>Price (₹)</th>
-            <th>Quantity</th>
-            <th>Total (₹)</th>
-            <th>Actions</th>
-          </tr>
-        </thead>
-        <tbody>
-          <% cart.forEach(item => { %>
-            <tr>
-              <td><%= item.name %></td>
-              <td><%= item.price %></td>
-              <td>
-                <form action="/cart/update/<%= item.productId %>" method="POST" class="quantity-form">
-                  <button type="submit" name="action" value="decrease" class="quantity-btn">-</button>
-                  <span><%= item.quantity %></span>
-                  <button type="submit" name="action" value="increase" class="quantity-btn">+</button>
-                </form>
-              </td>
-              <td><%= item.price * item.quantity %></td>
-              <td>
-                <form action="/cart/delete/<%= item.productId %>?_method=DELETE" method="post">
-                  <button type="submit" class="delete-btn">Remove</button>
-                </form>
-              </td>
-            </tr>
-          <% }); %>
-        </tbody>
-      </table>
-
-      <div class="cart-total">
-        <p>Total: ₹<%= totalAmount %></p>
-      </div>
-
-    <% } else { %>
-      <p>Your cart is empty. <br>
-        <a href="/product/all"><button class="checkout-btn">Back to Product Page</button></a>
+  <% if (!cart || cart.length === 0) { %>
+    <div class="empty-cart-card">
+      <div class="empty-cart-icon"><i class="fa-solid fa-basket-shopping"></i></div>
+      <h2 style="font-size:1.6rem; font-weight:800; color:#0f172a; margin-bottom:8px;">Your Cart is Empty</h2>
+      <p style="color:#64748b; margin-bottom:24px; max-width:400px; margin-left:auto; margin-right:auto;">
+        Explore our farm-fresh dairy collection including pure desi ghee, fresh paneer, organic curd, and artisan butter!
       </p>
-    <% } %>
-  </section>
+      <a href="/product/all" class="mm-btn mm-btn-primary mm-btn-lg">
+        <i class="fa-solid fa-store"></i> Explore Fresh Dairy Store
+      </a>
+    </div>
+  <% } else { %>
+    <div class="cart-grid-layout">
+      <!-- Left: Item Rows -->
+      <div class="cart-items-card">
+        <% cart.forEach(item => { %>
+          <div class="cart-item-row">
+            <div class="cart-item-info">
+              <div class="cart-item-icon">
+                <i class="fa-solid fa-box-archive"></i>
+              </div>
+              <div class="cart-item-details">
+                <h4><%= item.name %></h4>
+                <p>₹<%= item.price %> per unit</p>
+              </div>
+            </div>
 
-  <%- include('../includes/footer.ejs') %>
-</body>
-</html>
+            <!-- Quantity Stepper Form -->
+            <form action="/cart/update/<%= item.productId %>" method="POST" class="qty-stepper-form">
+              <button type="submit" name="action" value="decrease" class="qty-btn" title="Decrease Quantity">-</button>
+              <span class="qty-display"><%= item.quantity %></span>
+              <button type="submit" name="action" value="increase" class="qty-btn" title="Increase Quantity">+</button>
+            </form>
+
+            <!-- Line Subtotal -->
+            <div class="cart-item-subtotal">
+              ₹<%= (item.price * item.quantity).toFixed(2) %>
+            </div>
+
+            <!-- Remove Button -->
+            <form action="/cart/delete/<%= item.productId %>?_method=DELETE" method="POST" onsubmit="return confirm('Remove <%= item.name %> from cart?');">
+              <button type="submit" class="cart-remove-btn" title="Remove Item">
+                <i class="fa-solid fa-trash-can"></i>
+              </button>
+            </form>
+          </div>
+        <% }); %>
+      </div>
+
+      <!-- Right: Order Summary -->
+      <div class="cart-summary-card">
+        <h3>Order Summary</h3>
+
+        <div class="summary-line">
+          <span>Items Total (<%= cart.length %> items)</span>
+          <span>₹<%= totalAmount.toFixed(2) %></span>
+        </div>
+
+        <div class="summary-line">
+          <span>Farm Fresh Packaging</span>
+          <span style="color:#059669; font-weight:600;">FREE</span>
+        </div>
+
+        <div class="summary-line">
+          <span>Delivery Standard</span>
+          <span style="color:#059669; font-weight:600;">FREE</span>
+        </div>
+
+        <div class="summary-total-line">
+          <span>Total Amount</span>
+          <span class="summary-total-price">₹<%= totalAmount.toFixed(2) %></span>
+        </div>
+
+        <div class="summary-guarantee">
+          <i class="fa-solid fa-shield-halved"></i>
+          <span>Guaranteed 100% Pure & Farm Sourced</span>
+        </div>
+
+        <form action="/cart/checkout" method="GET" style="margin-top:24px;">
+          <button type="submit" class="mm-btn mm-btn-primary mm-btn-lg" style="width:100%;">
+            <i class="fa-solid fa-credit-card"></i> Proceed to Checkout
+          </button>
+        </form>
+      </div>
+    </div>
+  <% } %>
+</div>
+
+<%- include('../includes/footer.ejs') %>

@@ -1,98 +1,83 @@
-/* Import Google Font */
-@import url('https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;600&display=swap');
+/* ==========================================================================
+   MilkMate - Add Customer Form Styling
+   ========================================================================== */
 
-body {
-    font-family: 'Poppins', sans-serif;
-    background-color: #f4f6f8;
-    margin: 0;
-    padding: 0;
-    display: flex;
-    justify-content: center;
-    align-items: center;
-    height: 100vh;
+.add-cust-wrapper {
+  min-height: calc(100vh - 160px);
+  padding: 50px 20px;
+  background: radial-gradient(circle at 10% 20%, rgba(209, 250, 229, 0.45) 0%, rgba(240, 249, 255, 0.4) 50%, #f8fafc 90%);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  animation: mmFadeIn 0.35s ease-out both;
 }
 
-/* Container styling */
-.container {
-    background-color: #fff;
-    padding: 40px;
-    border-radius: 12px;
-    box-shadow: 0 8px 24px rgba(0, 0, 0, 0.1);
-    width: 100%;
-    max-width: 480px;
-    box-sizing: border-box;
-    text-align: center;
+.add-cust-card {
+  width: 620px;
+  max-width: 100%;
+  background: #ffffff;
+  border-radius: 24px;
+  border: 1px solid #e2e8f0;
+  box-shadow: 0 20px 40px -15px rgba(15, 23, 42, 0.1);
+  padding: 40px 36px;
+  animation: mmSlideUp 0.45s cubic-bezier(0.16, 1, 0.3, 1) both;
 }
 
-/* Heading */
-h2 {
-    margin-bottom: 20px;
-    font-size: 24px;
-    color: #28a745;
-    font-weight: 600;
+.add-cust-head {
+  text-align: center;
+  margin-bottom: 28px;
 }
 
-/* Form styling */
-form {
-    display: flex;
-    flex-direction: column;
-    gap: 14px;
+.add-cust-badge {
+  display: inline-flex;
+  align-items: center;
+  gap: 6px;
+  background: #ecfdf5;
+  color: #059669;
+  border: 1px solid #a7f3d0;
+  padding: 5px 14px;
+  border-radius: 9999px;
+  font-size: 0.8rem;
+  font-weight: 700;
+  text-transform: uppercase;
+  margin-bottom: 12px;
 }
 
-/* Label */
-label.form-label {
-    text-align: left;
-    font-size: 14px;
-    color: #333;
-    font-weight: 500;
+.add-cust-head h2 {
+  font-size: clamp(1.6rem, 3.5vw, 2rem);
+  font-weight: 800;
+  color: #0f172a;
+  margin-bottom: 6px;
+  letter-spacing: -0.5px;
 }
 
-/* Input fields */
-input.form-control {
-    padding: 10px 12px;
-    border: 1px solid #ccc;
-    border-radius: 6px;
-    font-size: 15px;
-    transition: border 0.3s;
-    background-color: #fdfdfd;
+.add-cust-head p {
+  color: #64748b;
+  font-size: 0.95rem;
 }
 
-input.form-control:focus {
-    outline: none;
-    border-color: #28a745;
-    background-color: #fff;
+.form-grid-2 {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 16px;
 }
 
-/* Button styling */
-.btn {
-    padding: 12px;
-    border: none;
-    border-radius: 8px;
-    font-size: 16px;
-    font-weight: 600;
-    cursor: pointer;
-    transition: background-color 0.3s, transform 0.2s;
-    width: 100%;
-    margin-top: 12px;
+.add-cust-footer {
+  display: flex;
+  flex-direction: column;
+  gap: 12px;
+  margin-top: 26px;
 }
 
-.primary-btn {
-    background-color: #28a745;
-    color: white;
-}
-
-.primary-btn:hover {
-    background-color: #218838;
-    transform: scale(1.03);
-}
-
-.primary-btn:active {
-    transform: scale(0.97);
-}
-
-/* Responsive */
-@media (max-width: 500px) {
-    .container {
-        padding: 25px;
-    }
+@media (max-width: 600px) {
+  .add-cust-wrapper {
+    padding: 30px 16px;
+  }
+  .add-cust-card {
+    padding: 28px 20px;
+  }
+  .form-grid-2 {
+    grid-template-columns: 1fr;
+    gap: 12px;
+  }
 }

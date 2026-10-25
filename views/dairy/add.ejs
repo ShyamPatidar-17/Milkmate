@@ -1,34 +1,59 @@
-<!DOCTYPE html>
-<html lang="en">
-<head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>ADD CUSTOMER</title>
-    <link rel="stylesheet" href="../css/dairy/addcustomer.css">
-</head>
-<body>
-    
-    <div class="container">
-        <h2>Add a new Customer</h2>
-        <br>
-        <form action="/customers" method="post">
-                 <label for="dairycode" class="form-label"><b>Dairy Code:&nbsp&nbsp&nbsp<%=user.dairyCode%></b></label>
-                 <input type="hidden" name="customer[codeD]" value="<%=user.dairyCode%>" class="form-control" required>
-                <label for="customercode" class="form-label"><b>Customer Code:</b></label>
-                <input type="number" name="customer[code]" min="1" placeholder="Enter customer Code" class="form-control" required>
-               <label for="first" class="form-label"><b>First Name:</b></label> 
-                <input type="text" name="customer[first]" placeholder="Enter Customer First Name" class="form-control" required>
-                <label for="last" class="form-label"><b>Last Name:</b></label> 
-                <input type="text" name="customer[last]" placeholder="Enter Customer Last name" class="form-control" required>
-                 <label for="contact" class="form-label"><b>Contact:</b></label> 
-                <input type="phone" name="customer[contact]" placeholder="Enter Mobile Number" class="form-control" required>
-                 <label for="address" class="form-label"><b>Address:</b></label> 
-                <input type="text" name="customer[address]" placeholder="Enter Address" class="form-control" required>
+<%- include('../includes/navbar.ejs') %>
+<link rel="stylesheet" href="/css/dairy/addcustomer.css">
 
-                <button class="btn primary-btn">Add</button>
-             
-        </form>
-        <a href="/dairy"><button class="btn primary-btn">Back To Home</button></a>
+<div class="add-cust-wrapper">
+  <div class="add-cust-card">
+    <div class="add-cust-head">
+      <span class="add-cust-badge"><i class="fa-solid fa-building-wheat"></i> Dairy Ledger Enrollment</span>
+      <h2>Register New Customer</h2>
+      <p>Enroll a farmer or supplier under Dairy #<%= user.dairyCode %></p>
     </div>
-</body>
-</html>
+
+    <form action="/customers" method="POST" id="addCustomerForm">
+      <!-- Hidden Dairy Code -->
+      <input type="hidden" name="customer[codeD]" value="<%= user.dairyCode %>">
+
+      <!-- Customer Code -->
+      <div class="mm-form-group">
+        <label class="mm-label" for="code">Customer Code *</label>
+        <input type="number" name="customer[code]" id="code" class="mm-input" placeholder="e.g. 101" min="1" required>
+      </div>
+
+      <!-- First & Last Name Grid -->
+      <div class="form-grid-2">
+        <div class="mm-form-group">
+          <label class="mm-label" for="first">First Name *</label>
+          <input type="text" name="customer[first]" id="first" class="mm-input" placeholder="e.g. Ramesh" required>
+        </div>
+
+        <div class="mm-form-group">
+          <label class="mm-label" for="last">Last Name *</label>
+          <input type="text" name="customer[last]" id="last" class="mm-input" placeholder="e.g. Patel" required>
+        </div>
+      </div>
+
+      <!-- Contact Phone -->
+      <div class="mm-form-group">
+        <label class="mm-label" for="contact">10-Digit Mobile Number *</label>
+        <input type="tel" name="customer[contact]" id="contact" class="mm-input" placeholder="e.g. 9879638521" maxlength="10" required>
+      </div>
+
+      <!-- Physical Address -->
+      <div class="mm-form-group">
+        <label class="mm-label" for="address">Customer Village / Residential Address *</label>
+        <input type="text" name="customer[address]" id="address" class="mm-input" placeholder="e.g. House No. 24, Near Gram Panchayat" required>
+      </div>
+
+      <div class="add-cust-footer">
+        <button type="submit" class="mm-btn mm-btn-primary mm-btn-lg" style="width:100%;">
+          <i class="fa-solid fa-check"></i> Save Customer Profile
+        </button>
+        <a href="/dairy" class="mm-btn mm-btn-secondary" style="width:100%; text-align:center;">
+          <i class="fa-solid fa-arrow-left"></i> Cancel & Return to Dashboard
+        </a>
+      </div>
+    </form>
+  </div>
+</div>
+
+<%- include('../includes/footer.ejs') %>

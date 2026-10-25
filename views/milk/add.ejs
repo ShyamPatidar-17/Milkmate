@@ -1,64 +1,396 @@
-<!DOCTYPE html>
-<html lang="en">
-<head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Add Milk</title>
-    <link rel="stylesheet" href="../css/milk/add.css">
-</head>
-<body>
+<%- include('../includes/navbar.ejs') %>
+<link rel="stylesheet" href="/css/milk/add.css">
 
-<div class="form-container"> 
-    <h1><b><i>Add Milk</i></b></h1>
-     <form action="/dairy/add" method="POST">
-        <div class="form-group">
-            <label for="code"><b>Dairy Code:&nbsp&nbsp&nbsp<%=user.dairyCode%></b></label>
-            <input type="hidden" id="code" name="milk[dairyCode]" value="<%=user.dairyCode%>" required>
-        </div>
-    <div class="form-group">
-            <label for="code"><b>Customer Code:</b></label>
-            <input type="number" id="code" name="milk[code]" required>
-        </div>
-        
-        <div class="form-group">
-            <label for="date"><b>Date:</b></label>
-            <input type="date" id="date" name="milk[date]"  required>
-        </div>
+<div class="milk-entry-wrapper">
+  <div class="milk-entry-layout-grid">
+    <!-- Left Column: Milk Intake Form -->
+    <div class="milk-entry-card">
+      <div class="milk-entry-head">
+        <span class="milk-entry-badge"><i class="fa-solid fa-faucet-drip"></i> Dairy Intake Ledger</span>
+        <h2>Record Milk Intake</h2>
+        <p>Log intake with Fat & SNF automated rate pricing under Dairy #<%= user.dairyCode %></p>
+      </div>
 
-        <div class="form-group">
-            <label for="liter"><b>Liter:</b></label>
-            <input type="number" step="any" id="liter" name="milk[liter]" required>
-        </div>
+      <form action="/dairy/add" method="POST" id="milkEntryForm">
+        <!-- Hidden Dairy Code -->
+        <input type="hidden" name="milk[dairyCode]" value="<%= user.dairyCode %>">
 
-        <div class="form-group">
-            <label for="rate"><b>Rate:</b></label>
-            <input type="number" step="any" id="rate" name="milk[rate]" required>
+        <!-- Customer Code with live lookup indicator -->
+        <div class="mm-form-group">
+          <label class="mm-label" for="customerCode" style="display:flex; justify-content:space-between; align-items:center;">
+            <span>Customer / Farmer Code *</span>
+            <small id="lookupBadge" style="font-size:0.75rem; color:#64748b; font-weight:600;">Type code for live preview</small>
+          </label>
+          <div style="position:relative;">
+            <input type="number" id="customerCode" name="milk[code]" class="mm-input" placeholder="Enter farmer code (e.g. 101, 1, 2...)" required min="1" autocomplete="off">
+            <span id="inputStatusSpinner" style="position:absolute; right:14px; top:50%; transform:translateY(-50%); display:none; color:#059669;">
+              <i class="fa-solid fa-spinner fa-spin"></i>
+            </span>
+          </div>
         </div>
 
-        <div class="form-group">
-            <label for="shift"><b>Shift:</b></label>
-            <select id="shift" name="milk[shift]" required>
-                <option value="Mor">Morning</option>
-                <option value="Eve">Evening</option>
-            </select>
+        <!-- Automated Date & Shift Row (Read-Only / Unchangeable) -->
+        <div style="display:grid; grid-template-columns: 1fr 1fr; gap:16px; margin-bottom: 18px;">
+          <div>
+            <label class="mm-label">
+              <i class="fa-solid fa-calendar-check" style="color:#059669;"></i> Date (Auto-Locked)
+            </label>
+            <div style="background:#f1f5f9; border:1.5px solid #cbd5e1; border-radius:12px; padding:11px 14px; font-weight:700; color:#1e293b; display:flex; align-items:center; gap:8px;">
+              <i class="fa-solid fa-lock" style="color:#64748b; font-size:0.85rem;"></i>
+              <span id="displayDateText">Setting date...</span>
+            </div>
+            <!-- Hidden locked date value -->
+            <input type="hidden" id="dateInput" name="milk[date]" value="">
+          </div>
+
+          <div>
+            <label class="mm-label">
+              <i class="fa-solid fa-clock" style="color:#059669;"></i> Shift (Auto-Locked)
+            </label>
+            <div id="shiftDisplayBox" style="background:#f1f5f9; border:1.5px solid #cbd5e1; border-radius:12px; padding:11px 14px; font-weight:700; color:#1e293b; display:flex; align-items:center; gap:8px;">
+              <i class="fa-solid fa-lock" style="color:#64748b; font-size:0.85rem;"></i>
+              <span id="displayShiftText">Detecting shift...</span>
+            </div>
+            <!-- Hidden locked shift value -->
+            <input type="hidden" id="shiftInput" name="milk[shift]" value="Mor">
+          </div>
         </div>
-    <button type="submit" class="btn primary-btn">Add Milk</button>
-    </form> 
-    <a href="/dairy"><button class="btn primary-btn" type="submit">Back to home page</button></a>
- </div>
-<ul>  
-</ul>
-</body>
-</html>
+
+        <!-- Quantity Liters -->
+        <div class="mm-form-group">
+          <label class="mm-label" for="liter">Milk Quantity (Liters) *</label>
+          <input type="number" step="any" id="liter" name="milk[liter]" class="mm-input" placeholder="e.g. 10.5" required min="0.1">
+        </div>
+
+        <!-- Fat (%) & SNF (%) Grid -->
+        <div style="display:grid; grid-template-columns: 1fr 1fr; gap:16px;">
+          <div class="mm-form-group">
+            <label class="mm-label" for="fat">
+              <i class="fa-solid fa-droplet" style="color:#f59e0b;"></i> Fat % (Testing) *
+            </label>
+            <input type="number" step="0.1" id="fat" name="milk[fat]" class="mm-input" placeholder="e.g. 6.5" value="6.5" required min="1.0" max="15.0">
+            <small style="color:#64748b; font-size:0.78rem;">Standard: 3.5% &ndash; 9.0%</small>
+          </div>
+
+          <div class="mm-form-group">
+            <label class="mm-label" for="snf">
+              <i class="fa-solid fa-flask" style="color:#0284c7;"></i> SNF % (Solids-Not-Fat) *
+            </label>
+            <input type="number" step="0.1" id="snf" name="milk[snf]" class="mm-input" placeholder="e.g. 8.5" value="8.5" required min="4.0" max="15.0">
+            <small style="color:#64748b; font-size:0.78rem;">Standard: 8.0% &ndash; 9.5%</small>
+          </div>
+        </div>
+
+        <!-- Formula Notice & Live Calculation Box -->
+        <div class="calc-preview-box" style="flex-direction:column; align-items:stretch; gap:10px;">
+          <div style="display:flex; justify-content:space-between; align-items:center;">
+            <span style="font-size:0.85rem; color:#475569; font-weight:600;">
+              <i class="fa-solid fa-calculator" style="color:#059669; margin-right:4px;"></i>
+              Formula: (Fat &times; 6.5) + (SNF &times; 3.5)
+            </span>
+            <span style="font-size:0.95rem; font-weight:800; color:#0f172a;" id="ratePreview">
+              Rate: ₹72.00 / Liter
+            </span>
+            <!-- Hidden auto-computed rate -->
+            <input type="hidden" id="rateInput" name="milk[rate]" value="72.00">
+          </div>
+
+          <div style="display:flex; justify-content:space-between; align-items:center; padding-top:8px; border-top:1px dashed #cbd5e1;">
+            <span class="calc-preview-label" style="font-size:1rem; font-weight:700; color:#0f172a;">
+              Total Payout Amount:
+            </span>
+            <span class="calc-preview-value" id="calcPreview">
+              ₹0.00
+            </span>
+          </div>
+        </div>
+
+        <div class="milk-form-footer-actions">
+          <button type="submit" class="mm-btn mm-btn-primary mm-btn-lg" style="width:100%;">
+            <i class="fa-solid fa-check"></i> Save Milk Intake Entry
+          </button>
+          <a href="/dairy" class="mm-btn mm-btn-secondary" style="width:100%; text-align:center;">
+            <i class="fa-solid fa-arrow-left"></i> Cancel & Return to Dashboard
+          </a>
+        </div>
+      </form>
+    </div>
+
+    <!-- Right Column: Live Farmer Details Side View -->
+    <aside class="farmer-side-card" id="farmerSideCard">
+      <div class="farmer-side-head">
+        <h3><i class="fa-solid fa-id-card-clip" style="color:#059669;"></i> Farmer Side View</h3>
+        <span class="farmer-side-status status-waiting" id="sideStatusBadge">Awaiting Code</span>
+      </div>
+
+      <!-- State 1: Awaiting Input / Empty -->
+      <div id="sideEmptyState" class="side-view-empty">
+        <div class="side-view-empty-icon">
+          <i class="fa-solid fa-user-tag"></i>
+        </div>
+        <h4>Farmer Details Preview</h4>
+        <p>Enter the Farmer Code on the left to instantly load their registered profile, village route, total supplies, and ledger balance.</p>
+      </div>
+
+      <!-- State 2: Loading Spinner -->
+      <div id="sideLoadingState" class="side-view-loading" style="display:none;">
+        <i class="fa-solid fa-circle-notch fa-spin"></i>
+        <p>Looking up farmer records...</p>
+      </div>
+
+      <!-- State 3: Farmer Profile Found -->
+      <div id="sideProfileState" style="display:none;">
+        <div class="farmer-profile-main">
+          <div class="farmer-avatar" id="sideAvatar">F</div>
+          <div class="farmer-name-block">
+            <h4 id="sideFarmerName">Farmer Name</h4>
+            <span class="mm-badge mm-badge-primary" id="sideFarmerCodeBadge">Customer #101</span>
+          </div>
+        </div>
+
+        <div class="farmer-meta-list">
+          <div class="farmer-meta-row">
+            <i class="fa-solid fa-phone"></i>
+            <div>
+              <span>Contact: </span>
+              <strong><a href="#" id="sideFarmerPhone" class="phone-link" style="color:#059669; font-weight:700;">—</a></strong>
+            </div>
+          </div>
+          <div class="farmer-meta-row">
+            <i class="fa-solid fa-location-dot"></i>
+            <div>
+              <span>Village / Address: </span>
+              <strong id="sideFarmerAddress">—</strong>
+            </div>
+          </div>
+          <div class="farmer-meta-row">
+            <i class="fa-solid fa-building-wheat"></i>
+            <div>
+              <span>Dairy Affiliation: </span>
+              <strong id="sideDairyAffiliation">Dairy #<%= user.dairyCode %></strong>
+            </div>
+          </div>
+        </div>
+
+        <!-- Quick KPI Grid -->
+        <div class="farmer-kpi-grid">
+          <div class="side-kpi-card">
+            <span>Total Milk</span>
+            <h4 id="sideTotalLiters">0.0 L</h4>
+          </div>
+          <div class="side-kpi-card">
+            <span>Pending Due</span>
+            <h4 id="sideTotalAmount" style="color:#b45309;">₹0.00</h4>
+          </div>
+        </div>
+
+        <!-- Last Delivery Record Snapshot -->
+        <div class="side-last-entry-box" id="sideLastEntryBox">
+          <h5><i class="fa-solid fa-history"></i> Last Delivery</h5>
+          <p id="sideLastEntryText">No past delivery records found.</p>
+        </div>
+
+        <!-- Direct Link to Customer Details -->
+        <a href="#" id="sidePassbookLink" class="mm-btn mm-btn-secondary mm-btn-sm" style="width:100%; justify-content:center;" target="_blank">
+          <i class="fa-solid fa-receipt"></i> Open Complete Passbook
+        </a>
+      </div>
+
+      <!-- State 4: Not Found Alert -->
+      <div id="sideNotFoundState" class="side-view-empty" style="display:none;">
+        <div class="side-view-empty-icon" style="background:#fef2f2; color:#ef4444;">
+          <i class="fa-solid fa-user-xmark"></i>
+        </div>
+        <h4 style="color:#b91c1c;">Farmer Not Found</h4>
+        <p id="notFoundMsg">No customer profile exists with this code under Dairy #<%= user.dairyCode %>.</p>
+        <a href="/customers/add" class="mm-btn mm-btn-primary mm-btn-sm" style="margin-top:12px;">
+          <i class="fa-solid fa-user-plus"></i> Enroll This Farmer
+        </a>
+      </div>
+    </aside>
+  </div>
+</div>
+
+<%- include('../includes/footer.ejs') %>
 
 <script>
-    window.onload = function() {
-        var today = new Date();
-        var dd = String(today.getDate()).padStart(2, '0');
-        var mm = String(today.getMonth() + 1).padStart(2, '0');
-        var yyyy = today.getFullYear();
+  window.addEventListener('DOMContentLoaded', () => {
+    // 1. Automatic Date setting (Cannot be modified)
+    const now = new Date();
+    const yyyy = now.getFullYear();
+    const mm = String(now.getMonth() + 1).padStart(2, '0');
+    const dd = String(now.getDate()).padStart(2, '0');
+    const isoDate = `${yyyy}-${mm}-${dd}`;
 
-        today = yyyy + '-' + mm + '-' + dd;
-        document.getElementById("date").value = today;
+    document.getElementById('dateInput').value = isoDate;
+    document.getElementById('displayDateText').textContent = now.toLocaleDateString('en-IN', {
+      weekday: 'short',
+      year: 'numeric',
+      month: 'short',
+      day: 'numeric'
+    });
+
+    // 2. Automatic Shift setting (Morning: 12:00 AM to 12:00 PM | Evening: 12:00 PM to 12:00 AM)
+    const hours = now.getHours();
+    const isMorning = (hours >= 0 && hours < 12);
+    const shiftCode = isMorning ? 'Mor' : 'Eve';
+    const shiftLabel = isMorning ? '🌅 Morning Shift' : '🌙 Evening Shift';
+
+    document.getElementById('shiftInput').value = shiftCode;
+    const shiftText = document.getElementById('displayShiftText');
+    const shiftBox = document.getElementById('shiftDisplayBox');
+    shiftText.textContent = shiftLabel;
+    if (isMorning) {
+      shiftBox.style.background = '#fef3c7';
+      shiftBox.style.borderColor = '#fde68a';
+      shiftBox.style.color = '#b45309';
+    } else {
+      shiftBox.style.background = '#e0e7ff';
+      shiftBox.style.borderColor = '#c7d2fe';
+      shiftBox.style.color = '#4338ca';
     }
+
+    // 3. Real-time Fat & SNF Rate Calculation
+    const fatInput = document.getElementById('fat');
+    const snfInput = document.getElementById('snf');
+    const literInput = document.getElementById('liter');
+    const ratePreview = document.getElementById('ratePreview');
+    const rateInput = document.getElementById('rateInput');
+    const calcPreview = document.getElementById('calcPreview');
+
+    function calculatePricing() {
+      const fat = parseFloat(fatInput.value) || 0;
+      const snf = parseFloat(snfInput.value) || 0;
+      const liters = parseFloat(literInput.value) || 0;
+
+      // Rate formula: (Fat * 6.5) + (SNF * 3.5)
+      const calculatedRate = (fat * 6.5) + (snf * 3.5);
+      const totalAmount = calculatedRate * liters;
+
+      ratePreview.textContent = `Rate: ₹${calculatedRate.toFixed(2)} / Liter`;
+      rateInput.value = calculatedRate.toFixed(2);
+      calcPreview.textContent = `₹${totalAmount.toFixed(2)}`;
+    }
+
+    fatInput.addEventListener('input', calculatePricing);
+    snfInput.addEventListener('input', calculatePricing);
+    literInput.addEventListener('input', calculatePricing);
+
+    calculatePricing();
+
+    // 4. Live Farmer Code Lookup for Side View
+    const codeInput = document.getElementById('customerCode');
+    const sideEmptyState = document.getElementById('sideEmptyState');
+    const sideLoadingState = document.getElementById('sideLoadingState');
+    const sideProfileState = document.getElementById('sideProfileState');
+    const sideNotFoundState = document.getElementById('sideNotFoundState');
+    const sideStatusBadge = document.getElementById('sideStatusBadge');
+    const inputStatusSpinner = document.getElementById('inputStatusSpinner');
+    const lookupBadge = document.getElementById('lookupBadge');
+
+    let debounceTimer = null;
+
+    function resetSideView() {
+      sideEmptyState.style.display = 'block';
+      sideLoadingState.style.display = 'none';
+      sideProfileState.style.display = 'none';
+      sideNotFoundState.style.display = 'none';
+      sideStatusBadge.className = 'farmer-side-status status-waiting';
+      sideStatusBadge.textContent = 'Awaiting Code';
+      inputStatusSpinner.style.display = 'none';
+      lookupBadge.textContent = 'Type code for live preview';
+      lookupBadge.style.color = '#64748b';
+    }
+
+    codeInput.addEventListener('input', () => {
+      const codeVal = codeInput.value.trim();
+      clearTimeout(debounceTimer);
+
+      if (!codeVal) {
+        resetSideView();
+        return;
+      }
+
+      sideEmptyState.style.display = 'none';
+      sideProfileState.style.display = 'none';
+      sideNotFoundState.style.display = 'none';
+      sideLoadingState.style.display = 'block';
+      inputStatusSpinner.style.display = 'block';
+      lookupBadge.textContent = 'Checking database...';
+      lookupBadge.style.color = '#0284c7';
+
+      debounceTimer = setTimeout(async () => {
+        try {
+          const res = await fetch(`/dairy/api/farmer/${encodeURIComponent(codeVal)}`);
+          const data = await res.json();
+          inputStatusSpinner.style.display = 'none';
+          sideLoadingState.style.display = 'none';
+
+          if (data.success && data.found && data.customer) {
+            const cust = data.customer;
+            // Render profile
+            document.getElementById('sideAvatar').textContent = (cust.first ? cust.first.charAt(0) : 'F').toUpperCase();
+            document.getElementById('sideFarmerName').textContent = cust.name || `${cust.first} ${cust.last}`;
+            document.getElementById('sideFarmerCodeBadge').textContent = `Customer #${cust.code}`;
+            
+            const phoneEl = document.getElementById('sideFarmerPhone');
+            phoneEl.textContent = `+91 ${cust.contact}`;
+            phoneEl.href = `tel:${cust.contact}`;
+
+            document.getElementById('sideFarmerAddress').textContent = cust.address || 'Village Address';
+            document.getElementById('sideTotalLiters').textContent = `${cust.totalLiters.toFixed(1)} L`;
+            const pendingEl = document.getElementById('sideTotalAmount');
+            if (cust.netPending === 0 && cust.totalGross > 0) {
+              pendingEl.textContent = '₹0.00 (Cleared)';
+              pendingEl.style.color = '#059669';
+            } else {
+              pendingEl.textContent = `₹${cust.netPending.toFixed(2)}`;
+              pendingEl.style.color = '#dc2626';
+            }
+
+            const lastEntryEl = document.getElementById('sideLastEntryText');
+            if (cust.lastEntry) {
+              const d = new Date(cust.lastEntry.date);
+              const formattedDate = d.toLocaleDateString('en-IN', { day:'2-digit', month:'short' });
+              const shift = (cust.lastEntry.shift === 'Mor') ? 'Morning' : 'Evening';
+              
+              const calculatedAmount = cust.lastEntry.amount || (cust.lastEntry.liter * cust.lastEntry.rate);
+              let entryHtml = `<strong>${formattedDate} (${shift})</strong>: ${cust.lastEntry.liter}L @ ₹${cust.lastEntry.rate} (₹${calculatedAmount.toFixed(2)})`;
+              
+              if (cust.lastSettlement) {
+                const sDate = new Date(cust.lastSettlement.date).toLocaleDateString('en-IN', { day:'2-digit', month:'short' });
+                entryHtml += `<br><small style="color:#059669; font-weight:700;"><i class="fa-solid fa-receipt"></i> Last Settle: ₹${cust.lastSettlement.amount.toFixed(2)} (${cust.lastSettlement.type}) on ${sDate}</small>`;
+              }
+              lastEntryEl.innerHTML = entryHtml;
+            } else {
+              lastEntryEl.textContent = 'No previous milk intakes recorded.';
+            }
+
+            document.getElementById('sidePassbookLink').href = `/customers/${cust.id}`;
+
+            sideStatusBadge.className = 'farmer-side-status status-verified';
+            sideStatusBadge.innerHTML = '<i class="fa-solid fa-circle-check"></i> Enrolled';
+            lookupBadge.textContent = `✓ ${cust.name}`;
+            lookupBadge.style.color = '#059669';
+
+            sideProfileState.style.display = 'block';
+          } else {
+            // Not found
+            sideNotFoundState.style.display = 'block';
+            document.getElementById('notFoundMsg').textContent = `No customer registered with Code #${codeVal} under Dairy #<%= user.dairyCode %>.`;
+            sideStatusBadge.className = 'farmer-side-status status-notfound';
+            sideStatusBadge.innerHTML = '<i class="fa-solid fa-triangle-exclamation"></i> Not Found';
+            lookupBadge.textContent = `✗ Not found (#${codeVal})`;
+            lookupBadge.style.color = '#ef4444';
+          }
+        } catch (err) {
+          console.error('Farmer lookup error:', err);
+          inputStatusSpinner.style.display = 'none';
+          sideLoadingState.style.display = 'none';
+          sideNotFoundState.style.display = 'block';
+          document.getElementById('notFoundMsg').textContent = 'Error connecting to database. Please try again.';
+        }
+      }, 300);
+    });
+  });
 </script>

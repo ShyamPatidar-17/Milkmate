@@ -1,150 +1,102 @@
-<!DOCTYPE html>
-<html lang="en">
-<head>
-  <meta charset="UTF-8" />
-  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
-  <title>Sign Up - Dairy Management</title>
-  <link rel="stylesheet" href="../css/user/dairy.css"/>
-  <style>
-    .error {
-      color: red;
-      font-size: 0.9em;
-      margin-top: 2px;
-      display: block;
-    }
-  </style>
-</head>
-<body>
+<%- include('../includes/navbar.ejs') %>
+<link rel="stylesheet" href="/css/user/dairy.css">
 
-  <% if (success && success.length > 0) { %>
-    <div class="alert alert-success"><%= success[0] %></div>
-  <% } else if (error && error.length > 0) { %>
-    <div class="alert alert-danger"><%= error[0] %></div>
-  <% } %>
+<div class="auth-form-wrapper">
+  <div class="auth-form-card">
+    <div class="auth-form-head">
+      <span class="auth-form-badge"><i class="fa-solid fa-building-wheat"></i> Dairy Center Portal</span>
+      <h2>Dairy Owner Registration</h2>
+      <p>Register your collection center to manage farmers, daily milk intake, and auto-settlements.</p>
+    </div>
 
-  <div class="form-container">
-    <h2>Sign Up as Dairy Owner</h2>
-    <form id="signupForm" action="/signup/dairy" method="POST">
-      <input type="text" name="dairy[dairyCode]" id="dairyCode" placeholder="Dairy Code" required>
-      <small id="codeError" class="error"></small>
+    <form id="dairySignupForm" action="/signup/dairy" method="POST" novalidate>
+      <div class="form-grid-2">
+        <!-- Dairy Code -->
+        <div class="mm-form-group">
+          <label class="mm-label" for="dairyCode">Unique Dairy Code *</label>
+          <input type="number" name="dairy[dairyCode]" id="dairyCode" class="mm-input" placeholder="e.g. 101" required>
+          <small id="codeError" class="field-error"></small>
+        </div>
 
-      <input type="text" name="dairy[fullName]" id="fullName" placeholder="Owner Name" required>
-      <small id="nameError" class="error"></small>
+        <!-- Owner Full Name -->
+        <div class="mm-form-group">
+          <label class="mm-label" for="fullName">Owner Full Name *</label>
+          <input type="text" name="dairy[fullName]" id="fullName" class="mm-input" placeholder="e.g. Rajesh Sharma" required>
+          <small id="nameError" class="field-error"></small>
+        </div>
 
-      <input type="text" name="dairy[dairyName]" id="dairyName" placeholder="Dairy Name" required>
-      <small id="dairyNameError" class="error"></small>
+        <!-- Dairy Name -->
+        <div class="mm-form-group">
+          <label class="mm-label" for="dairyName">Dairy / Center Name *</label>
+          <input type="text" name="dairy[dairyName]" id="dairyName" class="mm-input" placeholder="e.g. Amrit Dhara Dairy" required>
+          <small id="dairyNameError" class="field-error"></small>
+        </div>
 
-      <input type="text" name="dairy[dairyAddress]" id="dairyAddress" placeholder="Dairy Address" required>
-      <small id="addressError" class="error"></small>
+        <!-- Contact Phone -->
+        <div class="mm-form-group">
+          <label class="mm-label" for="contact">10-Digit Mobile Number *</label>
+          <input type="tel" name="dairy[contact]" id="contact" class="mm-input" placeholder="e.g. 9879638521" required maxlength="10">
+          <small id="contactError" class="field-error"></small>
+        </div>
+      </div>
 
-      <input type="email" name="dairy[email]" id="email" placeholder="Email Address" required>
-      <small id="emailError" class="error"></small>
+      <!-- Email Address -->
+      <div class="mm-form-group">
+        <label class="mm-label" for="email">Official Email Address *</label>
+        <input type="email" name="dairy[email]" id="email" class="mm-input" placeholder="e.g. contact@amritdairy.com" required>
+        <small id="emailError" class="field-error"></small>
+      </div>
 
-      <input type="tel" name="dairy[contact]" id="contact" placeholder="Contact Number" required>
-      <small id="contactError" class="error"></small>
+      <!-- Dairy Address -->
+      <div class="mm-form-group">
+        <label class="mm-label" for="dairyAddress">Physical Dairy Address *</label>
+        <input type="text" name="dairy[dairyAddress]" id="dairyAddress" class="mm-input" placeholder="e.g. Village Kanadia, Bypass Road, Indore, MP" required>
+        <small id="addressError" class="field-error"></small>
+      </div>
 
-      <input type="password" name="dairy[password]" id="password" placeholder="Password" required>
-      <small id="passwordError" class="error"></small>
+      <div class="form-grid-2">
+        <!-- Password -->
+        <div class="mm-form-group">
+          <label class="mm-label" for="password">Create Password *</label>
+          <input type="password" name="dairy[password]" id="password" class="mm-input" placeholder="Minimum 5 characters" required minlength="5">
+          <small id="passwordError" class="field-error"></small>
+        </div>
 
-      <input type="password" name="dairy[confirmPassword]" id="confirmPassword" placeholder="Confirm Password" required>
-      <small id="confirmPasswordError" class="error"></small>
+        <!-- Confirm Password -->
+        <div class="mm-form-group">
+          <label class="mm-label" for="confirmPassword">Confirm Password *</label>
+          <input type="password" name="dairy[confirmPassword]" id="confirmPassword" class="mm-input" placeholder="Re-enter password" required minlength="5">
+          <small id="confirmPasswordError" class="field-error"></small>
+        </div>
+      </div>
 
-      <button class="btn-1" type="submit">Register</button>
+      <button type="submit" class="mm-btn mm-btn-primary mm-btn-lg auth-submit-btn">
+        <i class="fa-solid fa-check"></i> Complete Dairy Registration
+      </button>
     </form>
 
-    <a href="/login"><button type="button" class="btn-2">Already Registered? Login</button></a>
-    <a href="/signup"><button type="button" class="btn-2">Back</button></a>
+    <div class="auth-footer-links">
+      <span>Already have a dairy registered? <a href="/login">Sign In Here</a></span>
+      <a href="/signup"><i class="fa-solid fa-arrow-left"></i> Change Role</a>
+    </div>
   </div>
+</div>
 
-  <!-- Auto-hide alert -->
-  <script>
-    setTimeout(() => {
-      const alert = document.querySelector(".alert");
-      if (alert) alert.style.display = "none";
-    }, 4000);
-  </script>
+<%- include('../includes/footer.ejs') %>
 
-  <!-- Signup form validation -->
-  <script>
-    const form = document.getElementById("signupForm");
+<script>
+  document.getElementById("dairySignupForm").addEventListener("submit", function(e) {
+    let isValid = true;
+    const pwd = document.getElementById("password").value;
+    const confirmPwd = document.getElementById("confirmPassword").value;
+    const confirmError = document.getElementById("confirmPasswordError");
 
-    form.addEventListener("submit", function (e) {
-      let hasError = false;
+    confirmError.textContent = "";
+    if (pwd !== confirmPwd) {
+      confirmError.textContent = "Passwords do not match.";
+      isValid = false;
+    }
 
-      // Get values
-      const code = document.getElementById("dairyCode").value.trim();
-      const fullName = document.getElementById("fullName").value.trim();
-      const dairyName = document.getElementById("dairyName").value.trim();
-      const address = document.getElementById("dairyAddress").value.trim();
-      const email = document.getElementById("email").value.trim();
-      const contact = document.getElementById("contact").value.trim();
-      const password = document.getElementById("password").value.trim();
-      const confirmPassword = document.getElementById("confirmPassword").value.trim();
-
-      // Get error elements
-      const codeError = document.getElementById("codeError");
-      const nameError = document.getElementById("nameError");
-      const dairyNameError = document.getElementById("dairyNameError");
-      const addressError = document.getElementById("addressError");
-      const emailError = document.getElementById("emailError");
-      const contactError = document.getElementById("contactError");
-      const passwordError = document.getElementById("passwordError");
-      const confirmPasswordError = document.getElementById("confirmPasswordError");
-
-      // Clear old errors
-      codeError.textContent = "";
-      nameError.textContent = "";
-      dairyNameError.textContent = "";
-      addressError.textContent = "";
-      emailError.textContent = "";
-      contactError.textContent = "";
-      passwordError.textContent = "";
-      confirmPasswordError.textContent = "";
-
-      // Validations
-
-      if (!/^\d{0,6}$/.test(code)) {
-        codeError.textContent = "Dairy Code must be 0 to 6 digits and in Numbers only.";
-        hasError = true;
-      }
-
-      if (fullName.length < 3) {
-        nameError.textContent = "Owner name must be at least 3 characters.";
-        hasError = true;
-      }
-
-      if (dairyName.length < 3) {
-        dairyNameError.textContent = "Dairy name must be at least 3 characters.";
-        hasError = true;
-      }
-
-      if (address.length < 5) {
-        addressError.textContent = "Address must be at least 5 characters.";
-        hasError = true;
-      }
-
-      if (!/^\S+@\S+\.\S+$/.test(email)) {
-        emailError.textContent = "Enter a valid email address.";
-        hasError = true;
-      }
-
-      if (!/^\d{10}$/.test(contact)) {
-        contactError.textContent = "Contact must be a 10-digit number.";
-        hasError = true;
-      }
-
-      if (password.length < 6) {
-        passwordError.textContent = "Password must be at least 6 characters.";
-        hasError = true;
-      }
-
-      if (confirmPassword !== password) {
-        confirmPasswordError.textContent = "Passwords do not match.";
-        hasError = true;
-      }
-
-      if (hasError) e.preventDefault();
-    });
-  </script>
-</body>
-</html>
+    if (!isValid) e.preventDefault();
+  });
+</script>

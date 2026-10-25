@@ -8,4 +8,5 @@ function isLoggedIn(req, res, next) {
     next();
 }
 
-module.exports = { isLoggedIn };
+export { isLoggedIn };
+export default { isLoggedIn };

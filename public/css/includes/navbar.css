@@ -1,134 +1,324 @@
-/* Navbar */
-.navbar {
-  background-color: #ffffff;
-  padding: 20px 40px;
-  display: flex;
-  align-items: center;
-  justify-content: space-between;
-  box-shadow: 0 2px 10px rgba(0, 0, 0, 0.05);
-  flex-wrap: wrap;
+/* ==========================================================================
+   MilkMate - Modern Navbar Styling
+   ========================================================================== */
+
+.mm-navbar {
   position: sticky;
   top: 0;
   z-index: 1000;
+  background: rgba(255, 255, 255, 0.92);
+  backdrop-filter: blur(14px);
+  -webkit-backdrop-filter: blur(14px);
+  border-bottom: 1px solid rgba(226, 232, 240, 0.85);
+  box-shadow: 0 4px 20px -2px rgba(15, 23, 42, 0.05);
+  transition: all 0.3s ease;
 }
 
-/* Logo */
-.logo img {
-  height: 60px;
-}
-
-/* Title */
-.title {
-  font-size: 28px;
-  font-weight: bold;
-  color: #2a9d8f;
-  margin: 0 20px;
-  flex: 1;
-  text-align: center;
-}
-
-/* Nav Links */
-.nav-links {
-  display: flex;
-  gap: 20px;
-}
-
-/* Nav Links Styling */
-.nav-links a {
+.mm-navbar-container {
   display: flex;
   align-items: center;
+  justify-content: space-between;
+  padding: 14px 24px;
+  max-width: 1280px;
+  margin: 0 auto;
+}
+
+/* Brand Area */
+.mm-brand {
+  display: flex;
+  align-items: center;
+  gap: 12px;
   text-decoration: none;
-  color: #333;
-  font-weight: 600;
-  transition: color 0.3s ease;
 }
 
-/* Hover effect */
-.nav-links a:hover {
-  color: #4CAF50;
+.mm-brand-logo-wrapper {
+  width: 44px;
+  height: 44px;
+  background: linear-gradient(135deg, #ecfdf5 0%, #d1fae5 100%);
+  border: 1.5px solid #a7f3d0;
+  border-radius: 12px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  box-shadow: 0 2px 8px rgba(5, 150, 105, 0.15);
+  transition: transform 0.3s ease;
 }
 
-/* Icon styles */
-.about-icon, .contact-icon {
-  font-size: 1.5rem;
-  margin-right: 8px;
+.mm-brand:hover .mm-brand-logo-wrapper {
+  transform: rotate(-6deg) scale(1.05);
 }
 
-/* Hamburger icon container (for ☰ and ✖ buttons) */
-.hamburger-icons {
-  display: none;
+.mm-brand-logo {
+  width: 32px;
+  height: 32px;
+  object-fit: contain;
 }
 
-/* Common style for icons */
-.hamburger-icon {
-  font-size: 28px;
-  cursor: pointer;
-  color: #264653;
-  margin-left: auto;
-}
-
-/* Close icon specific */
-.close-icon {
-  display: none;
-}
-
-/* Responsive Styles */
-@media (max-width: 768px) {
- .navbar {
+.mm-brand-text {
+  display: flex;
   flex-direction: column;
-  align-items: center; /* Center logo and title horizontally */
-  padding: 15px 20px;
 }
 
-.title {
+.mm-brand-name {
+  font-family: var(--font-main, 'Plus Jakarta Sans', sans-serif);
+  font-size: 1.35rem;
+  font-weight: 800;
+  letter-spacing: -0.5px;
+  background: linear-gradient(135deg, #065f46 0%, #059669 50%, #0284c7 100%);
+  -webkit-background-clip: text;
+  -webkit-text-fill-color: transparent;
+  display: flex;
+  align-items: center;
+  gap: 6px;
+}
+
+.mm-brand-sub {
+  font-size: 0.72rem;
+  font-weight: 600;
+  text-transform: uppercase;
+  letter-spacing: 0.8px;
+  color: #64748b;
+}
+
+/* Nav Links Desktop */
+.mm-nav-menu {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+}
+
+.mm-nav-link {
+  font-family: var(--font-main, 'Plus Jakarta Sans', sans-serif);
+  font-size: 0.92rem;
+  font-weight: 600;
+  color: #334155;
+  padding: 8px 14px;
+  border-radius: 10px;
+  text-decoration: none;
+  display: inline-flex;
+  align-items: center;
+  gap: 7px;
+  transition: all 0.2s ease;
+}
+
+.mm-nav-link i {
+  font-size: 0.95rem;
+  color: #64748b;
+  transition: color 0.2s ease;
+}
+
+.mm-nav-link:hover {
+  color: #059669;
+  background: #f0fdf4;
+}
+
+.mm-nav-link:hover i {
+  color: #059669;
+}
+
+.mm-nav-link.active {
+  color: #059669;
+  background: #ecfdf5;
+}
+
+/* User Pill & Auth Buttons */
+.mm-user-pill {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+  background: #f8fafc;
+  border: 1px solid #e2e8f0;
+  border-radius: 9999px;
+  padding: 4px 14px 4px 5px;
+  margin-left: 6px;
+}
+
+.mm-user-avatar {
+  width: 32px;
+  height: 32px;
+  border-radius: 50%;
+  background: linear-gradient(135deg, #059669 0%, #0284c7 100%);
+  color: white;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-weight: 700;
+  font-size: 0.85rem;
+  box-shadow: 0 2px 6px rgba(5, 150, 105, 0.2);
+}
+
+.mm-user-details {
+  display: flex;
+  flex-direction: column;
+  line-height: 1.15;
+}
+
+.mm-user-name {
+  font-size: 0.84rem;
+  font-weight: 700;
+  color: #1e293b;
+}
+
+.mm-user-role {
+  font-size: 0.68rem;
+  font-weight: 600;
+  text-transform: uppercase;
+  color: #059669;
+}
+
+.mm-btn-login {
+  color: #059669;
+  background: #ecfdf5;
+  border: 1.5px solid #a7f3d0;
+  font-weight: 600;
+  padding: 8px 18px;
+  border-radius: 10px;
+  font-size: 0.9rem;
+  text-decoration: none;
+  transition: all 0.2s ease;
+  display: inline-flex;
+  align-items: center;
+  gap: 6px;
+}
+
+.mm-btn-login:hover {
+  background: #059669;
+  color: #ffffff;
+  border-color: #059669;
+  box-shadow: 0 4px 12px rgba(5, 150, 105, 0.2);
+}
+
+.mm-btn-register {
+  background: linear-gradient(135deg, #059669 0%, #047857 100%);
+  color: #ffffff !important;
+  font-weight: 600;
+  padding: 8px 18px;
+  border-radius: 10px;
+  font-size: 0.9rem;
+  text-decoration: none;
+  display: inline-flex;
+  align-items: center;
+  gap: 6px;
+  box-shadow: 0 4px 12px rgba(5, 150, 105, 0.25);
+  transition: all 0.2s ease;
+}
+
+.mm-btn-register:hover {
+  background: linear-gradient(135deg, #10b981 0%, #059669 100%);
+  box-shadow: 0 6px 16px rgba(5, 150, 105, 0.35);
+  transform: translateY(-1px);
+}
+
+.mm-btn-logout {
+  color: #ef4444;
+  background: #fee2e2;
+  border: 1px solid #fecaca;
+  font-weight: 600;
+  padding: 7px 14px;
+  border-radius: 10px;
+  font-size: 0.85rem;
+  text-decoration: none;
+  transition: all 0.2s ease;
+  display: inline-flex;
+  align-items: center;
+  gap: 5px;
+}
+
+.mm-btn-logout:hover {
+  background: #ef4444;
+  color: white;
+}
+
+/* Cart Badge Nav */
+.mm-nav-cart-btn {
+  position: relative;
+  background: #f0fdf4;
+  color: #059669;
+  border: 1px solid #bbf7d0;
+  padding: 8px 14px;
+  border-radius: 10px;
+  font-size: 0.9rem;
+  font-weight: 600;
+  display: inline-flex;
+  align-items: center;
+  gap: 6px;
+  text-decoration: none;
+  transition: all 0.2s ease;
+}
+
+.mm-nav-cart-btn:hover {
+  background: #dcfce7;
+}
+
+.mm-nav-cart-badge {
+  background: #ef4444;
+  color: white;
+  font-size: 0.72rem;
+  font-weight: 700;
+  padding: 2px 6px;
+  border-radius: 9999px;
+  min-width: 18px;
   text-align: center;
-  font-size: 24px;
-  margin: 10px 0;
 }
 
-  .logo img {
-    height: 50px;
-  }
+/* Mobile Toggle */
+.mm-nav-toggle {
+  display: none;
+  background: transparent;
+  border: none;
+  font-size: 1.5rem;
+  color: #1e293b;
+  cursor: pointer;
+  padding: 6px;
+  border-radius: 8px;
+}
 
-  .hamburger-icons {
+.mm-nav-toggle:hover {
+  background: #f1f5f9;
+}
+
+/* Responsive Mobile Navigation */
+@media (max-width: 992px) {
+  .mm-nav-toggle {
     display: flex;
-    flex-direction: row;
-    margin-left: auto;
+    align-items: center;
+    justify-content: center;
   }
 
-  .nav-links {
-    display: none;
+  .mm-nav-menu {
+    position: fixed;
+    top: 72px;
+    left: 0;
+    width: 100%;
+    background: #ffffff;
     flex-direction: column;
-    width: 100%;
-    margin-top: 10px;
-    gap: 10px;
+    align-items: stretch;
+    padding: 20px 24px;
+    gap: 12px;
+    border-bottom: 1px solid #e2e8f0;
+    box-shadow: 0 10px 25px -5px rgba(0, 0, 0, 0.1);
+    transform: translateY(-150%);
+    opacity: 0;
+    visibility: hidden;
+    transition: all 0.3s cubic-bezier(0.16, 1, 0.3, 1);
   }
 
-  .nav-links.active {
-    display: flex;
+  .mm-nav-menu.active {
+    transform: translateY(0);
+    opacity: 1;
+    visibility: visible;
   }
 
-  .nav-links a {
-    width: 100%;
-    padding: 10px 0;
-    border-bottom: 1px solid #ddd;
-  }
-}
-
-/* Force hamburger & close icons hidden on large screens */
-@media (min-width: 769px) {
-  .hamburger-icon {
-    display: none !important;
+  .mm-nav-link {
+    padding: 12px 16px;
+    font-size: 1rem;
+    border-radius: 8px;
   }
 
-  .nav-links {
-    display: flex !important;
-    flex-direction: row;
-    width: auto;
-  }
-
-  .nav-links a {
-    border: none;
-    padding: 0;
+  .mm-user-pill {
+    margin: 8px 0;
+    padding: 8px 12px;
+    border-radius: 12px;
+    justify-content: flex-start;
   }
 }

@@ -1,16 +1,7 @@
-const mongoose = require("mongoose");
+// Models/customer.js
+// Firebase Firestore Model for Dairy Customers / Farmers
+import { createModel } from "../config/firebaseModel.js";
 
-const customerSchema = new mongoose.Schema({
-  first: { type: String, required: true },
-  last: { type: String, required: true },
-  contact: { type: Number, required: true },
-  address: { type: String, required: true },
-  code: { type: Number, required: true }, 
-  codeD: { type: Number, required: true },
-});
+const Customer = createModel("customers");
 
-customerSchema.index({ code: 1, codeD: 1 }, { unique: true });
-
-const Customer = mongoose.model("Customer", customerSchema);
-
-module.exports = Customer;
+export default Customer;

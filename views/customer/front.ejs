@@ -1,78 +1,91 @@
 <%- include('../includes/navbar.ejs') %>
-<head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Dairy Management</title>
-    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.7.2/css/all.min.css">
-    <link rel="stylesheet" href="../css/customers/front.css">
-</head>
-<body>
-    <main class="container">
-        <!-- Left Section -->
-        <section class="left-section">
-           <a href="/customerrs/details">My Details </a>
-           <a href="/product/all">Products</a> 
-        </section>
+<link rel="stylesheet" href="/css/customers/front.css">
 
+<div class="dashboard-wrapper">
+  <!-- Welcome Profile Banner -->
+  <div class="dash-welcome-card">
+    <div class="dash-welcome-info">
+      <h1>Hello, <%= user.name || 'Valued Customer' %> 👋</h1>
+      <p>Customer Passbook & Fresh Dairy Products Hub</p>
+    </div>
 
-        <!-- Center Section (Image) -->
-        <section class="center-section">
-            <img src="https://cdn.vectorstock.com/i/500p/53/99/cartoon-little-farmer-with-cow-and-milk-bucket-vector-51335399.jpg" alt="Milkman Illustration">
-        </section>
+    <div class="dash-profile-badges">
+      <div class="dash-badge-chip">
+        <i class="fa-solid fa-id-card"></i>
+        <span>Customer Code: <strong><%= user.code %></strong></span>
+      </div>
+      <div class="dash-badge-chip">
+        <i class="fa-solid fa-building-wheat"></i>
+        <span>Dairy Code: <strong><%= user.dairyCode %></strong></span>
+      </div>
+      <div class="dash-badge-chip">
+        <i class="fa-solid fa-calendar-day"></i>
+        <span id="currentDateStr">Live Operations</span>
+      </div>
+    </div>
+  </div>
 
-        <!-- Right Section (Milkman Details) -->
-        <section class="right-section">
-            <h2>Customer Details</h2>
-            <table>
-                <tr>
-                    <th>User Code</th>
-                    <td><%=user.code%></td>
-                </tr>
-                <tr>
-                    <th>User Name</th>
-                    <td><%=user.name%></td>
-                </tr>
-                <tr>
-                    <th>Dairy Code</th>
-                    <td><%=user.dairyCode%> </td>
-                </tr>
-                <tr>
-                    <th>Contact</th>
-                    <td>+91 <%=user.mobile%> </td>
-                </tr>
-                <tr>
-                    <th>Address</th>
-                    <td><%=user.address%> </td>
-                </tr>
-               
-            </table>
-        </section>
-    </main>
+  <!-- Profile Details Card -->
+  <div class="customer-profile-card">
+    <div class="profile-meta-item">
+      <span class="profile-meta-label">Customer Name</span>
+      <span class="profile-meta-value"><%= user.name || 'Not Available' %></span>
+    </div>
+    <div class="profile-meta-item">
+      <span class="profile-meta-label">Mobile Contact</span>
+      <span class="profile-meta-value">+91 <%= user.mobile || 'Not Available' %></span>
+    </div>
+    <div class="profile-meta-item">
+      <span class="profile-meta-label">Dairy Center</span>
+      <span class="profile-meta-value">Center #<%= user.dairyCode %></span>
+    </div>
+    <div class="profile-meta-item">
+      <span class="profile-meta-label">Delivery Address</span>
+      <span class="profile-meta-value"><%= user.address || 'Local Customer' %></span>
+    </div>
+  </div>
 
+  <!-- Core Actions Grid -->
+  <h2 class="dash-section-title">
+    <i class="fa-solid fa-grid-2"></i> Customer Services
+  </h2>
 
-    <%- include('../includes/footer.ejs') %>
+  <div class="dash-actions-grid">
+    <!-- Action 1: My Milk Ledger / Passbook -->
+    <a href="/customerrs/details" class="action-tile">
+      <div class="action-tile-icon" style="background:#ecfdf5; color:#059669;">
+        <i class="fa-solid fa-receipt"></i>
+      </div>
+      <h4>Milk Passbook & Dues <i class="fa-solid fa-arrow-right arrow-icon"></i></h4>
+      <p>View your complete daily milk intake history, fat rates, liters delivered, and cumulative bill amount.</p>
+      <div class="tile-footer">View Passbook &rarr;</div>
+    </a>
 
-    <script src="https://cdn.jsdelivr.net/npm/sweetalert2@11"></script>
+    <!-- Action 2: Fresh Dairy Store -->
+    <a href="/product/all" class="action-tile">
+      <div class="action-tile-icon" style="background:#fef3c7; color:#d97706;">
+        <i class="fa-solid fa-store"></i>
+      </div>
+      <h4>Farm Fresh Dairy Store <i class="fa-solid fa-arrow-right arrow-icon"></i></h4>
+      <p>Shop pure farm-made ghee, freshly pressed paneer, curd, and organic butter directly from local dairies.</p>
+      <div class="tile-footer">Browse Products &rarr;</div>
+    </a>
 
-<% if (typeof success !== 'undefined' && success.length > 0) { %>
-    <script>
-        Swal.fire({
-            icon: 'success',
-            title: 'Success',
-            text: '<%= success[0] %>'
-        });
-    </script>
-<% } %>
+    <!-- Action 3: Cart & Orders -->
+    <a href="/cart" class="action-tile">
+      <div class="action-tile-icon" style="background:#f0f9ff; color:#0284c7;">
+        <i class="fa-solid fa-cart-shopping"></i>
+      </div>
+      <h4>My Shopping Cart <i class="fa-solid fa-arrow-right arrow-icon"></i></h4>
+      <p>Review items in your shopping bag, update quantities, calculate shipping, and checkout securely.</p>
+      <div class="tile-footer">Open Shopping Cart &rarr;</div>
+    </a>
+  </div>
+</div>
 
-<% if (typeof error !== 'undefined' && error.length > 0) { %>
-    <script>
-        Swal.fire({
-            icon: 'error',
-            title: 'Error',
-            text: '<%= error[0] %>'
-        });
-    </script>
-<% } %>
+<%- include('../includes/footer.ejs') %>
 
-</body>
-</html>
+<script>
+  const dateOptions = { weekday: 'short', year: 'numeric', month: 'short', day: 'numeric' };
+  document.getElementById('currentDateStr').textContent = new Date().toLocaleDateString('en-IN', dateOptions);
+</script>

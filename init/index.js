@@ -1,10 +1,10 @@
-const mongoose = require('mongoose');
-const initData=require("./data.js");
-const Customer=require("../Models/customer.js");
-const Dairy=require("../Models/dairy.js");
-const Milkman=require("../Models/milkman.js");
-const customerr=require("../Models/customerr.js");
-const addMilk=require("../Models/addmilk.js")
+import mongoose from "mongoose";
+import initData from "./data.js";
+import Customer from "../Models/customer.js";
+import Dairy from "../Models/dairy.js";
+import Milkman from "../Models/milkman.js";
+import customerr from "../Models/customerr.js";
+import addMilk from "../Models/addmilk.js";
 
 
 const dbUrl="mongodb://localhost:27017/Milkman"

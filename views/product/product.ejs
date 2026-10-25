@@ -1,77 +1,135 @@
 <%- include('../includes/navbar.ejs') %>
+<link rel="stylesheet" href="/css/dairy/product.css">
 
-<!DOCTYPE html>
-<html lang="en">
-<head>
-  <meta charset="UTF-8">
-  <meta name="viewport" content="width=device-width, initial-scale=1">
-  <title>Fresh Dairy Products</title>
-  <link rel="stylesheet" href="/css/dairy/product.css">
-</head>
-<body>
-  
-  <section class="hero">
-    <div id="cart-message" style="display:none; position:fixed; top:20px; right:20px; background:#4caf50; color:white; padding:10px 20px; border-radius:5px; z-index:1000;">
-    Item added to cart!
+<!-- Toast Notification -->
+<div id="cart-message" class="cart-toast">
+  <i class="fa-solid fa-circle-check"></i>
+  <span id="toast-text">Item successfully added to your cart!</span>
+</div>
+
+<!-- Floating Go To Cart Button (For Customers / Shoppers) -->
+<% 
+  const isCustomer = user && user.type === 'customer';
+  const cartItemsCount = (typeof cart !== 'undefined' && cart) ? cart.length : 0;
+%>
+
+<% if (isCustomer) { %>
+  <div class="cart-floating-dock" id="floatingCartDock">
+    <a href="/cart" class="cart-dock-btn">
+      <i class="fa-solid fa-cart-shopping"></i>
+      <span>Go to Cart</span>
+      <span class="cart-dock-counter" id="cart-count"><%= cartItemsCount %></span>
+    </a>
+  </div>
+<% } %>
+
+<!-- Hero Header -->
+<section class="market-hero">
+  <div class="market-hero-inner">
+    <span class="mm-badge mm-badge-primary" style="margin-bottom:12px;">
+      <i class="fa-solid fa-seedling"></i> Farm Fresh &bull; 100% Pure
+    </span>
+    <h1>Fresh Farm Dairy Marketplace</h1>
+    <p>Pure, wholesome, and preservative-free dairy delights delivered directly from local dairy cooperatives and milkmen to your home.</p>
+
+    <!-- Controls / Action Buttons -->
+    <div class="market-controls">
+      <% if (user && (user.type === 'dairy' || user.type === 'milkman')) { %>
+        <a href="/product/add" class="mm-btn mm-btn-primary mm-btn-lg">
+          <i class="fa-solid fa-plus"></i> Add New Product to Store
+        </a>
+        <a href="<%= user.type === 'dairy' ? '/dairy' : '/milkman' %>" class="mm-btn mm-btn-secondary mm-btn-lg">
+          <i class="fa-solid fa-arrow-left"></i> My Dashboard
+        </a>
+      <% } else if (isCustomer) { %>
+        <a href="/cart" class="mm-btn mm-btn-primary">
+          <i class="fa-solid fa-cart-shopping"></i> View Shopping Cart (<span id="cart-counter-btn"><%= cartItemsCount %></span>)
+        </a>
+        <a href="/customerrs" class="mm-btn mm-btn-secondary">
+          <i class="fa-solid fa-arrow-left"></i> Customer Portal
+        </a>
+      <% } else { %>
+        <a href="/login" class="mm-btn mm-btn-primary">
+          <i class="fa-solid fa-right-to-bracket"></i> Login to Order
+        </a>
+      <% } %>
     </div>
-    <%if (user.type==="customer"){%>
-      <div id="go-to-cart-container">
-          <div class="cart-fixed-btn">
-            <a href="/cart">
-              <button class="go-to-cart-btn">
-                🛒 Go to Cart (<span id="cart-count"><%= cart.length %></span>items)
-              </button>
-            </a>
+  </div>
+</section>
+
+<!-- Products Grid Section -->
+<section class="products-container">
+  <% if (!products || products.length === 0) { %>
+    <div class="empty-table-state" style="background:#ffffff; border-radius:20px; border:1px solid #e2e8f0; padding:60px 20px;">
+      <div class="empty-icon"><i class="fa-solid fa-box-open"></i></div>
+      <h3>No Products Listed Yet</h3>
+      <p>There are currently no fresh products listed in this inventory catalog.</p>
+      <% if (user && (user.type === 'dairy' || user.type === 'milkman')) { %>
+        <a href="/product/add" class="mm-btn mm-btn-primary">
+          <i class="fa-solid fa-plus"></i> Add Your First Dairy Product
+        </a>
+      <% } %>
+    </div>
+  <% } else { %>
+    <div class="products-grid">
+      <% for (let product of products) { 
+        // Fallback image if broken or empty
+        const fallbackImg = "https://images.unsplash.com/photo-1550583724-b2692b85b150?auto=format&fit=crop&w=600&q=80";
+        const imgSrc = (product.image && product.image.trim()) ? product.image : fallbackImg;
+      %>
+        <div class="product-card">
+          <div class="product-img-box">
+            <img src="<%= imgSrc %>" alt="<%= product.name %>" class="product-img" onerror="this.onerror=null; this.src='<%= fallbackImg %>';">
+            <span class="product-fresh-badge"><i class="fa-solid fa-certificate"></i> Fresh Batch</span>
           </div>
 
-      </div>      
-    <% }%>
-    
-    <div class="hero-text">
-      <h1 style="text-align: center;">Our Fresh Dairy Products</h1>
-      <b><p style="text-align: center;">Pure, Fresh & Delicious – Direct from Farms & Our Dairy to Your Home</p></b>
-    </div>
-    <img src="https://static.vecteezy.com/system/resources/previews/024/529/923/non_2x/dairy-products-on-rustic-wooden-table-illustration-ai-generative-free-photo.jpg" alt="Dairy Products Banner" class="banner">
+          <div class="product-body">
+            <h3 class="product-title"><%= product.name %></h3>
+            <p class="product-desc"><%= product.desc %></p>
 
-    <% if (user.type === 'dairy' || user.type === 'milkman') { %>
-      <div class="add-button-container">
-        <a href="/product/add">
-          <button class="add-btn">+ Add New Product</button>
-        </a>
-      </div>
-    <% } %>
-  </section>
+            <div class="product-price-row">
+              <span class="product-price">₹<%= product.price %></span>
+              <span class="product-unit">Tax Included</span>
+            </div>
 
-  <section class="products">
-    <% for(let product of products) { %>
-      <div class="product-card">
-        <img src="<%=product.image%>" alt="Product Image" class="product-img">
-        <h2><b>Name: </b><%=product.name%></h2>
-        <p class="desc"><b>Description:</b> <%=product.desc%></p>
-        <p><b>Price: ₹<%=product.price%></b></p>
-
-        <div class="button-group">
-          <% if (user.type === 'dairy'||user.type === 'milkman') { %>
-            <a href="/product/edit/<%= product._id %>"><button class="edit-btn">Edit</button></a>
-            <form action="/product/delete/<%= product._id %>?_method=DELETE" method="POST" style="display:inline;">
-              <button type="submit" class="del-btn">Delete</button>
-            </form>
-          <% } %>
-
-          <% if (user.type==='customer') { %>
-            <button class="buy-btn" data-product-id="<%= product._id%>">Add to Cart</button>     
-          <% } %>
+            <div class="product-actions">
+              <% if (user && (user.type === 'dairy' || user.type === 'milkman')) { %>
+                <a href="/product/edit/<%= product._id %>" class="mm-btn mm-btn-secondary mm-btn-sm" style="flex:1;">
+                  <i class="fa-solid fa-pen"></i> Edit
+                </a>
+                <form action="/product/delete/<%= product._id %>?_method=DELETE" method="POST" style="flex:1;" onsubmit="return confirm('Delete this product permanently?');">
+                  <button type="submit" class="mm-btn mm-btn-danger mm-btn-sm" style="width:100%;">
+                    <i class="fa-solid fa-trash"></i> Delete
+                  </button>
+                </form>
+              <% } else if (isCustomer) { %>
+                <button type="button" class="buy-btn" data-product-id="<%= product._id %>">
+                  <i class="fa-solid fa-cart-plus"></i> Add to Cart
+                </button>
+              <% } else { %>
+                <a href="/login" class="buy-btn" style="text-decoration:none;">
+                  <i class="fa-solid fa-right-to-bracket"></i> Login to Purchase
+                </a>
+              <% } %>
+            </div>
+          </div>
         </div>
-      </div>
-    <% } %>
-  </section>
+      <% } %>
+    </div>
+  <% } %>
+</section>
 
 <%- include('../includes/footer.ejs') %>
 
 <script>
-  document.querySelectorAll('.buy-btn').forEach(button => {
+  // Add to cart AJAX handler
+  document.querySelectorAll('.buy-btn[data-product-id]').forEach(button => {
     button.addEventListener('click', async () => {
       const productId = button.dataset.productId;
+      const originalText = button.innerHTML;
+      button.disabled = true;
+      button.innerHTML = '<i class="fa-solid fa-spinner fa-spin"></i> Adding...';
+
       try {
         const res = await fetch('/cart/add', {
           method: 'POST',
@@ -84,42 +142,32 @@
         if (res.ok) {
           const result = await res.json();
 
-          const cartCountSpan = document.getElementById('cart-count');
-          const goToCartContainer = document.getElementById('go-to-cart-container');
+          // Update dock counters
+          const countSpan = document.getElementById('cart-count');
+          const btnCountSpan = document.getElementById('cart-counter-btn');
+          if (countSpan) countSpan.textContent = result.cartCount;
+          if (btnCountSpan) btnCountSpan.textContent = result.cartCount;
 
-          if (cartCountSpan) {
-            cartCountSpan.textContent = result.cartCount;
-          } else {
-            // If no cart button exists, inject it
-            goToCartContainer.innerHTML = `
-              <div class="cart-fixed-btn">
-                <a href="/cart">
-                  <button class="go-to-cart-btn">
-                    🛒 Go to Cart (<span id="cart-count">${result.cartCount}</span> items)
-                  </button>
-                </a>
-              </div>
-            `;
+          // Toast Message
+          const toast = document.getElementById('cart-message');
+          if (toast) {
+            toast.style.display = 'flex';
+            setTimeout(() => {
+              toast.style.display = 'none';
+            }, 3000);
           }
-
-          // ✅ Flash message
-          const msg = document.getElementById('cart-message');
-          msg.style.display = 'block';
-          msg.textContent = '✅ Product added to cart!';
-          setTimeout(() => {
-            msg.style.display = 'none';
-          }, 2000);
+        } else {
+          alert('Could not add item to cart. Please try again.');
         }
       } catch (err) {
-        console.error('Error:', err);
+        console.error('Add to cart error:', err);
+      } finally {
+        button.disabled = false;
+        button.innerHTML = '<i class="fa-solid fa-check"></i> Added!';
+        setTimeout(() => {
+          button.innerHTML = originalText;
+        }, 1500);
       }
     });
   });
 </script>
-
-  
-  
-</body>
-</html>
-
- 

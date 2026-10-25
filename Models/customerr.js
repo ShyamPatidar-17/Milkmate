@@ -1,43 +1,7 @@
-const mongoose = require('mongoose');
-const Schema = mongoose.Schema;
+// Models/customerr.js
+// Firebase Firestore Model for Customer Portal Authentication
+import { createModel } from "../config/firebaseModel.js";
 
-const customerrSchema= new Schema({
-    code:{
-        type:Number,
-        required: true,
-    },
-    codeD:{
-      type:Number,
-      required:true,
-    },
-    contact:{
-        type:Number,
-        required:true,
-        unique:true,
-    },
-    password:{
-        type:String,
-        minlength: 5,
-        maxlength: 20
-    },
-    confirmPassword:{
-        type:String,
-        minlength:5,
-        maxlength:20
-    }
-})
+const customerr = createModel("customerrs");
 
-customerrSchema.index({ code: 1, codeD: 1 }, { unique: true });
-
-customerrSchema.pre('save', function(next) {
-  if (this.password !== this.confirmPassword) {
-    next(new Error('Passwords do not match'));
-  } else {
-    next();
-  }
-});
-
-// Create and export the DairyOwner model
-const Customerr = mongoose.model('Customerr', customerrSchema);
-
-module.exports = Customerr;
+export default customerr;

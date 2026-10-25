@@ -1,183 +1,272 @@
+/* ==========================================================================
+   MilkMate - Modern Dairy Marketplace Styles
+   ========================================================================== */
 
-body {
-  font-family: 'Segoe UI', sans-serif;
-  margin: 0;
-  background-color: #f8f9fa;
-}
-
-.hero {
-  padding: 20px;
+.market-hero {
+  background: radial-gradient(circle at 10% 20%, rgba(209, 250, 229, 0.5) 0%, rgba(240, 249, 255, 0.4) 50%, #ffffff 90%);
+  padding: 50px 24px 60px 24px;
+  border-bottom: 1px solid #e2e8f0;
   text-align: center;
-  background-color: #ffffff;
-  box-shadow: 0 2px 5px rgba(0,0,0,0.1);
+  position: relative;
+  overflow: hidden;
+  animation: mmFadeIn 0.4s ease-out both;
 }
 
-.hero .banner {
-  width: 100%;
-  max-width: 1000px;
-  height: auto;
-  max-height: 400px;
-  object-fit: cover;
-  margin-top: 10px;
-  border-radius: 10px;
+.market-hero-inner {
+  max-width: 900px;
+  margin: 0 auto;
+  animation: mmSlideUp 0.45s cubic-bezier(0.16, 1, 0.3, 1) both;
 }
 
-.add-button-container {
-  margin-top: 20px;
+.market-hero-inner h1 {
+  font-size: clamp(2rem, 4vw, 2.8rem);
+  font-weight: 800;
+  color: #0f172a;
+  letter-spacing: -0.5px;
+  margin-bottom: 12px;
 }
 
-.add-btn {
-  padding: 10px 20px;
-  font-size: 16px;
-  background-color:#2ecc71;
-  color: white;
-  border: none;
-  border-radius: 8px;
-  cursor: pointer;
-  transition: background-color 0.3s ease, transform 0.2s ease;
+.market-hero-inner p {
+  font-size: 1.1rem;
+  color: #64748b;
+  margin-bottom: 24px;
+  line-height: 1.6;
 }
 
-.add-btn:hover {
-  background-color: #07652e;
-  transform: translateY(-2px);
-}
-
-.products {
+.market-controls {
   display: flex;
-  flex-wrap: wrap;
   justify-content: center;
-  margin: 40px 10px;
-  gap: 20px;
+  gap: 14px;
+  flex-wrap: wrap;
+  margin-top: 10px;
+}
+
+/* Floating / Fixed Go To Cart Button */
+.cart-floating-dock {
+  position: fixed;
+  bottom: 28px;
+  right: 28px;
+  z-index: 999;
+  animation: mmSlideUp 0.5s cubic-bezier(0.16, 1, 0.3, 1) both;
+}
+
+.cart-dock-btn {
+  background: linear-gradient(135deg, #059669 0%, #047857 100%);
+  color: #ffffff;
+  padding: 14px 24px;
+  border-radius: 9999px;
+  font-family: var(--font-main, sans-serif);
+  font-weight: 700;
+  font-size: 1rem;
+  display: inline-flex;
+  align-items: center;
+  gap: 12px;
+  box-shadow: 0 10px 25px -5px rgba(5, 150, 105, 0.45);
+  text-decoration: none;
+  transition: all 0.28s cubic-bezier(0.16, 1, 0.3, 1);
+  border: 2px solid #ffffff;
+}
+
+.cart-dock-btn:hover {
+  transform: translateY(-4px) scale(1.04);
+  box-shadow: 0 16px 32px -5px rgba(5, 150, 105, 0.55);
+  color: #ffffff;
+}
+
+.cart-dock-counter {
+  background: #ffffff;
+  color: #065f46;
+  font-size: 0.85rem;
+  font-weight: 800;
+  padding: 3px 9px;
+  border-radius: 9999px;
+  box-shadow: 0 2px 6px rgba(0, 0, 0, 0.1);
+}
+
+/* Products Grid Section */
+.products-container {
+  max-width: 1240px;
+  margin: 50px auto 80px auto;
+  padding: 0 24px;
+}
+
+.products-grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fill, minmax(280px, 1fr));
+  gap: 28px;
 }
 
 .product-card {
-  background-color: #ffffff;
-  border-radius: 10px;
-  box-shadow: 0 2px 10px rgba(0,0,0,0.1);
-  width: 250px;
-  padding: 20px;
-  text-align: center;
-  transition: 0.3s ease;
+  background: #ffffff;
+  border-radius: 20px;
+  border: 1.5px solid #e2e8f0;
+  overflow: hidden;
+  display: flex;
+  flex-direction: column;
+  transition: all 0.35s cubic-bezier(0.16, 1, 0.3, 1);
+  box-shadow: 0 4px 15px -2px rgba(15, 23, 42, 0.04);
+  animation: mmSlideUp 0.5s ease both;
 }
 
 .product-card:hover {
-  transform: scale(1.03);
+  transform: translateY(-8px);
+  border-color: #a7f3d0;
+  box-shadow: 0 20px 32px -10px rgba(5, 150, 105, 0.18);
+}
+
+.product-img-box {
+  width: 100%;
+  height: 210px;
+  background: #f1f5f9;
+  overflow: hidden;
+  position: relative;
 }
 
 .product-img {
   width: 100%;
-  max-width: 100%;
-  height: 150px;
-  object-fit: contain;
-  margin-bottom: 10px;
-  display: block;
-}
-.cart-fixed-btn {
-  position: fixed;
-  top: 120px;
-  right: 20px;
-  z-index: 1000;
+  height: 100%;
+  object-fit: cover;
+  transition: transform 0.45s ease;
 }
 
-.go-to-cart-btn {
-  padding: 10px 20px;
-  font-size: 16px;
-  background-color: #28a745;
-  color: white;
-  border: none;
-  border-radius: 5px;
-  cursor: pointer;
-  box-shadow: 0 2px 8px rgba(0,0,0,0.2);
-  transition: background-color 0.3s ease;
+.product-card:hover .product-img {
+  transform: scale(1.08);
 }
 
-.go-to-cart-btn:hover {
-  background-color: #026d19;
+.product-fresh-badge {
+  position: absolute;
+  top: 14px;
+  left: 14px;
+  background: rgba(255, 255, 255, 0.94);
+  backdrop-filter: blur(8px);
+  color: #065f46;
+  font-size: 0.72rem;
+  font-weight: 800;
+  text-transform: uppercase;
+  letter-spacing: 0.5px;
+  padding: 4px 12px;
+  border-radius: 9999px;
+  border: 1px solid #a7f3d0;
+  box-shadow: 0 2px 8px rgba(0, 0, 0, 0.08);
 }
 
-.desc{
-  height: 100px;
-}
-
-/* Button layout */
-.button-group {
+.product-body {
+  padding: 22px 24px;
   display: flex;
-  justify-content: center;
-  gap: 8px;
-  margin-top: 10px;
-  flex-wrap: wrap;
+  flex-direction: column;
+  flex-grow: 1;
 }
 
-.edit-btn, .del-btn, .buy-btn {
-  padding: 10px 16px;
-  border: none;
-  border-radius: 6px;
-  font-size: 14px;
-  margin: 15px;
-  cursor: pointer;
-  transition: background-color 0.3s ease, transform 0.2s ease;
+.product-title {
+  font-size: 1.25rem;
+  font-weight: 800;
+  color: #0f172a;
+  margin-bottom: 6px;
+  letter-spacing: -0.3px;
 }
 
-.edit-btn {
-  background-color: #1d9ef5;
-  color: white;
+.product-desc {
+  font-size: 0.88rem;
+  color: #64748b;
+  line-height: 1.55;
+  margin-bottom: 18px;
+  flex-grow: 1;
+  display: -webkit-box;
+  -webkit-line-clamp: 2;
+  -webkit-box-orient: vertical;
+  overflow: hidden;
 }
 
-.edit-btn:hover {
-  background-color: #025084;
-  transform: translateY(-2px);
+.product-price-row {
+  display: flex;
+  align-items: baseline;
+  justify-content: space-between;
+  margin-bottom: 18px;
+  padding-top: 14px;
+  border-top: 1px solid #f1f5f9;
+}
+
+.product-price {
+  font-size: 1.45rem;
+  font-weight: 800;
+  color: #059669;
+}
+
+.product-unit {
+  font-size: 0.8rem;
+  color: #94a3b8;
+  font-weight: 600;
+}
+
+.product-actions {
+  display: flex;
+  gap: 10px;
 }
 
 .buy-btn {
-  background-color: #f39c12;
-  color: white;
+  width: 100%;
+  background: linear-gradient(135deg, #059669 0%, #047857 100%);
+  color: #ffffff;
+  border: none;
+  border-radius: 12px;
+  padding: 12px 18px;
+  font-family: var(--font-main, sans-serif);
+  font-weight: 700;
+  font-size: 0.95rem;
+  cursor: pointer;
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  gap: 8px;
+  transition: all 0.22s ease;
+  box-shadow: 0 4px 12px rgba(5, 150, 105, 0.25);
 }
 
 .buy-btn:hover {
-  background-color: #8e4505;
+  background: linear-gradient(135deg, #10b981 0%, #059669 100%);
+  box-shadow: 0 6px 18px rgba(5, 150, 105, 0.38);
   transform: translateY(-2px);
 }
 
-.del-btn {
-  background-color: #e74c3c;
-  color: white;
+.buy-btn:active {
+  transform: scale(0.97);
 }
 
-.del-btn:hover {
-  background-color: #911406;
-  transform: translateY(-2px);
+/* Toast Message */
+.cart-toast {
+  position: fixed;
+  top: 90px;
+  right: 24px;
+  background: #059669;
+  color: #ffffff;
+  padding: 14px 22px;
+  border-radius: 14px;
+  box-shadow: 0 10px 25px -5px rgba(5, 150, 105, 0.4);
+  font-family: var(--font-main, sans-serif);
+  font-weight: 700;
+  font-size: 0.95rem;
+  z-index: 2000;
+  display: none;
+  align-items: center;
+  gap: 10px;
+  animation: mmSlideDown 0.3s ease;
 }
 
-/* Responsive Design */
-@media (max-width: 768px) {
-  .product-card {
-    width: 80%;
-    padding: 15px;
+@media (max-width: 600px) {
+  .products-container {
+    margin: 32px auto 60px auto;
+    padding: 0 16px;
   }
-
-  .add-btn {
-    width: 80%;
-    font-size: 15px;
+  .products-grid {
+    grid-template-columns: 1fr;
+    gap: 20px;
   }
-}
-
-@media (max-width: 480px) {
-  .product-card {
-    width: 90%;
+  .cart-floating-dock {
+    bottom: 20px;
+    right: 20px;
   }
-
-  .add-btn {
-    width: 100%;
-  }
-
-  .edit-btn, .del-btn, .buy-btn {
-    width: 100%;
-    font-size: 15px;
-  }
-
-  .button-group {
-    flex-direction: column;
-    align-items: stretch;
-    gap: 10px;
+  .cart-dock-btn {
+    padding: 12px 20px;
+    font-size: 0.92rem;
   }
 }

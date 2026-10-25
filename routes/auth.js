@@ -1,10 +1,10 @@
-const express = require("express");
+import express from "express";
 const router = express.Router();
-const Dairy = require("../Models/dairy");
-const Milkman = require("../Models/milkman");
-const Customer = require("../Models/customer");
-const customerr = require("../Models/customerr");
-const MilkmanCustomer=require("../Models/milkmancustomer")
+import Dairy from "../Models/dairy.js";
+import Milkman from "../Models/milkman.js";
+import Customer from "../Models/customer.js";
+import customerr from "../Models/customerr.js";
+import MilkmanCustomer from "../Models/milkmancustomer.js";
 
 // Signup Routes
 router.get("/signup", (req, res) => res.render("user/main.ejs"));
@@ -283,4 +283,4 @@ router.get("/logout", (req, res) => {
 });
 
 
-module.exports = router;
+export default router;

@@ -1,51 +1,179 @@
-/* Footer */
-.site-footer {
-    background-color: #060606;
-    color: #ffffff;
-    padding: 40px 20px 20px 20px;
+/* ==========================================================================
+   MilkMate - Modern Footer Styling
+   ========================================================================== */
+
+.mm-footer {
+  margin-top: auto;
+  background: #0f172a;
+  color: #94a3b8;
+  border-top: 1px solid #1e293b;
+  font-family: var(--font-body, 'Inter', sans-serif);
+}
+
+.mm-footer-container {
+  max-width: 1280px;
+  margin: 0 auto;
+  padding: 60px 24px 30px 24px;
+}
+
+.mm-footer-grid {
+  display: grid;
+  grid-template-columns: 2fr 1fr 1fr 1.5fr;
+  gap: 40px;
+  margin-bottom: 48px;
+}
+
+/* Col 1: Brand Info */
+.mm-footer-brand {
+  display: flex;
+  align-items: center;
+  gap: 12px;
+  margin-bottom: 16px;
+  text-decoration: none;
+}
+
+.mm-footer-brand-title {
+  font-family: var(--font-main, 'Plus Jakarta Sans', sans-serif);
+  font-size: 1.4rem;
+  font-weight: 800;
+  color: #ffffff;
+  letter-spacing: -0.5px;
+}
+
+.mm-footer-desc {
+  font-size: 0.92rem;
+  line-height: 1.7;
+  color: #94a3b8;
+  margin-bottom: 20px;
+  max-width: 360px;
+}
+
+.mm-footer-socials {
+  display: flex;
+  gap: 12px;
+}
+
+.mm-social-link {
+  width: 38px;
+  height: 38px;
+  border-radius: 10px;
+  background: #1e293b;
+  color: #cbd5e1;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-size: 1rem;
+  transition: all 0.2s ease;
+  border: 1px solid #334155;
+  text-decoration: none;
+}
+
+.mm-social-link:hover {
+  background: #059669;
+  color: #ffffff;
+  border-color: #059669;
+  transform: translateY(-3px);
+}
+
+/* Col 2 & 3: Links */
+.mm-footer-heading {
+  font-family: var(--font-main, 'Plus Jakarta Sans', sans-serif);
+  color: #ffffff;
+  font-size: 1.05rem;
+  font-weight: 700;
+  margin-bottom: 20px;
+  position: relative;
+}
+
+.mm-footer-heading::after {
+  content: '';
+  position: absolute;
+  bottom: -6px;
+  left: 0;
+  width: 24px;
+  height: 2px;
+  background: #059669;
+  border-radius: 2px;
+}
+
+.mm-footer-links {
+  list-style: none;
+  padding: 0;
+  margin: 0;
+  display: flex;
+  flex-direction: column;
+  gap: 12px;
+}
+
+.mm-footer-links a {
+  color: #94a3b8;
+  text-decoration: none;
+  font-size: 0.92rem;
+  display: inline-flex;
+  align-items: center;
+  gap: 8px;
+  transition: all 0.2s ease;
+}
+
+.mm-footer-links a:hover {
+  color: #34d399;
+  transform: translateX(4px);
+}
+
+/* Col 4: Contact & Support */
+.mm-footer-contact-item {
+  display: flex;
+  align-items: flex-start;
+  gap: 12px;
+  font-size: 0.92rem;
+  margin-bottom: 14px;
+  color: #cbd5e1;
+}
+
+.mm-footer-contact-item i {
+  color: #10b981;
+  font-size: 1.1rem;
+  margin-top: 3px;
+}
+
+/* Bottom Bar */
+.mm-footer-bottom {
+  border-top: 1px solid #1e293b;
+  padding-top: 24px;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  flex-wrap: wrap;
+  gap: 16px;
+  font-size: 0.88rem;
+  color: #64748b;
+}
+
+.mm-footer-bottom a {
+  color: #94a3b8;
+  text-decoration: none;
+}
+
+.mm-footer-bottom a:hover {
+  color: #34d399;
+}
+
+/* Responsive Footer */
+@media (max-width: 992px) {
+  .mm-footer-grid {
+    grid-template-columns: 1fr 1fr;
+    gap: 32px;
   }
-  
-  .footer-content {
-    display: flex;
-    flex-wrap: wrap;
-    justify-content: space-between;
-    max-width: 1200px;
-    margin: auto;
-    gap: 30px;
+}
+
+@media (max-width: 576px) {
+  .mm-footer-grid {
+    grid-template-columns: 1fr;
+    gap: 28px;
   }
-  
-  .footer-section {
-    flex: 1;
-    min-width: 250px;
-    line-height: 1.6;
-  }
-  
-  .footer-section h3,
-  .footer-section h4 {
-    color: #f4a261;
-    margin-bottom: 10px;
-  }
-  
-  .footer-section ul {
-    list-style: none;
-    padding: 0;
-  }
-  
-  .footer-section ul li a {
-    color: #ffffff;
-    text-decoration: none;
-    transition: color 0.3s ease;
-  }
-  
-  .footer-section ul li a:hover {
-    color: #e9c46a;
-  }
-  
-  .footer-bottom {
+
+  .mm-footer-bottom {
+    flex-direction: column;
     text-align: center;
-    margin-top: 30px;
-    border-top: 1px solid #ffffff33;
-    padding-top: 15px;
-    font-size: 14px;
-    color: #ccc;
   }
+}

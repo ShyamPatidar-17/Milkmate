@@ -1,92 +1,214 @@
-/* Reset and base styles */
-* {
-  margin: 0;
-  padding: 0;
-  box-sizing: border-box;
-}
+/* ==========================================================================
+   MilkMate - Signup Role Selection Styling
+   ========================================================================== */
 
-body, html {
-  font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
-  color: #333;
-  background: #f7f9fc;
-}
-
-/* Container - Welcome Section */
-.container {
-  text-align: center;
-  padding: 80px 20px;
-  background: linear-gradient(to right, #f1f9ff, #e6f7f2);
-}
-
-.container h1 {
-  font-size: 36px;
-  color: #264653;
-  margin-bottom: 15px;
-}
-
-.container p {
-  font-size: 18px;
-  margin-bottom: 40px;
-  color: #555;
-}
-
-/* Options */
-.options {
+.signup-select-section {
+  min-height: calc(100vh - 160px);
+  padding: 60px 24px;
+  background: radial-gradient(circle at 10% 20%, rgba(209, 250, 229, 0.45) 0%, rgba(240, 249, 255, 0.4) 50%, #f8fafc 90%);
   display: flex;
-  justify-content: center;
-  gap: 30px;
-  flex-wrap: wrap;
+  align-items: center;
+  position: relative;
+  overflow: hidden;
 }
 
-.option {
-  background-color: #2a9d8f;
-  color: white;
+.signup-select-container {
+  max-width: 1140px;
+  margin: 0 auto;
+  width: 100%;
+  animation: mmSlideUp 0.45s cubic-bezier(0.16, 1, 0.3, 1) both;
+}
+
+.signup-select-header {
+  text-align: center;
+  max-width: 640px;
+  margin: 0 auto 50px auto;
+}
+
+.signup-select-header h1 {
+  font-size: clamp(2rem, 4vw, 2.75rem);
+  font-weight: 800;
+  color: #0f172a;
+  letter-spacing: -0.5px;
+  margin-bottom: 12px;
+}
+
+.signup-select-header p {
+  font-size: 1.05rem;
+  color: #64748b;
+  line-height: 1.6;
+}
+
+.signup-cards-grid {
+  display: grid;
+  grid-template-columns: repeat(3, 1fr);
+  gap: 28px;
+}
+
+.signup-role-card {
+  background: #ffffff;
+  border-radius: 20px;
+  border: 1.5px solid #e2e8f0;
+  padding: 36px 28px;
+  display: flex;
+  flex-direction: column;
+  transition: all 0.35s cubic-bezier(0.16, 1, 0.3, 1);
   text-decoration: none;
-  padding: 15px 30px;
-  border-radius: 8px;
-  font-size: 18px;
-  font-weight: 500;
-  transition: background-color 0.3s ease;
+  position: relative;
+  overflow: hidden;
+  box-shadow: 0 4px 15px rgba(15, 23, 42, 0.04);
+  animation: mmFadeIn 0.5s ease both;
 }
 
-.option:hover {
-  background-color: #13e408;
+.signup-role-card:nth-child(1) { animation-delay: 0.08s; }
+.signup-role-card:nth-child(2) { animation-delay: 0.16s; }
+.signup-role-card:nth-child(3) { animation-delay: 0.24s; }
+
+.signup-role-card:hover {
+  transform: translateY(-8px);
+  border-color: #10b981;
+  box-shadow: 0 20px 35px -10px rgba(5, 150, 105, 0.18);
 }
 
+.signup-role-card:nth-child(2):hover {
+  border-color: #0284c7;
+  box-shadow: 0 20px 35px -10px rgba(2, 132, 199, 0.18);
+}
 
+.signup-role-card:nth-child(3):hover {
+  border-color: #d97706;
+  box-shadow: 0 20px 35px -10px rgba(217, 119, 6, 0.18);
+}
 
-/* Responsive */
-@media (max-width: 768px) {
-  .navbar {
-    flex-direction: column;
-    align-items: flex-start;
+.signup-card-badge {
+  position: absolute;
+  top: 18px;
+  right: 18px;
+  font-size: 0.72rem;
+  font-weight: 700;
+  text-transform: uppercase;
+  letter-spacing: 0.5px;
+  padding: 4px 10px;
+  border-radius: 9999px;
+  background: #ecfdf5;
+  color: #059669;
+  transition: transform 0.25s ease;
+}
+
+.signup-role-card:hover .signup-card-badge {
+  transform: scale(1.06);
+}
+
+.signup-icon-box {
+  width: 64px;
+  height: 64px;
+  border-radius: 18px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-size: 1.6rem;
+  margin-bottom: 24px;
+  transition: transform 0.35s cubic-bezier(0.34, 1.56, 0.64, 1);
+}
+
+.signup-role-card:hover .signup-icon-box {
+  transform: scale(1.12) rotate(4deg);
+}
+
+.signup-icon-dairy {
+  background: #ecfdf5;
+  color: #059669;
+  box-shadow: 0 4px 12px rgba(5, 150, 105, 0.12);
+}
+
+.signup-icon-milkman {
+  background: #f0f9ff;
+  color: #0284c7;
+  box-shadow: 0 4px 12px rgba(2, 132, 199, 0.12);
+}
+
+.signup-icon-customer {
+  background: #fef3c7;
+  color: #d97706;
+  box-shadow: 0 4px 12px rgba(217, 119, 6, 0.12);
+}
+
+.signup-role-card h3 {
+  font-size: 1.45rem;
+  font-weight: 800;
+  color: #0f172a;
+  margin-bottom: 10px;
+  letter-spacing: -0.3px;
+}
+
+.signup-role-card p {
+  font-size: 0.92rem;
+  color: #64748b;
+  line-height: 1.6;
+  margin-bottom: 24px;
+  flex-grow: 1;
+}
+
+.signup-features-pill {
+  font-size: 0.82rem;
+  color: #334155;
+  background: #f8fafc;
+  padding: 10px 14px;
+  border-radius: 12px;
+  margin-bottom: 24px;
+  border: 1px solid #e2e8f0;
+  line-height: 1.45;
+  transition: background 0.2s ease, border-color 0.2s ease;
+}
+
+.signup-role-card:hover .signup-features-pill {
+  background: #ffffff;
+  border-color: #cbd5e1;
+}
+
+.signup-action-btn {
+  width: 100%;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 8px;
+  transition: all 0.25s ease;
+}
+
+.signup-action-btn i {
+  transition: transform 0.25s ease;
+}
+
+.signup-role-card:hover .signup-action-btn i {
+  transform: translateX(4px);
+}
+
+@media (max-width: 992px) {
+  .signup-select-section {
+    padding: 40px 20px;
   }
-
-  .nav-links {
-    margin-top: 10px;
-    width: 100%;
-    justify-content: center;
-    flex-wrap: wrap;
+  .signup-cards-grid {
+    grid-template-columns: 1fr;
+    max-width: 480px;
+    margin: 0 auto;
+    gap: 20px;
   }
+}
 
-  .title {
-    text-align: center;
-    margin-top: 10px;
+@media (max-width: 480px) {
+  .signup-select-header {
+    margin-bottom: 32px;
   }
-
-  .footer-content {
-    flex-direction: column;
-    align-items: center;
-    text-align: center;
+  .signup-role-card {
+    padding: 26px 20px;
   }
-
-  .options {
-    flex-direction: column;
-    align-items: center;
+  .signup-icon-box {
+    width: 52px;
+    height: 52px;
+    font-size: 1.35rem;
+    margin-bottom: 18px;
   }
-
-  .option {
-    width: 80%;
-    max-width: 300px;
+  .signup-role-card h3 {
+    font-size: 1.3rem;
   }
 }

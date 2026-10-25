@@ -1,130 +1,249 @@
+/* ==========================================================================
+   MilkMate - Contact & Team Modern Styles
+   ========================================================================== */
 
-body {
-  font-family: 'Poppins', sans-serif;
-  margin: 0;
-  padding: 0;
-  background-color: #f9f9f9;
-  color: #333;
+.contact-hero {
+  background: radial-gradient(circle at 10% 20%, rgba(209, 250, 229, 0.6) 0%, rgba(240, 249, 255, 0.4) 50%, #ffffff 90%);
+  padding: 60px 24px 70px 24px;
+  text-align: center;
+  border-bottom: 1px solid #e2e8f0;
+  position: relative;
+  overflow: hidden;
+  animation: mmFadeIn 0.4s ease-out both;
+}
+
+.contact-hero-content {
+  max-width: 800px;
+  margin: 0 auto;
+  animation: mmSlideUp 0.45s cubic-bezier(0.16, 1, 0.3, 1) both;
+}
+
+.contact-hero-content h1 {
+  font-size: clamp(2rem, 4vw, 2.9rem);
+  font-weight: 800;
+  color: #0f172a;
+  letter-spacing: -0.5px;
+  margin-bottom: 14px;
+}
+
+.contact-hero-content p {
+  font-size: 1.15rem;
+  color: #475569;
+  line-height: 1.7;
+}
+
+.contact-main-wrapper {
+  max-width: 1200px;
+  margin: 60px auto 80px auto;
+  padding: 0 24px;
+}
+
+/* Contact Info 3-Card Grid */
+.contact-cards-grid {
+  display: grid;
+  grid-template-columns: repeat(3, 1fr);
+  gap: 24px;
+  margin-bottom: 70px;
+}
+
+.contact-info-card {
+  background: #ffffff;
+  border-radius: 20px;
+  border: 1.5px solid #e2e8f0;
+  padding: 34px 24px;
+  text-align: center;
+  transition: all 0.32s cubic-bezier(0.16, 1, 0.3, 1);
+  box-shadow: 0 4px 15px rgba(15, 23, 42, 0.04);
+  animation: mmSlideUp 0.5s ease both;
+}
+
+.contact-cards-grid .contact-info-card:nth-child(1) { animation-delay: 0.08s; }
+.contact-cards-grid .contact-info-card:nth-child(2) { animation-delay: 0.16s; }
+.contact-cards-grid .contact-info-card:nth-child(3) { animation-delay: 0.24s; }
+
+.contact-info-card:hover {
+  transform: translateY(-6px);
+  border-color: #a7f3d0;
+  box-shadow: 0 16px 30px -5px rgba(5, 150, 105, 0.15);
+}
+
+.contact-icon-bubble {
+  width: 62px;
+  height: 62px;
+  border-radius: 18px;
+  background: #ecfdf5;
+  color: #059669;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-size: 1.55rem;
+  margin: 0 auto 18px auto;
+  transition: transform 0.3s cubic-bezier(0.34, 1.56, 0.64, 1);
+}
+
+.contact-info-card:hover .contact-icon-bubble {
+  transform: scale(1.12) rotate(4deg);
+}
+
+.contact-info-card h4 {
+  font-size: 1.25rem;
+  font-weight: 700;
+  color: #0f172a;
+  margin-bottom: 8px;
+}
+
+.contact-info-card p {
+  color: #64748b;
+  font-size: 0.95rem;
   line-height: 1.6;
 }
 
-/* Section Headings */
-.tex1, .tex {
+/* Team Grid */
+.team-section-head {
   text-align: center;
-  margin-top: 40px;
+  margin-bottom: 44px;
+  animation: mmSlideUp 0.4s ease both;
 }
 
-.tex1 h1, .tex h1 {
-  font-size: 36px;
-  color: #2c3e50;
+.team-section-head h2 {
+  font-size: clamp(1.8rem, 3.5vw, 2.3rem);
+  font-weight: 800;
+  color: #0f172a;
+  margin-bottom: 8px;
+  letter-spacing: -0.5px;
 }
 
+.team-section-head p {
+  color: #64748b;
+  font-size: 1.05rem;
+}
 
-/* Milkman Contact Section */
-.milkman-contact {
+.team-cards-grid {
+  display: grid;
+  grid-template-columns: repeat(4, 1fr);
+  gap: 26px;
+}
+
+.team-member-card {
   background: #ffffff;
-  padding: 30px;
-  margin: 20px auto;
-  max-width: 700px;
-  box-shadow: 0px 4px 10px rgba(0, 0, 0, 0.1);
-  border-radius: 10px;
-  line-height: 1.7;
-  font-size: 18px;
-}
-
-
-/* Milkman Note */
-.milkman-note {
-  margin-top: 20px;
-  color: #16a085;
-}
-
-
-/* Meet the Team Main Section */
-main.container {
-  display: flex;
-  flex-wrap: wrap;
-  justify-content: center;
-  gap: 30px;
-  margin: 50px auto;
-  padding: 0 20px;
-}
-
-
-/* Person Card */
-.person-card {
-  background: #ffffff;
-  border-radius: 15px;
-  box-shadow: 0px 8px 20px rgba(0, 0, 0, 0.1);
+  border-radius: 22px;
+  border: 1.5px solid #e2e8f0;
   overflow: hidden;
-  width: 300px;
-  transition: transform 0.3s;
-}
-
-.person-card:hover {
-  transform: translateY(-10px);
-}
-
-/* Photo Box */
-.photo-box {
-  background-color: #ecf0f1;
-  height: 350px;
+  text-align: center;
+  padding: 32px 20px;
+  transition: all 0.35s cubic-bezier(0.16, 1, 0.3, 1);
+  box-shadow: 0 4px 15px rgba(15, 23, 42, 0.04);
   display: flex;
-  justify-content: center;
+  flex-direction: column;
   align-items: center;
-  overflow: hidden;
+  animation: mmSlideUp 0.5s ease both;
 }
 
-.photo-box img {
-  width: 300px;
-  height: 300px;
-  object-fit: cover;
+.team-cards-grid .team-member-card:nth-child(1) { animation-delay: 0.1s; }
+.team-cards-grid .team-member-card:nth-child(2) { animation-delay: 0.18s; }
+.team-cards-grid .team-member-card:nth-child(3) { animation-delay: 0.26s; }
+.team-cards-grid .team-member-card:nth-child(4) { animation-delay: 0.34s; }
+
+.team-member-card:hover {
+  transform: translateY(-8px);
+  border-color: #059669;
+  box-shadow: 0 20px 32px -10px rgba(5, 150, 105, 0.18);
+}
+
+.member-avatar-box {
+  width: 124px;
+  height: 124px;
   border-radius: 50%;
- 
+  overflow: hidden;
+  border: 4px solid #ecfdf5;
+  box-shadow: 0 6px 18px rgba(5, 150, 105, 0.15);
+  margin-bottom: 18px;
+  transition: transform 0.35s ease, border-color 0.35s ease;
 }
 
-
-/* Info Box */
-.info-box {
-  padding: 20px;
-  text-align: center;
+.team-member-card:hover .member-avatar-box {
+  transform: scale(1.06);
+  border-color: #a7f3d0;
 }
 
-.info-box h2 {
-  margin: 10px 0;
-  font-size: 24px;
-  color: #2c3e50;
+.member-avatar-box img {
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
 }
 
-.info-box .role {
-  font-size: 18px;
-  color: #3498db;
-  margin-bottom: 15px;
+.member-name {
+  font-size: 1.25rem;
+  font-weight: 800;
+  color: #0f172a;
+  margin-bottom: 4px;
 }
 
-.info-box p {
-  margin: 8px 0;
-  font-size: 16px;
+.member-role {
+  font-size: 0.8rem;
+  font-weight: 700;
+  color: #059669;
+  background: #ecfdf5;
+  padding: 4px 12px;
+  border-radius: 9999px;
+  margin-bottom: 14px;
+  border: 1px solid #a7f3d0;
 }
 
-.info-box a {
-  color: #16a085;
+.member-email {
+  font-size: 0.84rem;
+  color: #64748b;
+  margin-bottom: 18px;
+  word-break: break-all;
+}
+
+.member-social-links {
+  margin-top: auto;
+  display: flex;
+  gap: 10px;
+}
+
+.member-social-btn {
+  padding: 8px 18px;
+  border-radius: 12px;
+  font-size: 0.86rem;
+  font-weight: 700;
   text-decoration: none;
+  display: inline-flex;
+  align-items: center;
+  gap: 6px;
+  background: #f1f5f9;
+  color: #0f172a;
+  border: 1px solid #e2e8f0;
+  transition: all 0.22s ease;
 }
 
-.info-box a:hover {
-  text-decoration: underline;
+.member-social-btn:hover {
+  background: #0284c7;
+  color: #ffffff;
+  border-color: #0284c7;
+  transform: translateY(-2px);
+  box-shadow: 0 4px 12px rgba(2, 132, 199, 0.3);
 }
 
-
-/* Responsive for Mobile */
-@media (max-width: 768px) {
-  main.container {
-    flex-direction: column;
-    align-items: center;
+@media (max-width: 992px) {
+  .contact-cards-grid {
+    grid-template-columns: 1fr;
+    gap: 16px;
   }
+  .team-cards-grid {
+    grid-template-columns: 1fr 1fr;
+    gap: 20px;
+  }
+}
 
-  .person-card {
-    width: 90%;
+@media (max-width: 580px) {
+  .contact-main-wrapper {
+    margin: 40px auto 60px auto;
+    padding: 0 16px;
+  }
+  .team-cards-grid {
+    grid-template-columns: 1fr;
+    gap: 18px;
   }
 }

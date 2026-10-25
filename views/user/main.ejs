@@ -1,26 +1,64 @@
 <%- include('../includes/navbar.ejs') %>
-<!DOCTYPE html>
-<html lang="en">
-<head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Dairy Management</title>
-    <link rel="stylesheet" href="../css/user/main.css">
-</head>
-<body>
-    <!-- Main Content -->
-    <div class="container">
-        <h1>Welcome to Dairy Management System</h1>
-        <p>Efficiently manage dairy, milkmen, and customers with ease.</p>
-        <div class="options">
-            <a href="signup/dairy" class="option">Dairy</a>
-            <a href="signup/milkman" class="option">Milkman</a>
-            <a href="signup/customer" class="option">Customer</a>
+<link rel="stylesheet" href="/css/user/main.css">
+
+<section class="signup-select-section">
+  <div class="signup-select-container">
+    <div class="signup-select-header">
+      <span class="mm-badge mm-badge-primary" style="margin-bottom: 12px;">Create Your Account</span>
+      <h1>Select Your Portal Role</h1>
+      <p>Choose the account type that corresponds to your operations in the MilkMate ecosystem.</p>
+    </div>
+
+    <div class="signup-cards-grid">
+      <!-- Dairy Owner Option -->
+      <div class="signup-role-card">
+        <span class="signup-card-badge">Cooperative</span>
+        <div class="signup-icon-box signup-icon-dairy">
+          <i class="fa-solid fa-building-wheat"></i>
         </div>
-    </div><br><br><br><br><br>
+        <h3>Dairy Center</h3>
+        <p>For milk collection centers, processing plants, and dairy cooperatives registering farmer suppliers and batch intake.</p>
+        <div class="signup-features-pill">
+          <i class="fa-solid fa-check" style="color:#10b981;"></i> Multi-farmer Ledger &bull; Shift Pricing &bull; Inventory
+        </div>
+        <a href="/signup/dairy" class="mm-btn mm-btn-primary signup-action-btn">
+          Register as Dairy <i class="fa-solid fa-arrow-right"></i>
+        </a>
+      </div>
 
-    <!-- Footer Section -->
-    <%- include('../includes/footer.ejs') %>
+      <!-- Milkman Option -->
+      <div class="signup-role-card">
+        <span class="signup-card-badge" style="background:#f0f9ff; color:#0284c7;">Vendor</span>
+        <div class="signup-icon-box signup-icon-milkman">
+          <i class="fa-solid fa-truck-fast"></i>
+        </div>
+        <h3>Milkman</h3>
+        <p>For independent milk delivery vendors, distributors, and delivery agents managing household morning & evening drop routes.</p>
+        <div class="signup-features-pill">
+          <i class="fa-solid fa-check" style="color:#0284c7;"></i> Doorstep Routes &bull; Instant Delivery Logs &bull; Retail Sales
+        </div>
+        <a href="/signup/milkman" class="mm-btn mm-btn-accent signup-action-btn">
+          Register as Milkman <i class="fa-solid fa-arrow-right"></i>
+        </a>
+      </div>
 
-</body>
-</html>
+      <!-- Customer Option -->
+      <div class="signup-role-card">
+        <span class="signup-card-badge" style="background:#fef3c7; color:#d97706;">Consumer</span>
+        <div class="signup-icon-box signup-icon-customer">
+          <i class="fa-solid fa-user-check"></i>
+        </div>
+        <h3>Customer</h3>
+        <p>For household customers and milk consumers. View your daily milk intake passbook, verify bills, and buy dairy products.</p>
+        <div class="signup-features-pill">
+          <i class="fa-solid fa-check" style="color:#d97706;"></i> Digital Passbook &bull; Bill History &bull; Store Checkout
+        </div>
+        <a href="/signup/customer" class="mm-btn mm-btn-secondary signup-action-btn">
+          Register as Customer <i class="fa-solid fa-arrow-right"></i>
+        </a>
+      </div>
+    </div>
+  </div>
+</section>
+
+<%- include('../includes/footer.ejs') %>
