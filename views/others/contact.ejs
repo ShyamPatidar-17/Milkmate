@@ -46,6 +46,14 @@
   </div>
 
   <!-- Get in Touch Google Form Section -->
+  <%
+    const formUrl = (typeof googleFormUrl !== 'undefined' && googleFormUrl) 
+      ? googleFormUrl 
+      : 'https://docs.google.com/forms/d/e/1FAIpQLSdX4uY6X3q0-dummy-milkmate/viewform';
+    const embedUrl = formUrl.includes('embedded=true') 
+      ? formUrl 
+      : (formUrl.includes('?') ? (formUrl + '&embedded=true') : (formUrl + '?embedded=true'));
+  %>
   <section class="get-in-touch-section">
     <div class="get-in-touch-header">
       <span class="mm-badge mm-badge-primary" style="margin-bottom:12px;">
@@ -91,7 +99,7 @@
         </div>
 
         <div class="touch-direct-cta">
-          <a href="https://docs.google.com/forms/d/e/1FAIpQLSdX4uY6X3q0-dummy-milkmate/viewform" target="_blank" rel="noopener noreferrer" class="mm-btn mm-btn-primary mm-btn-lg" style="width:100%; text-align:center;">
+          <a href="<%= formUrl %>" target="_blank" rel="noopener noreferrer" class="mm-btn mm-btn-primary mm-btn-lg" style="width:100%; text-align:center;">
             <i class="fa-brands fa-google"></i> Open Google Form in New Tab <i class="fa-solid fa-arrow-up-right-from-square" style="font-size:0.8rem;"></i>
           </a>
           <span class="direct-cta-subtext"><i class="fa-solid fa-circle-check" style="color:#10b981;"></i> Opens in a secure new browser window</span>
@@ -107,14 +115,14 @@
             <span class="gform-dot dot-green"></span>
             <span class="gform-toolbar-title"><i class="fa-brands fa-google" style="color:#4285F4;"></i> MilkMate Inquiry & Feedback Form</span>
           </div>
-          <a href="https://docs.google.com/forms/d/e/1FAIpQLSdX4uY6X3q0-dummy-milkmate/viewform" target="_blank" rel="noopener noreferrer" class="gform-fullscreen-link" title="Open full screen in new tab">
+          <a href="<%= formUrl %>" target="_blank" rel="noopener noreferrer" class="gform-fullscreen-link" title="Open full screen in new tab">
             <i class="fa-solid fa-up-right-from-square"></i> Fullscreen
           </a>
         </div>
 
         <div class="google-form-iframe-container">
           <iframe 
-            src="https://docs.google.com/forms/d/e/1FAIpQLSdX4uY6X3q0-dummy-milkmate/viewform?embedded=true" 
+            src="<%= embedUrl %>" 
             width="100%" 
             height="560" 
             frameborder="0" 
@@ -128,7 +136,7 @@
 
         <div class="google-form-footer">
           <i class="fa-solid fa-circle-info"></i>
-          <span>Having trouble loading the form? <a href="https://docs.google.com/forms/d/e/1FAIpQLSdX4uY6X3q0-dummy-milkmate/viewform" target="_blank" rel="noopener noreferrer">Click here to open Google Form directly</a>.</span>
+          <span>Having trouble loading the form? <a href="<%= formUrl %>" target="_blank" rel="noopener noreferrer">Click here to open Google Form directly</a>.</span>
         </div>
       </div>
     </div>
