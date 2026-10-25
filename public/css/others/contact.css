@@ -488,6 +488,10 @@
     grid-template-columns: 1fr;
     gap: 16px;
   }
+  .get-in-touch-grid {
+    grid-template-columns: 1fr;
+    gap: 24px;
+  }
   .team-cards-grid {
     grid-template-columns: 1fr 1fr;
     gap: 20px;
@@ -498,6 +502,14 @@
   .contact-main-wrapper {
     margin: 40px auto 60px auto;
     padding: 0 16px;
+  }
+  .get-in-touch-info-card {
+    padding: 24px 18px;
+  }
+  .google-form-iframe-container,
+  .google-form-iframe {
+    height: 480px;
+    min-height: 480px;
   }
   .team-cards-grid {
     grid-template-columns: 1fr;
